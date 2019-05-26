@@ -18,6 +18,8 @@ class MastercomWorkbook:
 		def __repr__(self):
 			return self.name
 		
+		def setMarks(self, data):
+			self.marks = [MastercomWorkbook.Mark(m) for m in data]
 		def marksAverage(self):
 			sum = 0
 			for m in self.marks:
@@ -95,8 +97,7 @@ class MastercomWorkbook:
 
 	def _loadMarksIndex(self, subjectIndex):
 		url = self.marksUrl.format(subjectId=self.subjects[subjectIndex].id)
-		self.subjects[subjectIndex].marks = [self.Mark(m)
-			for m in self._fetchJsonUrl(url)["result"]]
+		self.subjects[subjectIndex].setMarks(self._fetchJsonUrl(url)["result"])
 
 	def loadMarks(self, subjectName):
 		for s in range(len(self.subjects)):
