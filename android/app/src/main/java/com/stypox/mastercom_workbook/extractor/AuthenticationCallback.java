@@ -1,5 +1,5 @@
 package com.stypox.mastercom_workbook.extractor;
 
-public class ExtractorCallback<Ts...> {
-
+public interface AuthenticationCallback extends BaseCallback {
+    void onAuthenticationCompleted(String fullName);
 }

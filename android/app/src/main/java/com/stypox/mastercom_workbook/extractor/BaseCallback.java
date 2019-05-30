@@ -1,4 +1,5 @@
 package com.stypox.mastercom_workbook.extractor;
 
-public class BaseCallback {
+interface BaseCallback {
+    void onError(String error);
 }
