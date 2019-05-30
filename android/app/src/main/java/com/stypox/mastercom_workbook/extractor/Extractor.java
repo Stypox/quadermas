@@ -2,6 +2,8 @@ package com.stypox.mastercom_workbook.extractor;
 
 import android.os.AsyncTask;
 
+import com.stypox.mastercom_workbook.data.SubjectData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +14,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Extractor {
@@ -166,7 +169,13 @@ public class Extractor {
     private static void fetchSubjectsCallback(JSONObject jsonResponse, FetchSubjectsCallback callback) {
         try {
             JSONArray result = jsonResponse.getJSONArray("result");
-            callback.onFetchSubjectsCompleted(result.getJSONObject(0).getString("nome"));
+
+            ArrayList<SubjectData> subjects = new ArrayList<SubjectData>();
+            for (int i = 0; i < result.length(); i++) {
+                subjects.add(new SubjectData(result.getJSONObject(i)));
+            }
+
+            callback.onFetchSubjectsCompleted(subjects);
         } catch (JSONException e) {
             e.printStackTrace();
             callback.onError("Malformed JSON");

@@ -5,21 +5,20 @@ import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.stypox.mastercom_workbook.data.SubjectData;
+
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Subject extends ConstraintLayout {
-    private String name;
-    private String id;
+    private SubjectData data;
 
     private TextView nameView;
     private TextView teacherView;
 
-    Subject(Context context, JSONObject data) throws JSONException {
+    public Subject(Context context, SubjectData data) {
         super(context);
 
-        this.name = data.getString("nome");
-        this.id = data.getString("id");
+        this.data = data;
 
         initializeViews(context);
     }
@@ -37,6 +36,6 @@ public class Subject extends ConstraintLayout {
         nameView = findViewById(R.id.name);
         teacherView = findViewById(R.id.teacher);
 
-        nameView.setText(name);
+        nameView.setText(data.getName());
     }
 }

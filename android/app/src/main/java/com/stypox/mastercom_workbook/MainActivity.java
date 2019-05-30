@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
@@ -22,6 +24,8 @@ import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,17 +50,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    subjectsLayout.addView(new Subject(getApplicationContext(), new JSONObject("{\"nome\": \"Italiano\", \"id\": \"ciao\"}")));
+                    subjectsLayout.addView(new Subject(getApplicationContext(), new SubjectData(new JSONObject("{\"nome\": \"Italiano\", \"id\": \"ciao\"}"))));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
 
         /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +118,8 @@ public class MainActivity extends AppCompatActivity
     private void fetchSubjects() {
         Extractor.fetchSubjects(new FetchSubjectsCallback() {
             @Override
-            public void onFetchSubjectsCompleted(String first) {
-                MainActivity.this.onFetchSubjectsCompleted(first);
+            public void onFetchSubjectsCompleted(ArrayList<SubjectData> subjects) {
+                MainActivity.this.onFetchSubjectsCompleted(subjects);
             }
 
             @Override
@@ -124,8 +128,13 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-    private void onFetchSubjectsCompleted(String first) {
-        Snackbar.make(findViewById(android.R.id.content), "Subject " + first, Snackbar.LENGTH_LONG).show();
+    private void onFetchSubjectsCompleted(ArrayList<SubjectData> subjects) {
+        for(SubjectData subjectData : subjects) {
+            Log.e("SUBJECT", subjectData.getId() + " = " + subjectData.getName());
+            subjectsLayout.addView(new Subject(getApplicationContext(), subjectData));
+        }
+
+        Snackbar.make(findViewById(android.R.id.content), "Subjects", Snackbar.LENGTH_LONG).show();
 
         Extractor.fetchMarks("1000124", new FetchMarksCallback() {
             @Override
