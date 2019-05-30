@@ -126,4 +126,62 @@ public class Extractor {
     }
 
 
+    //////////////
+    // SUBJECTS //
+    //////////////
+
+    private static class FetchSubjectListTask extends AsyncTask<URL, String, Void> {
+        private FetchSubjectListCallback callback;
+        private JSONObject jsonResponse = null;
+
+        FetchSubjectListTask(FetchSubjectListCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Void doInBackground(URL... urls) {
+            try {
+                jsonResponse = fetchJsonAuthenticated(urls[0]);
+            } catch (Exception e) {
+                publishProgress(e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... error) {
+            callback.onError(error[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            if (jsonResponse != null) {
+                Extractor.fetchSubjectListCallback(jsonResponse, callback);
+            }
+        }
+    }
+
+    private static void fetchSubjectListCallback(JSONObject jsonResponse, FetchSubjectListCallback callback) {
+        try {
+            JSONArray result = jsonResponse.getJSONArray("result");
+            callback.onFetchSubjectListCompleted(result.getJSONObject(0).getString("nome"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            callback.onError("Malformed JSON");
+        }
+    }
+
+    public static void fetchSubjectList(FetchSubjectListCallback callback) {
+        FetchSubjectListTask fetchSubjectListTask = new FetchSubjectListTask(callback);
+        try {
+            fetchSubjectListTask.execute(new URL(subjectListUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            callback.onError("Malformed URL");
+        }
+    }
+
+
+
 }

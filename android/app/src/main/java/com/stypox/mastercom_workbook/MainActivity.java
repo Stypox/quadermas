@@ -15,6 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
+import com.stypox.mastercom_workbook.extractor.Extractor;
+import com.stypox.mastercom_workbook.extractor.FetchSubjectListCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,6 +79,49 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);*/
     }
 
+    /////////////
+    // NETWORK //
+    /////////////
+
+    private void authenticate() {
+        Extractor.authenticate("", "", new AuthenticationCallback() {
+            @Override
+            public void onAuthenticationCompleted(String fullName) {
+                MainActivity.this.onAuthenticationCompleted(fullName);
+            }
+
+            @Override
+            public void onError(String error) {
+                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG)
+                        .setAction("Retry", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                authenticate();
+                            }
+                        }).show();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private void onAuthenticationCompleted(String fullName) {
+        Snackbar.make(findViewById(android.R.id.content), "Authenticated " + fullName, Snackbar.LENGTH_LONG).show();
+        refreshLayout.setRefreshing(false);
+
+        fetchSubjects();
+    }
+
+    private void fetchSubjects() {
+        Extractor.fetchSubjectList(new FetchSubjectListCallback() {
+            @Override
+            public void onFetchSubjectListCompleted(String first) {
+                Snackbar.make(findViewById(android.R.id.content), "Subject " + first, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     ////////////////

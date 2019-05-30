@@ -1,5 +1,5 @@
 package com.stypox.mastercom_workbook.extractor;
 
-public interface FetchSubjectsCallback extends BaseCallback {
-    void onFetchSubjectsCompleted(String first);
+public interface FetchSubjectListCallback extends BaseCallback {
+    void onFetchSubjectListCompleted(String first);
 }
