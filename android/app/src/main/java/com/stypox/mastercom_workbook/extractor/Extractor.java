@@ -16,7 +16,8 @@ import java.util.Scanner;
 
 public class Extractor {
     private static final String authenticationUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
-    private static final String subjectListUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_subjects&page=1&start=0&limit=25";
+    private static final String subjectsUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_subjects&page=1&start=0&limit=25";
+    private static final String marksUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&page=1&start=0&limit=100&id_materia={subject_id}";
 
     private static String authenticationCookie;
 
@@ -130,11 +131,11 @@ public class Extractor {
     // SUBJECTS //
     //////////////
 
-    private static class FetchSubjectListTask extends AsyncTask<URL, String, Void> {
-        private FetchSubjectListCallback callback;
+    private static class FetchSubjectsTask extends AsyncTask<URL, String, Void> {
+        private FetchSubjectsCallback callback;
         private JSONObject jsonResponse = null;
 
-        FetchSubjectListTask(FetchSubjectListCallback callback) {
+        FetchSubjectsTask(FetchSubjectsCallback callback) {
             this.callback = callback;
         }
 
@@ -157,25 +158,25 @@ public class Extractor {
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
             if (jsonResponse != null) {
-                Extractor.fetchSubjectListCallback(jsonResponse, callback);
+                Extractor.fetchSubjectsCallback(jsonResponse, callback);
             }
         }
     }
 
-    private static void fetchSubjectListCallback(JSONObject jsonResponse, FetchSubjectListCallback callback) {
+    private static void fetchSubjectsCallback(JSONObject jsonResponse, FetchSubjectsCallback callback) {
         try {
             JSONArray result = jsonResponse.getJSONArray("result");
-            callback.onFetchSubjectListCompleted(result.getJSONObject(0).getString("nome"));
+            callback.onFetchSubjectsCompleted(result.getJSONObject(0).getString("nome"));
         } catch (JSONException e) {
             e.printStackTrace();
             callback.onError("Malformed JSON");
         }
     }
 
-    public static void fetchSubjectList(FetchSubjectListCallback callback) {
-        FetchSubjectListTask fetchSubjectListTask = new FetchSubjectListTask(callback);
+    public static void fetchSubjects(FetchSubjectsCallback callback) {
+        FetchSubjectsTask fetchSubjectsTask = new FetchSubjectsTask(callback);
         try {
-            fetchSubjectListTask.execute(new URL(subjectListUrl));
+            fetchSubjectsTask.execute(new URL(subjectsUrl));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             callback.onError("Malformed URL");
@@ -183,5 +184,62 @@ public class Extractor {
     }
 
 
+
+    //////////////
+    // SUBJECTS //
+    //////////////
+
+    private static class FetchMarksTask extends AsyncTask<URL, String, Void> {
+        private FetchMarksCallback callback;
+        private JSONObject jsonResponse = null;
+
+        FetchMarksTask(FetchMarksCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Void doInBackground(URL... urls) {
+            try {
+                jsonResponse = fetchJsonAuthenticated(urls[0]);
+            } catch (Exception e) {
+                publishProgress(e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... error) {
+            callback.onError(error[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            if (jsonResponse != null) {
+                Extractor.fetchMarksCallback(jsonResponse, callback);
+            }
+        }
+    }
+
+    private static void fetchMarksCallback(JSONObject jsonResponse, FetchMarksCallback callback) {
+        try {
+            JSONArray result = jsonResponse.getJSONArray("result");
+            callback.onFetchMarksCompleted(result.getJSONObject(0).getString("note"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            callback.onError("Malformed JSON");
+        }
+    }
+
+    public static void fetchMarks(String subjectId, FetchMarksCallback callback) {
+        FetchMarksTask fetchMarksTask = new FetchMarksTask(callback);
+        try {
+            fetchMarksTask.execute(new URL(marksUrl
+                    .replace("{subject_id}", subjectId)));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            callback.onError("Malformed URL");
+        }
+    }
 
 }

@@ -17,7 +17,8 @@ import android.widget.LinearLayout;
 
 import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
 import com.stypox.mastercom_workbook.extractor.Extractor;
-import com.stypox.mastercom_workbook.extractor.FetchSubjectListCallback;
+import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
+import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,10 +112,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fetchSubjects() {
-        Extractor.fetchSubjectList(new FetchSubjectListCallback() {
+        Extractor.fetchSubjects(new FetchSubjectsCallback() {
             @Override
-            public void onFetchSubjectListCompleted(String first) {
-                Snackbar.make(findViewById(android.R.id.content), "Subject " + first, Snackbar.LENGTH_LONG).show();
+            public void onFetchSubjectsCompleted(String first) {
+                MainActivity.this.onFetchSubjectsCompleted(first);
             }
 
             @Override
@@ -123,6 +124,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+    private void onFetchSubjectsCompleted(String first) {
+        Snackbar.make(findViewById(android.R.id.content), "Subject " + first, Snackbar.LENGTH_LONG).show();
+
+        Extractor.fetchMarks("1000124", new FetchMarksCallback() {
+            @Override
+            public void onFetchMarksCompleted(String first) {
+                Snackbar.make(findViewById(android.R.id.content), first, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String error) {
+                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     ////////////////
     // GUI EVENTS //
