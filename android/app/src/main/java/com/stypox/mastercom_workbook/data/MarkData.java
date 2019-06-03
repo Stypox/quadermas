@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MarkData implements Serializable {
@@ -73,5 +74,20 @@ public class MarkData implements Serializable {
     public String getDateRepresentation() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(date);
+    }
+
+    public int getTerm() {
+        if (date.getMonth() > 6) {
+            return 0; // first term
+        } else {
+            return 1; // second term
+        }
+    }
+    static public int currentTerm() {
+        if (Calendar.getInstance().get(Calendar.MONTH) > 6) {
+            return 0; // first term
+        } else {
+            return 1; // second term
+        }
     }
 }

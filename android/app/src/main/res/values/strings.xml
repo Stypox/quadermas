@@ -14,4 +14,17 @@
     <string name="type_practical">Practical</string>
 
     <string name="no_marks">No marks</string>
+
+    <string name="marks_average_title">Marks average</string>
+    <string name="term_title">Term:</string>
+    <string-array name="terms_spinner_entries">
+        <item>1st</item>
+        <item>2nd</item>
+    </string-array>
+
+    <string name="wanted_mark_title">Wanted mark</string>
+    <string name="aim_mark_title">Aim mark:</string>
+    <string name="default_aim_mark">6</string>
+    <string name="remaining_tests_title">Remaining tests:</string>
+    <string name="default_remaining_tests">1</string>
 </resources>
