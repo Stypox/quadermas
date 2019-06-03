@@ -94,7 +94,7 @@ public class SubjectActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 try {
                     if (Integer.valueOf(s.toString()) <= 0) {
-                        remainingTestsEdit.setText("1");
+                        s.clear();
                     } else {
                         updateNeededMark();
                     }
