@@ -8,4 +8,10 @@
     <string name="menu_subjects">Subjects</string>
     <string name="menu_marks">Marks</string>
     <string name="menu_timeline">Timeline</string>
+
+    <string name="type_written">Written</string>
+    <string name="type_oral">Oral</string>
+    <string name="type_practical">Practical</string>
+
+    <string name="no_marks">No marks</string>
 </resources>

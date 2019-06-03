@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.extractor;
 
 import android.os.AsyncTask;
 
+import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
 import org.json.JSONArray;
@@ -19,8 +20,8 @@ import java.util.Scanner;
 
 public class Extractor {
     private static final String authenticationUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
-    private static final String subjectsUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_subjects&page=1&start=0&limit=25";
-    private static final String marksUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&page=1&start=0&limit=100&id_materia={subject_id}";
+    private static final String subjectsUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
+    private static final String marksUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
 
     private static String authenticationCookie;
 
@@ -105,6 +106,7 @@ public class Extractor {
         try {
             if (jsonResponse.getBoolean("auth") == false) {
                 callback.onError("Wrong user or password");
+                return;
             }
 
             authenticationCookie = cookieToSet.substring(0, "PHPSESSID=00000000000000000000000000".length());
@@ -233,8 +235,14 @@ public class Extractor {
     private static void fetchMarksCallback(JSONObject jsonResponse, FetchMarksCallback callback) {
         try {
             JSONArray result = jsonResponse.getJSONArray("result");
-            callback.onFetchMarksCompleted(result.getJSONObject(0).getString("note"));
-        } catch (JSONException e) {
+
+            ArrayList<MarkData> marks = new ArrayList<>();
+            for (int i = 0; i < result.length(); i++) {
+                marks.add(new MarkData(result.getJSONObject(i)));
+            }
+
+            callback.onFetchMarksCompleted(marks);
+        } catch (Throwable e) {
             e.printStackTrace();
             callback.onError("Malformed JSON");
         }

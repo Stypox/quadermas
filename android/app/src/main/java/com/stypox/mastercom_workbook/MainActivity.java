@@ -1,5 +1,6 @@
 package com.stypox.mastercom_workbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,14 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
 import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.stypox.mastercom_workbook.view.SubjectItem;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         subjectsLayout = findViewById(R.id.subjectsLayout);
@@ -50,15 +50,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        refreshLayout.setRefreshing(true);
+        authenticate();
+
         /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    subjectsLayout.addView(new Subject(getApplicationContext(), new SubjectData(new JSONObject("{\"nome\": \"Italiano\", \"id\": \"ciao\"}"))));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Intent openSubjectActivity = new Intent(MainActivity.this, SubjectActivity.class);
+                //toolbar.collapseActionView();
+                MainActivity.this.startActivity(openSubjectActivity);
             }
         });*/
 
@@ -130,23 +131,25 @@ public class MainActivity extends AppCompatActivity
     }
     private void onFetchSubjectsCompleted(ArrayList<SubjectData> subjects) {
         for(SubjectData subjectData : subjects) {
-            Log.e("SUBJECT", subjectData.getId() + " = " + subjectData.getName());
-            subjectsLayout.addView(new Subject(getApplicationContext(), subjectData));
+            Log.i("fetchSubjects", subjectData.getName());
+            final SubjectItem subjectItem = new SubjectItem(getApplicationContext(), subjectData);
+
+            subjectData.fetchMarks(new FetchMarksCallback() {
+                @Override
+                public void onFetchMarksCompleted(ArrayList<MarkData> marks) {
+                    subjectItem.onMarksLoaded(marks);
+                }
+
+                @Override
+                public void onError(String error) {
+                    subjectItem.onMarksLoadingError(error);
+                }
+            });
+
+            subjectsLayout.addView(subjectItem);
         }
 
         Snackbar.make(findViewById(android.R.id.content), "Subjects", Snackbar.LENGTH_LONG).show();
-
-        Extractor.fetchMarks("1000124", new FetchMarksCallback() {
-            @Override
-            public void onFetchMarksCompleted(String first) {
-                Snackbar.make(findViewById(android.R.id.content), first, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(String error) {
-                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
 
