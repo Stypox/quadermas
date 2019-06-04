@@ -18,8 +18,6 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.view.MarkItem;
 
-import java.util.Calendar;
-
 public class SubjectActivity extends AppCompatActivity {
     public static final String subjectDataIntentKey = "subject_data";
 
@@ -40,6 +38,10 @@ public class SubjectActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
+        if (data.getMarks().isEmpty()) {
+            throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
+        }
+
         marksLayout = findViewById(R.id.marksLayout);
         termSpinner = findViewById(R.id.termSpinner);
         averageTextView = findViewById(R.id.averageTextView);
@@ -53,9 +55,7 @@ public class SubjectActivity extends AppCompatActivity {
                 try {
                     updateAverage();
                 } catch (ArithmeticException e) {
-                    e.printStackTrace();
-
-                    // change selection
+                    // change selection; should be safe since data is guaranteed to have at least one mark
                     if (position == 0) {
                         termSpinner.setSelection(1, true);
                     } else /* position == 1 */ {
@@ -79,9 +79,7 @@ public class SubjectActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() != 0) {
-                    updateNeededMark();
-                }
+                updateNeededMark();
             }
         });
         remainingTestsEdit.addTextChangedListener(new TextWatcher() {
@@ -92,13 +90,10 @@ public class SubjectActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                try {
-                    if (Integer.valueOf(s.toString()) <= 0) {
-                        s.clear();
-                    } else {
-                        updateNeededMark();
-                    }
-                } catch (NumberFormatException e) {}
+                if (s.length() != 0 && Integer.valueOf(s.toString()) <= 0) {
+                    s.clear();
+                }
+                updateNeededMark();
             }
         });
         updateNeededMark();
@@ -118,6 +113,20 @@ public class SubjectActivity extends AppCompatActivity {
         }
     }
 
+    private String floatToString(float f) {
+        if (f > 1000) {
+            throw new IllegalArgumentException();
+        }
+
+        String str = String.valueOf(f);
+        str = str.substring(0, Math.min(4, str.length()));
+        if (str.endsWith(".")) {
+            str = str.substring(0, str.length() - 1);
+        }
+
+        return str;
+    }
+
     private float getAverage(int termToConsider) throws ArithmeticException {
         float marksSum = 0;
         int numberOfMarks = 0;
@@ -135,9 +144,12 @@ public class SubjectActivity extends AppCompatActivity {
         return marksSum / numberOfMarks;
     }
     private void updateAverage() throws ArithmeticException {
-        float average = getAverage(termSpinner.getSelectedItemPosition());
-        String averageString = String.valueOf(average); // TODO fix strings
-        averageTextView.setText(averageString.substring(0, Math.min(4, averageString.length())));
+        try {
+            float average = getAverage(termSpinner.getSelectedItemPosition());
+            averageTextView.setText(floatToString(average));
+        } catch (Throwable e) {
+            averageTextView.setText("");
+        }
     }
 
     private float getNeededMark(float aimMark, int remainingTests) {
@@ -155,8 +167,11 @@ public class SubjectActivity extends AppCompatActivity {
         return (aimMark*(numberOfMarks + remainingTests) - marksSum) / remainingTests;
     }
     private void updateNeededMark() {
-        float neededMark = getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
-        String neededMarkString = String.valueOf(neededMark); // TODO fix strings
-        neededMarkTextView.setText(neededMarkString.substring(0, Math.min(4, neededMarkString.length())));
+        try {
+            float neededMark = getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
+            neededMarkTextView.setText(floatToString(neededMark));
+        } catch (Throwable e) {
+            neededMarkTextView.setText("");
+        }
     }
 }
