@@ -1,4 +1,4 @@
-package com.stypox.mastercom_workbook;
+package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.view.MarkItem;

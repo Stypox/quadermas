@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
-import com.stypox.mastercom_workbook.SubjectActivity;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
