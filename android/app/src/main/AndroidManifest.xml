@@ -22,5 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.SubjectActivity" />
+        <activity android:name=".login.LoginDialog" />
     </application>
 </manifest>

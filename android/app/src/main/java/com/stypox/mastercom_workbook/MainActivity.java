@@ -23,6 +23,8 @@ import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
 import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
+import com.stypox.mastercom_workbook.login.LoginData;
+import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.SubjectItem;
 
 import java.util.ArrayList;
@@ -50,18 +52,13 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        if (!LoginData.isLoggedIn(getApplicationContext())) {
+            Intent intent = new Intent(this, LoginDialog.class);
+            startActivity(intent);
+        }
+
         refreshLayout.setRefreshing(true);
         authenticate();
-
-        /*FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent openSubjectActivity = new Intent(MainActivity.this, SubjectActivity.class);
-                //toolbar.collapseActionView();
-                MainActivity.this.startActivity(openSubjectActivity);
-            }
-        });*/
 
         /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity
     /////////////
 
     private void authenticate() {
-        Extractor.authenticate("", "", new AuthenticationCallback() {
+        Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
             @Override
             public void onAuthenticationCompleted(String fullName) {
                 MainActivity.this.onAuthenticationCompleted(fullName);

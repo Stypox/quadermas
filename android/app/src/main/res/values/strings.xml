@@ -27,4 +27,9 @@
     <string name="default_aim_mark">6</string>
     <string name="remaining_tests_title">Remaining tests:</string>
     <string name="default_remaining_tests">1</string>
+
+    <string name="login_user">User:</string>
+    <string name="login_user_hint">012345</string>
+    <string name="login_password">Password:</string>
+    <string name="login_login">LOGIN</string>
 </resources>
