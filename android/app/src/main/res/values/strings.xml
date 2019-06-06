@@ -4,7 +4,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_marksActions">Manage marks</string>
+    <string name="menu_account_actions_title">Your account</string>
+    <string name="menu_login">Login</string>
+    <string name="menu_marks_actions_title">Manage marks</string>
     <string name="menu_subjects">Subjects</string>
     <string name="menu_marks">Marks</string>
     <string name="menu_timeline">Timeline</string>

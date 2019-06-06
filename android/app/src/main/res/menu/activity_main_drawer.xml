@@ -3,7 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/menu_marksActions">
+    <item android:title="@string/menu_account_actions_title">
+        <menu>
+            <item
+                android:id="@+id/menu_login"
+                android:icon="@drawable/ic_menu_login"
+                android:title="@string/menu_login" />
+        </menu>
+    </item>
+    <item android:title="@string/menu_marks_actions_title">
         <menu>
             <item
                 android:id="@+id/menu_subjects"

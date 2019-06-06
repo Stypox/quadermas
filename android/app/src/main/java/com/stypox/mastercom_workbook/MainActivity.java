@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -30,9 +31,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final int requestCodeLoginDialog = 0;
 
-    LinearLayout subjectsLayout;
-    SwipeRefreshLayout refreshLayout;
+    private int fetchedSubjectsSoFar;
+    private boolean areSubjectsLoaded = false;
+
+    private LinearLayout subjectsLayout;
+    private SwipeRefreshLayout refreshLayout;
+    private ArrayList<SubjectData> subjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +50,18 @@ public class MainActivity extends AppCompatActivity
         subjectsLayout = findViewById(R.id.subjectsLayout);
         refreshLayout = findViewById(R.id.refreshLayout);
 
+        if (!LoginData.isLoggedIn(getApplicationContext())) {
+            openLoginDialogThenReload();
+        } else {
+            reloadSubjects();
+        }
+
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                subjectsLayout.removeAllViews();
-                authenticate();
+                reloadSubjects();
             }
         });
-
-        if (!LoginData.isLoggedIn(getApplicationContext())) {
-            Intent intent = new Intent(this, LoginDialog.class);
-            startActivity(intent);
-        }
-
-        refreshLayout.setRefreshing(true);
-        authenticate();
 
         /*FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,19 +75,51 @@ public class MainActivity extends AppCompatActivity
                             }
                         }).show();
             }
-        });
+        });*/
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);*/
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    ////////////////////
+    // LOGIN AND LOAD //
+    ////////////////////
+
+    private void openLoginDialogThenReload() {
+        Intent intent = new Intent(this, LoginDialog.class);
+        startActivityForResult(intent, requestCodeLoginDialog); // see onActivityResult
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case requestCodeLoginDialog:
+                reloadSubjects();
+                break;
+        }
+    }
+
+    private void reloadSubjects() {
+        areSubjectsLoaded = false;
+        refreshLayout.setRefreshing(true);
+        subjectsLayout.removeAllViews();
+        authenticate();
+    }
+    private void onReloadSubjectsCompleted(ArrayList<SubjectData> subjects) {
+        areSubjectsLoaded = true;
+        refreshLayout.setRefreshing(false);
+        this.subjects = subjects;
     }
 
     /////////////
     // NETWORK //
     /////////////
+
     private void authenticate() {
         Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
             @Override
@@ -108,7 +143,6 @@ public class MainActivity extends AppCompatActivity
     }
     private void onAuthenticationCompleted(String fullName) {
         Snackbar.make(findViewById(android.R.id.content), "Authenticated " + fullName, Snackbar.LENGTH_LONG).show();
-        refreshLayout.setRefreshing(false);
 
         fetchSubjects();
     }
@@ -126,7 +160,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-    private void onFetchSubjectsCompleted(ArrayList<SubjectData> subjects) {
+    private void onFetchSubjectsCompleted(final ArrayList<SubjectData> subjects) {
+        fetchedSubjectsSoFar = 0;
+        final Runnable onSubjectFetched = new Runnable() {
+            @Override
+            public void run() {
+                ++fetchedSubjectsSoFar;
+                if (fetchedSubjectsSoFar == subjects.size()) {
+                    onReloadSubjectsCompleted(subjects);
+                }
+            }
+        };
+
         for(SubjectData subjectData : subjects) {
             Log.i("fetchSubjects", subjectData.getName());
             final SubjectItem subjectItem = new SubjectItem(getApplicationContext(), subjectData);
@@ -135,18 +180,18 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onFetchMarksCompleted(ArrayList<MarkData> marks) {
                     subjectItem.onMarksLoaded(marks);
+                    onSubjectFetched.run();
                 }
 
                 @Override
                 public void onError(Extractor.Error error) {
                     subjectItem.onMarksLoadingError(error);
+                    onSubjectFetched.run();
                 }
             });
 
             subjectsLayout.addView(subjectItem);
         }
-
-        Snackbar.make(findViewById(android.R.id.content), "Subjects", Snackbar.LENGTH_LONG).show();
     }
 
 
@@ -190,8 +235,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.menu_subjects) {
-
+        if (id == R.id.menu_login) {
+            openLoginDialogThenReload();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
