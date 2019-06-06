@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -175,7 +174,6 @@ public class MainActivity extends AppCompatActivity
         };
 
         for(SubjectData subjectData : subjects) {
-            Log.i("fetchSubjects", subjectData.getName());
             final SubjectItem subjectItem = new SubjectItem(getApplicationContext(), subjectData);
 
             subjectData.fetchMarks(new FetchMarksCallback() {
