@@ -1,12 +1,10 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,7 +16,6 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
-import com.stypox.mastercom_workbook.view.MarkItem;
 
 public class SubjectActivity extends AppCompatActivity {
     public static final String subjectDataIntentKey = "subject_data";
@@ -120,6 +117,7 @@ public class SubjectActivity extends AppCompatActivity {
         try {
             float average = data.getAverage(termSpinner.getSelectedItemPosition());
             averageTextView.setText(MarkFormatting.floatToString(average, 4));
+            averageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), average));
         } catch (Throwable e) {
             averageTextView.setText("");
         }

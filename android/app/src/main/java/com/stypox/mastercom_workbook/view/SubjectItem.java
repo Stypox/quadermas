@@ -3,7 +3,6 @@ package com.stypox.mastercom_workbook.view;
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -63,17 +62,9 @@ public class SubjectItem extends ConstraintLayout implements View.OnClickListene
         try {
             float average = data.getAverage(data.getMarks().get(0).getTerm()); // current average
             averageTextView.setText(MarkFormatting.floatToString(average, 3));
-
-            if (average < 6) {
-                averageTextView.setTextColor(getResources().getColor(R.color.failingMark));
-            } else if (average < 8) {
-                averageTextView.setTextColor(getResources().getColor(R.color.halfwayMark));
-            } else {
-                averageTextView.setTextColor(getResources().getColor(R.color.excellentMark));
-            }
+            averageTextView.setTextColor(MarkFormatting.colorOf(getContext(), average));
         } catch (Throwable e) {
             averageTextView.setText("?");
-            averageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
         }
     }
 
