@@ -6,32 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
-    <ImageView
-        android:id="@+id/average_image"
+    <TextView
+        android:id="@+id/average"
         android:layout_width="80dp"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_book_black_24dp"
-        tools:contentDescription="Computer Science"
+        android:textColor="@color/highlightedText"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10.5" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        tools:text="Lingua e Cultura Straniera (inglese)"
         android:textColor="@color/highlightedText"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/average_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/average"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Lingua e Cultura Straniera (inglese)" />
 
     <TextView
         android:id="@+id/teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginBottom="16dp"
-        tools:text="John Smith"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/average_image" />
+        app:layout_constraintStart_toEndOf="@+id/average"
+        tools:text="John Smith" />
 </android.support.constraint.ConstraintLayout>
