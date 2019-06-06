@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.view.MarkItem;
 
 public class SubjectActivity extends AppCompatActivity {
@@ -114,24 +115,11 @@ public class SubjectActivity extends AppCompatActivity {
         }
     }
 
-    private String floatToString(float f) {
-        if (f > 1000) {
-            throw new IllegalArgumentException();
-        }
-
-        String str = String.valueOf(f);
-        str = str.substring(0, Math.min(4, str.length()));
-        if (str.endsWith(".")) {
-            str = str.substring(0, str.length() - 1);
-        }
-
-        return str;
-    }
 
     private void updateAverage() throws ArithmeticException {
         try {
             float average = data.getAverage(termSpinner.getSelectedItemPosition());
-            averageTextView.setText(floatToString(average));
+            averageTextView.setText(MarkFormatting.floatToString(average, 4));
         } catch (Throwable e) {
             averageTextView.setText("");
         }
@@ -140,7 +128,7 @@ public class SubjectActivity extends AppCompatActivity {
     private void updateNeededMark() {
         try {
             float neededMark = data.getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
-            neededMarkTextView.setText(floatToString(neededMark));
+            neededMarkTextView.setText(MarkFormatting.floatToString(neededMark, 4));
         } catch (Throwable e) {
             neededMarkTextView.setText("");
         }
