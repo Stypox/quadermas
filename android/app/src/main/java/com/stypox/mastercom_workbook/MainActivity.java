@@ -2,7 +2,6 @@ package com.stypox.mastercom_workbook;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                subjectsLayout.removeAllViews();
                 authenticate();
             }
         });
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity
     /////////////
     // NETWORK //
     /////////////
-
     private void authenticate() {
         Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
             @Override
@@ -94,8 +93,9 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onError(String error) {
-                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG)
+            public void onError(Extractor.Error error) {
+                Snackbar.make(findViewById(android.R.id.content),
+                        error.toString(getApplicationContext()), Snackbar.LENGTH_LONG)
                         .setAction("Retry", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity
             }
 
             @Override
-            public void onError(String error) {
-                Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
+            public void onError(Extractor.Error error) {
+                Snackbar.make(findViewById(android.R.id.content), error.toString(getApplicationContext()), Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 @Override
-                public void onError(String error) {
+                public void onError(Extractor.Error error) {
                     subjectItem.onMarksLoadingError(error);
                 }
             });

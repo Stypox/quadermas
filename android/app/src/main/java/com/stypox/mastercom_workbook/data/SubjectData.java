@@ -34,7 +34,7 @@ public class SubjectData implements Serializable {
             }
 
             @Override
-            public void onError(String error) {
+            public void onError(Extractor.Error error) {
                 callback.onError(error);
             }
         });

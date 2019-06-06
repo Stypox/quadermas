@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.extractor.Extractor;
 
 import java.util.ArrayList;
 
@@ -42,14 +43,14 @@ public class SubjectItem extends ConstraintLayout implements View.OnClickListene
 
     public void onMarksLoaded(ArrayList<MarkData> marks) {
         if (marks.isEmpty()) {
-            this.teacherView.setText(getContext().getString(R.string.no_marks));
+            this.teacherView.setText(getContext().getString(R.string.error_no_marks));
         } else {
             this.teacherView.setText(data.getTeacher());
             setOnClickListener(this);
         }
     }
-    public void onMarksLoadingError(String error) {
-        this.teacherView.setText(error);
+    public void onMarksLoadingError(Extractor.Error error) {
+        this.teacherView.setText(error.toString(getContext()));
     }
 
     @Override

@@ -13,7 +13,12 @@
     <string name="type_oral">Oral</string>
     <string name="type_practical">Practical</string>
 
-    <string name="no_marks">No marks</string>
+    <string name="error_malformed_url">Malformed url</string>
+    <string name="error_network">Network error</string>
+    <string name="error_not_json">Response was not JSON</string>
+    <string name="error_unsuitable_json">Unsuitable response JSON</string>
+    <string name="error_invalid_credentials">Wrong user or password</string>
+    <string name="error_no_marks">No marks</string>
 
     <string name="marks_average_title">Marks average</string>
     <string name="term_title">Term:</string>

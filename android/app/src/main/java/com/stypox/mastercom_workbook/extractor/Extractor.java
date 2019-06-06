@@ -1,7 +1,9 @@
 package com.stypox.mastercom_workbook.extractor;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
@@ -25,6 +27,31 @@ public class Extractor {
 
     private static String authenticationCookie;
 
+
+    public enum Error {
+        malformed_url,
+        network,
+        not_json,
+        unsuitable_json,
+        invalid_credentials;
+
+        public String toString(Context context) {
+            switch (this) {
+                case malformed_url:
+                    return context.getResources().getString(R.string.error_malformed_url);
+                case network:
+                    return context.getResources().getString(R.string.error_network);
+                case not_json:
+                    return context.getResources().getString(R.string.error_not_json);
+                case unsuitable_json:
+                    return context.getResources().getString(R.string.error_unsuitable_json);
+                case invalid_credentials: default: // default is useless
+                    return context.getResources().getString(R.string.error_invalid_credentials);
+            }
+        }
+    }
+
+
     ///////////
     // UTILS //
     ///////////
@@ -39,7 +66,7 @@ public class Extractor {
         }
     }
 
-    private static JSONObject fetchJsonAuthenticated(URL url) throws Exception {
+    private static JSONObject fetchJsonAuthenticated(URL url) throws IOException, JSONException {
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.addRequestProperty("Cookie", authenticationCookie); // auth cookie
@@ -48,10 +75,10 @@ public class Extractor {
             return new JSONObject(response);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new Exception("Network error");
+            throw e;
         } catch (JSONException e) {
             e.printStackTrace();
-            throw new Exception("Malformed JSON");
+            throw e;
         }
     }
 
@@ -60,7 +87,7 @@ public class Extractor {
     // AUTHENTICATION //
     ////////////////////
 
-    private static class AuthenticationTask extends AsyncTask<URL, String, Void> {
+    private static class AuthenticationTask extends AsyncTask<URL, Error, Void> {
         private AuthenticationCallback callback;
         private String cookieToSet = null;
         private JSONObject jsonResponse = null;
@@ -79,17 +106,17 @@ public class Extractor {
                 jsonResponse = new JSONObject(response);
             } catch (IOException e) {
                 e.printStackTrace();
-                publishProgress("Network error");
+                publishProgress(Error.network);
             } catch (JSONException e) {
                 e.printStackTrace();
-                publishProgress("Website returned invalid JSON");
+                publishProgress(Error.not_json);
             }
 
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... error) {
+        protected void onProgressUpdate(Error... error) {
             callback.onError(error[0]);
         }
 
@@ -105,7 +132,7 @@ public class Extractor {
     private static void authenticationCallback(String cookieToSet, JSONObject jsonResponse, AuthenticationCallback callback) {
         try {
             if (jsonResponse.getBoolean("auth") == false) {
-                callback.onError("Wrong user or password");
+                callback.onError(Error.invalid_credentials);
                 return;
             }
 
@@ -115,7 +142,7 @@ public class Extractor {
             callback.onAuthenticationCompleted(fullNameUppercase);
         } catch (JSONException e) {
             e.printStackTrace();
-            callback.onError("Malformed JSON");
+            callback.onError(Error.unsuitable_json);
         }
     }
 
@@ -127,7 +154,7 @@ public class Extractor {
                     .replace("{password}", password)));
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            callback.onError("Malformed URL");
+            callback.onError(Error.malformed_url);
         }
     }
 
@@ -136,7 +163,7 @@ public class Extractor {
     // SUBJECTS //
     //////////////
 
-    private static class FetchSubjectsTask extends AsyncTask<URL, String, Void> {
+    private static class FetchSubjectsTask extends AsyncTask<URL, Error, Void> {
         private FetchSubjectsCallback callback;
         private JSONObject jsonResponse = null;
 
@@ -148,14 +175,16 @@ public class Extractor {
         protected Void doInBackground(URL... urls) {
             try {
                 jsonResponse = fetchJsonAuthenticated(urls[0]);
-            } catch (Exception e) {
-                publishProgress(e.getMessage());
+            } catch (IOException e) {
+                publishProgress(Error.network);
+            } catch (JSONException e) {
+                publishProgress(Error.not_json);
             }
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... error) {
+        protected void onProgressUpdate(Error... error) {
             callback.onError(error[0]);
         }
 
@@ -180,7 +209,7 @@ public class Extractor {
             callback.onFetchSubjectsCompleted(subjects);
         } catch (JSONException e) {
             e.printStackTrace();
-            callback.onError("Malformed JSON");
+            callback.onError(Error.unsuitable_json);
         }
     }
 
@@ -190,7 +219,7 @@ public class Extractor {
             fetchSubjectsTask.execute(new URL(subjectsUrl));
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            callback.onError("Malformed URL");
+            callback.onError(Error.malformed_url);
         }
     }
 
@@ -200,7 +229,7 @@ public class Extractor {
     // SUBJECTS //
     //////////////
 
-    private static class FetchMarksTask extends AsyncTask<URL, String, Void> {
+    private static class FetchMarksTask extends AsyncTask<URL, Error, Void> {
         private FetchMarksCallback callback;
         private JSONObject jsonResponse = null;
 
@@ -212,14 +241,16 @@ public class Extractor {
         protected Void doInBackground(URL... urls) {
             try {
                 jsonResponse = fetchJsonAuthenticated(urls[0]);
-            } catch (Exception e) {
-                publishProgress(e.getMessage());
+            } catch (IOException e) {
+                publishProgress(Error.network);
+            } catch (JSONException e) {
+                publishProgress(Error.not_json);
             }
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... error) {
+        protected void onProgressUpdate(Error... error) {
             callback.onError(error[0]);
         }
 
@@ -244,7 +275,7 @@ public class Extractor {
             callback.onFetchMarksCompleted(marks);
         } catch (Throwable e) {
             e.printStackTrace();
-            callback.onError("Malformed JSON");
+            callback.onError(Error.unsuitable_json);
         }
     }
 
@@ -255,7 +286,7 @@ public class Extractor {
                     .replace("{subject_id}", subjectId)));
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            callback.onError("Malformed URL");
+            callback.onError(Error.malformed_url);
         }
     }
 
