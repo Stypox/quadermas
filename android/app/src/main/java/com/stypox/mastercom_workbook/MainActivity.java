@@ -25,6 +25,7 @@ import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
 import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
+import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.SubjectItem;
 
 import java.util.ArrayList;
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         this.subjects = subjects;
     }
 
+
     /////////////
     // NETWORK //
     /////////////
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity
             public void onError(Extractor.Error error) {
                 Snackbar.make(findViewById(android.R.id.content),
                         error.toString(getApplicationContext()), Snackbar.LENGTH_LONG)
-                        .setAction("Retry", new View.OnClickListener() {
+                        .setAction(getString(R.string.retry), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 authenticate();
@@ -196,6 +198,28 @@ public class MainActivity extends AppCompatActivity
 
 
     ////////////////
+    // ACTIVITIES //
+    ////////////////
+
+    private void openMarksActivity() {
+        if (areSubjectsLoaded) {
+            Intent intent = new Intent(this, MarksActivity.class);
+            intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
+            startActivity(intent);
+        } else {
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.retry), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openMarksActivity();
+                        }
+                    }).show();
+        }
+    }
+
+
+    ////////////////
     // GUI EVENTS //
     ////////////////
 
@@ -237,6 +261,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_login) {
             openLoginDialogThenReload();
+        } else if (id == R.id.menu_marks) {
+            openMarksActivity();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
