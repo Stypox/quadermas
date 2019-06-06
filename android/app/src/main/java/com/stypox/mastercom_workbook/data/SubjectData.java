@@ -49,4 +49,35 @@ public class SubjectData implements Serializable {
     public ArrayList<MarkData> getMarks() {
         return marks;
     }
+
+    public float getAverage(int termToConsider) throws ArithmeticException {
+        float marksSum = 0;
+        int numberOfMarks = 0;
+
+        for (MarkData mark : marks) {
+            if (mark.getTerm() == termToConsider) {
+                marksSum += mark.getValue();
+                ++numberOfMarks;
+            }
+        }
+
+        if (numberOfMarks == 0)
+            throw new ArithmeticException();
+
+        return marksSum / numberOfMarks;
+    }
+    public float getNeededMark(float aimMark, int remainingTests) {
+        float marksSum = 0;
+        int numberOfMarks = 0;
+
+        int currentTerm = MarkData.currentTerm();
+        for (MarkData mark : marks) {
+            if (mark.getTerm() == currentTerm) {
+                marksSum += mark.getValue();
+                ++numberOfMarks;
+            }
+        }
+
+        return (aimMark*(numberOfMarks + remainingTests) - marksSum) / remainingTests;
+    }
 }

@@ -128,48 +128,18 @@ public class SubjectActivity extends AppCompatActivity {
         return str;
     }
 
-    private float getAverage(int termToConsider) throws ArithmeticException {
-        float marksSum = 0;
-        int numberOfMarks = 0;
-
-        for (MarkData mark : data.getMarks()) {
-            if (mark.getTerm() == termToConsider) {
-                marksSum += mark.getValue();
-                ++numberOfMarks;
-            }
-        }
-
-        if (numberOfMarks == 0)
-            throw new ArithmeticException();
-
-        return marksSum / numberOfMarks;
-    }
     private void updateAverage() throws ArithmeticException {
         try {
-            float average = getAverage(termSpinner.getSelectedItemPosition());
+            float average = data.getAverage(termSpinner.getSelectedItemPosition());
             averageTextView.setText(floatToString(average));
         } catch (Throwable e) {
             averageTextView.setText("");
         }
     }
 
-    private float getNeededMark(float aimMark, int remainingTests) {
-        float marksSum = 0;
-        int numberOfMarks = 0;
-
-        int currentTerm = MarkData.currentTerm();
-        for (MarkData mark : data.getMarks()) {
-            if (mark.getTerm() == currentTerm) {
-                marksSum += mark.getValue();
-                ++numberOfMarks;
-            }
-        }
-
-        return (aimMark*(numberOfMarks + remainingTests) - marksSum) / remainingTests;
-    }
     private void updateNeededMark() {
         try {
-            float neededMark = getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
+            float neededMark = data.getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
             neededMarkTextView.setText(floatToString(neededMark));
         } catch (Throwable e) {
             neededMarkTextView.setText("");
