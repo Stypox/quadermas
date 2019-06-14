@@ -77,6 +77,7 @@ public class SubjectActivity extends AppCompatActivity
         });
         termSpinner.setSelection(data.getMarks().get(0).getTerm(), false);
 
+        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(data.getMarks().get(0).getTerm())))));
         aimMarkEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
