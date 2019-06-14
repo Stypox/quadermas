@@ -24,12 +24,17 @@ public class SubjectData implements Serializable {
         Extractor.fetchMarks(id, new FetchMarksCallback() {
             @Override
             public void onFetchMarksCompleted(ArrayList<MarkData> marks) {
+                for (MarkData mark : marks) {
+                    mark.setSubject(name);
+                }
+
                 SubjectData.this.marks = marks;
                 if(marks.isEmpty()) {
                     teacher = null;
                 } else {
                     teacher = marks.get(0).getTeacher();
                 }
+
                 callback.onFetchMarksCompleted(marks);
             }
 
@@ -40,6 +45,9 @@ public class SubjectData implements Serializable {
         });
     }
 
+    public String getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }

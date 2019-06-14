@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MarkData implements Serializable {
+    private String subject;
     private final float value;
     private final MarkType type;
     private final Date date;
@@ -22,6 +23,7 @@ public class MarkData implements Serializable {
     private final String teacher;
 
     public MarkData(JSONObject json) throws JSONException, InvalidKeyException, ParseException {
+        this.subject = null;
         value = Float.parseFloat(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
         date = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z").parse(json.getString("data"));
@@ -29,6 +31,13 @@ public class MarkData implements Serializable {
         teacher = json.getString("docente");
     }
 
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject == null ? "" : subject;
+    }
     public float getValue() {
         return value;
     }

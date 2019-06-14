@@ -41,4 +41,6 @@
     <string name="login_user_hint">012345</string>
     <string name="login_password">Password:</string>
     <string name="login_login">LOGIN</string>
+    <string name="action_sort_by_date">Sort by date</string>
+    <string name="action_sort_by_value">Sort by value</string>
 </resources>

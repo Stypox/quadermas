@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sortByDateAction"
+        android:icon="@drawable/ic_sort_by_date"
+        android:title="@string/action_sort_by_date"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sortByValueAction"
+        android:icon="@drawable/ic_sort_by_value"
+        android:title="@string/action_sort_by_value"
+        app:showAsAction="ifRoom" />
+
+</menu>

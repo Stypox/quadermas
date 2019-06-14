@@ -9,10 +9,10 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
-public class MarkItem extends ConstraintLayout {
+public class MarkDetailItem extends ConstraintLayout {
     private MarkData data;
 
-    public MarkItem(Context context, MarkData data) {
+    public MarkDetailItem(Context context, MarkData data) {
         super(context);
         this.data = data;
         initializeViews(context);
@@ -20,7 +20,12 @@ public class MarkItem extends ConstraintLayout {
 
     private void initializeViews(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.mark_item, this);
+        if (data.getDescription().isEmpty()) {
+            inflater.inflate(R.layout.mark_detail_item_no_desc, this);
+        }
+        else {
+            inflater.inflate(R.layout.mark_detail_item, this);
+        }
         onFinishInflate();
     }
 
@@ -32,8 +37,11 @@ public class MarkItem extends ConstraintLayout {
         mark_value.setText(data.getValueRepresentation());
         mark_value.setTextColor(MarkFormatting.colorOf(getContext(), data.getValue()));
 
-        ((TextView)findViewById(R.id.mark_teacher_date)).setText(data.getDateRepresentation());
         ((TextView)findViewById(R.id.mark_type)).setText(data.getTypeRepresentation(getContext()));
-
+        ((TextView)findViewById(R.id.mark_subject)).setText(data.getSubject());
+        if(!data.getDescription().isEmpty()) {
+            ((TextView)findViewById(R.id.mark_description)).setText(data.getDescription());
+        }
+        ((TextView)findViewById(R.id.mark_teacher_date)).setText(String.format("%s  -  %s", data.getTeacher(), data.getDateRepresentation()));
     }
 }
