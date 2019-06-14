@@ -1,10 +1,13 @@
 package com.stypox.mastercom_workbook.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,7 +20,10 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
-public class SubjectActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class SubjectActivity extends AppCompatActivity
+    implements Toolbar.OnMenuItemClickListener {
     public static final String subjectDataIntentKey = "subject_data";
 
     private SubjectData data;
@@ -35,6 +41,7 @@ public class SubjectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subject);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(this);
 
         data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
         if (data.getMarks().isEmpty()) {
@@ -101,6 +108,13 @@ public class SubjectActivity extends AppCompatActivity {
         showMarks();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.subject, menu);
+        return true;
+    }
+
+
     private void showInfo() {
         ((TextView)findViewById(R.id.subject_name)).setText(data.getName());
         ((TextView)findViewById(R.id.teacher)).setText(data.getTeacher());
@@ -129,6 +143,26 @@ public class SubjectActivity extends AppCompatActivity {
             neededMarkTextView.setText(MarkFormatting.floatToString(neededMark, 4));
         } catch (Throwable e) {
             neededMarkTextView.setText("");
+        }
+    }
+
+
+    private void openMarksActivity() {
+        Intent intent = new Intent(this, MarksActivity.class);
+        ArrayList<SubjectData> subjects = new ArrayList<>();
+        subjects.add(this.data);
+        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.showMarksAction:
+                openMarksActivity();
+                return true;
+            default:
+                return false;
         }
     }
 }

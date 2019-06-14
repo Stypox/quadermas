@@ -90,12 +90,13 @@ public class MarksActivity extends AppCompatActivity
             case R.id.sortByDateAction:
                 sortMarksByDate();
                 showMarks();
-                break;
+                return true;
             case R.id.sortByValueAction:
                 sortMarksByValue();
                 showMarks();
-                break;
+                return true;
+            default:
+                return false;
         }
-        return true;
     }
 }

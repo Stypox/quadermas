@@ -43,4 +43,5 @@
     <string name="login_login">LOGIN</string>
     <string name="action_sort_by_date">Sort by date</string>
     <string name="action_sort_by_value">Sort by value</string>
+    <string name="action_show_marks">Show mark details</string>
 </resources>
