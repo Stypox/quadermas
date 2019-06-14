@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
@@ -22,12 +23,7 @@ public class MarkDetailItem extends ConstraintLayout {
 
     private void initializeViews(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (data.getDescription().isEmpty()) {
-            inflater.inflate(R.layout.mark_detail_item_no_desc, this);
-        }
-        else {
-            inflater.inflate(R.layout.mark_detail_item, this);
-        }
+        inflater.inflate(R.layout.mark_detail_item, this);
         onFinishInflate();
     }
 
@@ -41,9 +37,15 @@ public class MarkDetailItem extends ConstraintLayout {
 
         ((TextView)findViewById(R.id.mark_type)).setText(data.getTypeRepresentation(getContext()));
         ((TextView)findViewById(R.id.mark_subject)).setText(data.getSubject());
-        if(!data.getDescription().isEmpty()) {
-            ((TextView)findViewById(R.id.mark_description)).setText(data.getDescription());
+
+        TextView mark_description = findViewById(R.id.mark_description);
+        if (data.getDescription().isEmpty()) {
+            mark_description.setHeight((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
         }
+        else {
+            mark_description.setText(data.getDescription());
+        }
+
         ((TextView)findViewById(R.id.mark_teacher_date)).setText(String.format("%s  -  %s", data.getTeacher(), data.getDateRepresentation()));
     }
 

@@ -9,7 +9,7 @@
     <string name="menu_marks_actions_title">Manage marks</string>
     <string name="menu_subjects">Subjects</string>
     <string name="menu_marks">Marks</string>
-    <string name="menu_timeline">Timeline</string>
+    <string name="menu_statistics">Statistics</string>
 
     <string name="type_written">Written</string>
     <string name="type_oral">Oral</string>

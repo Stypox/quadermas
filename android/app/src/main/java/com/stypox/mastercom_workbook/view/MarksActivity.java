@@ -27,6 +27,7 @@ public class MarksActivity extends AppCompatActivity
     private ArrayList<MarkDetailItem> items;
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marks);

@@ -1,5 +1,3 @@
 <resources>
-    <item name="ic_menu_subjects" type="drawable">@drawable/ic_book_black_24dp</item>
-    <item name="ic_menu_marks" type="drawable">@drawable/ic_view_list_black_24dp</item>
-    <item name="ic_menu_timeline" type="drawable">@drawable/ic_access_time_black_24dp</item>
+
 </resources>

@@ -14,17 +14,13 @@
     <item android:title="@string/menu_marks_actions_title">
         <menu>
             <item
-                android:id="@+id/menu_subjects"
-                android:icon="@drawable/ic_menu_subjects"
-                android:title="@string/menu_subjects" />
-            <item
                 android:id="@+id/menu_marks"
                 android:icon="@drawable/ic_menu_marks"
                 android:title="@string/menu_marks" />
             <item
-                android:id="@+id/menu_timeline"
-                android:icon="@drawable/ic_menu_timeline"
-                android:title="@string/menu_timeline" />
+                android:id="@+id/menu_statistics"
+                android:icon="@drawable/ic_menu_statistics"
+                android:title="@string/menu_statistics" />
         </menu>
     </item>
 </menu>
