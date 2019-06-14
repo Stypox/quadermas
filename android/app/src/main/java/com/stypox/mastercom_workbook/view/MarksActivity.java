@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.stypox.mastercom_workbook.R;
@@ -14,6 +13,8 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MarksActivity extends AppCompatActivity
     implements Toolbar.OnMenuItemClickListener {
@@ -39,6 +40,7 @@ public class MarksActivity extends AppCompatActivity
         marksLayout = findViewById(R.id.marksLayout);
 
         buildItemsArray();
+        sortMarksByDate();
         showMarks();
     }
 
@@ -57,6 +59,23 @@ public class MarksActivity extends AppCompatActivity
         }
     }
 
+    private void sortMarksByDate() {
+        Collections.sort(items, new Comparator<MarkDetailItem>() {
+            @Override
+            public int compare(MarkDetailItem o1, MarkDetailItem o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+    }
+    private void sortMarksByValue() {
+        Collections.sort(items, new Comparator<MarkDetailItem>() {
+            @Override
+            public int compare(MarkDetailItem o1, MarkDetailItem o2) {
+                return Float.compare(o2.getValue(), o1.getValue());
+            }
+        });
+    }
+
     private void showMarks() {
         marksLayout.removeAllViews();
         for (MarkDetailItem item : items) {
@@ -68,10 +87,12 @@ public class MarksActivity extends AppCompatActivity
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.sortByDateAction:
-                Snackbar.make(findViewById(android.R.id.content), "sort by date", Snackbar.LENGTH_LONG).show();
+                sortMarksByDate();
+                showMarks();
                 break;
             case R.id.sortByValueAction:
-                Snackbar.make(findViewById(android.R.id.content), "sort by value", Snackbar.LENGTH_LONG).show();
+                sortMarksByValue();
+                showMarks();
                 break;
         }
         return true;

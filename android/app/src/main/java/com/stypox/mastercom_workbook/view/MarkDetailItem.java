@@ -9,6 +9,8 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
+import java.util.Date;
+
 public class MarkDetailItem extends ConstraintLayout {
     private MarkData data;
 
@@ -43,5 +45,12 @@ public class MarkDetailItem extends ConstraintLayout {
             ((TextView)findViewById(R.id.mark_description)).setText(data.getDescription());
         }
         ((TextView)findViewById(R.id.mark_teacher_date)).setText(String.format("%s  -  %s", data.getTeacher(), data.getDateRepresentation()));
+    }
+
+    public Date getDate() {
+        return data.getDate();
+    }
+    public float getValue() {
+        return data.getValue();
     }
 }
