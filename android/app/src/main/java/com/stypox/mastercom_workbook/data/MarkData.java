@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.data;
 import android.content.Context;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.util.DateFormatting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,8 +82,7 @@ public class MarkData implements Serializable {
         return ""; // useless
     }
     public String getDateRepresentation() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(date);
+        return DateFormatting.formatDate(date);
     }
 
     public int getTerm() {

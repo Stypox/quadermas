@@ -109,4 +109,12 @@
         app:layout_constraintTop_toBottomOf="@+id/overallAverageModeSpinner"
         tools:layout_editor_absoluteX="-7dp" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/marksChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
 </android.support.constraint.ConstraintLayout>
