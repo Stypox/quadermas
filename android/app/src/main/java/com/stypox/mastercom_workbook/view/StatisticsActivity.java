@@ -63,10 +63,12 @@ public class StatisticsActivity extends AppCompatActivity {
         if (subjects.size() == 1) {
             ConstraintLayout overallAverageLayout = findViewById(R.id.overallAverageLayout);
             TextView overallAverageModeTextView = findViewById(R.id.overallAverageModeTextView);
+            View overallAverageDivider = findViewById(R.id.overallAverageDivider);
 
             overallAverageLayout.setVisibility(View.GONE);
             overallAverageModeTextView.setVisibility(View.GONE);
             overallAverageModeSpinner.setVisibility(View.GONE);
+            overallAverageDivider.setVisibility(View.GONE);
         } else {
             overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
         }
