@@ -49,8 +49,8 @@ public class SubjectActivity extends AppCompatActivity
         }
 
         marksLayout = findViewById(R.id.marksLayout);
-        termSpinner = findViewById(R.id.termSpinner);
-        averageTextView = findViewById(R.id.averageTextView);
+        termSpinner = findViewById(R.id.overallAverageTermSpinner);
+        averageTextView = findViewById(R.id.overallAverageTextView);
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkTextView = findViewById(R.id.neededMarkTextView);

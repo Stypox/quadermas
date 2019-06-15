@@ -89,20 +89,20 @@
             app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
         <TextView
-            android:id="@+id/averageTextView"
+            android:id="@+id/overallAverageTextView"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="7.51"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="60sp"
             app:layout_constraintBottom_toTopOf="@+id/divider3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider5" />
+            app:layout_constraintTop_toBottomOf="@+id/divider5"
+            tools:text="7.51" />
 
         <TextView
             android:id="@+id/neededMarkTextView"
@@ -112,13 +112,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="7.5"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="60sp"
             app:layout_constraintBottom_toTopOf="@+id/divider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider3" />
+            app:layout_constraintTop_toBottomOf="@+id/divider3"
+            tools:text="7.5" />
 
         <View
             android:id="@+id/divider5"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider3"
-            app:layout_constraintEnd_toStartOf="@+id/averageTextView"
+            app:layout_constraintEnd_toStartOf="@+id/overallAverageTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider5">
 
@@ -226,7 +226,7 @@
                     android:layout_height="45dp"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text="@string/default_aim_mark"
+                    tools:text="6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

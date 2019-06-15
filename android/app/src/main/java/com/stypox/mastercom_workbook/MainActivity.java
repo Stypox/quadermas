@@ -25,6 +25,7 @@ import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.MarksActivity;
+import com.stypox.mastercom_workbook.view.StatisticsActivity;
 import com.stypox.mastercom_workbook.view.SubjectItem;
 
 import java.util.ArrayList;
@@ -209,6 +210,23 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void openStatisticsActivity() {
+        if (areSubjectsLoaded) {
+            Intent intent = new Intent(this, StatisticsActivity.class);
+            intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
+            startActivity(intent);
+        } else {
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.retry), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openStatisticsActivity();
+                        }
+                    }).show();
+        }
+    }
+
 
     ////////////////
     // GUI EVENTS //
@@ -243,10 +261,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.menu_login) {
-            openLoginDialogThenReload();
-        } else if (id == R.id.menu_marks) {
-            openMarksActivity();
+        switch (id) {
+            case R.id.menu_login:
+                openLoginDialogThenReload();
+                break;
+            case R.id.menu_marks:
+                openMarksActivity();
+                break;
+            case R.id.menu_statistics:
+                openStatisticsActivity();
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
