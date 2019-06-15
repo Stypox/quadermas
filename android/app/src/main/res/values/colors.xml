@@ -8,4 +8,6 @@
     <color name="failingMark">#B20000</color>
     <color name="halfwayMark">#B2B200</color>
     <color name="excellentMark">#00B200</color>
+
+    <color name="chartLine">#3366DD</color>
 </resources>

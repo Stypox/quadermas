@@ -2,17 +2,22 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.EntryXComparator;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
@@ -36,6 +41,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private Spinner overallAverageModeSpinner;
     private TextView overallAverageTextView;
     private LineChart marksChart;
+    private LinearLayout markLayout;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -53,12 +59,13 @@ public class StatisticsActivity extends AppCompatActivity {
         overallAverageModeSpinner = findViewById(R.id.overallAverageModeSpinner);
         overallAverageTextView = findViewById(R.id.overallAverageTextView);
         marksChart = findViewById(R.id.marksChart);
+        markLayout = findViewById(R.id.markLayout);
 
         connectListeners();
         overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
 
-        formatMarksChart();
         fillMarksChart();
+        formatMarksChart();
     }
 
     private void connectListeners() {
@@ -94,6 +101,18 @@ public class StatisticsActivity extends AppCompatActivity {
                 overallAverageModeSpinner.setSelection(0, true);
             }
         });
+
+        marksChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                showMark((MarkData)e.getData());
+            }
+
+            @Override
+            public void onNothingSelected() {
+                hideMark();
+            }
+        });
     }
 
 
@@ -114,29 +133,70 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void formatMarksChart() {
         XAxis xAxis = marksChart.getXAxis();
+        xAxis.setLabelCount(4);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
                 return DateFormatting.formatDate(new Date((long)value));
             }
         });
-        xAxis.setLabelCount(4);
+
+        int initialTerm = marks.get(0).getTerm();
+        int index = 0;
+        for(MarkData mark : marks) {
+            if (mark.getTerm() != initialTerm) {
+                xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
+            }
+            ++index;
+        }
+        xAxis.setAxisMaximum(marks.get(0).getDate().getTime());
+
+        ValueFormatter markFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return MarkFormatting.valueRepresentation(value);
+            }
+        };
+
+        YAxis axisLeft = marksChart.getAxisLeft();
+        axisLeft.setGranularity(0.5f);
+        axisLeft.setLabelCount(15);
+        axisLeft.setDrawGridLines(false);
+        axisLeft.setValueFormatter(markFormatter);
+
+        YAxis axisRight = marksChart.getAxisRight();
+        axisRight.setGranularity(0.5f);
+        axisRight.setLabelCount(15);
+        axisRight.setDrawGridLines(false);
+        axisRight.setValueFormatter(markFormatter);
     }
     private void fillMarksChart() {
         ArrayList<Entry> chartEntries = new ArrayList<>();
         for(MarkData mark : marks) {
-            chartEntries.add(new Entry(mark.getDate().getTime(), mark.getValue()));
+            chartEntries.add(new Entry(mark.getDate().getTime(), mark.getValue(), mark));
         }
         Collections.sort(chartEntries, new EntryXComparator());
 
         LineDataSet chartDataSet = new LineDataSet(chartEntries, "Marks"); // TODO hardcoded string
-        chartDataSet.setColor(MarkFormatting.colorOf(getApplicationContext(), 5));
-        chartDataSet.setValueTextColor(MarkFormatting.colorOf(getApplicationContext(), 9));
+        chartDataSet.setColor(getResources().getColor(R.color.chartLine));
+        chartDataSet.setCircleColor(getResources().getColor(R.color.chartLine));
+        chartDataSet.setCircleHoleColor(getResources().getColor(R.color.chartLine));
+        chartDataSet.setCircleRadius(getResources().getDimension(R.dimen.chartCircleRadius));
+        chartDataSet.setDrawValues(false);
 
         LineData chartData = new LineData(chartDataSet);
         marksChart.setData(chartData);
         marksChart.invalidate();
     }
+
+    private void showMark(MarkData markData) {
+        markLayout.removeAllViews();
+        markLayout.addView(new MarkDetailItem(getApplicationContext(), markData));
+    }
+    private void hideMark() {
+        markLayout.removeAllViews();
+    }
+
 
     private float getOverallAverageOfRoundedAverages(int term) {
         float sum = 0;

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.util.DateFormatting;
+import com.stypox.mastercom_workbook.util.MarkFormatting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,19 +57,7 @@ public class MarkData implements Serializable {
     }
 
     public String getValueRepresentation() {
-        float quarterPrecision = ((float)Math.round(value*4))/4; // 0.25 intervals: 0.0; 0.25; 0.5; 0.75; 1.0; ...
-        int baseValue = (int)Math.floor(quarterPrecision);
-
-        float delta = quarterPrecision-baseValue;
-        if        (delta == 0.00) {
-            return String.valueOf(baseValue);
-        } else if (delta == 0.25) {
-            return baseValue + "+";
-        } else if (delta == 0.50) {
-            return baseValue + "½";
-        } else {//(delta == 0.75)
-            return (baseValue+1) + "-";
-        }
+        return MarkFormatting.valueRepresentation(value);
     }
     public String getTypeRepresentation(Context context) {
         switch (type) {

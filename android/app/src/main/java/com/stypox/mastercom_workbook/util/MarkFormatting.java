@@ -28,4 +28,20 @@ public class MarkFormatting {
             return context.getResources().getColor(R.color.excellentMark);
         }
     }
+
+    public static String valueRepresentation(float value) {
+        float quarterPrecision = ((float)Math.round(value*4))/4; // 0.25 intervals: 0.0; 0.25; 0.5; 0.75; 1.0; ...
+        int baseValue = (int)Math.floor(quarterPrecision);
+
+        float delta = quarterPrecision-baseValue;
+        if        (delta == 0.00) {
+            return String.valueOf(baseValue);
+        } else if (delta == 0.25) {
+            return baseValue + "+";
+        } else if (delta == 0.50) {
+            return baseValue + "½";
+        } else {//(delta == 0.75)
+            return (baseValue+1) + "-";
+        }
+    }
 }
