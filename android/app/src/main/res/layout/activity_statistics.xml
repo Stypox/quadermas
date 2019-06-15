@@ -8,7 +8,7 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/overallAverageLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -74,9 +74,9 @@
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/overallAverageLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/overallAverageLayout"
         tools:text="7.51" />
 
     <Spinner
@@ -87,10 +87,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/overallAverageModeTextView" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/overallAverageModeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -98,10 +98,10 @@
         android:text="@string/overall_average_mode_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/overallAverageLayout" />
 
     <View
-        android:id="@+id/divider2"
+        android:id="@+id/overallAverageDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
@@ -115,7 +115,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        app:layout_constraintTop_toBottomOf="@+id/overallAverageDivider" />
 
     <LinearLayout
         android:id="@+id/markLayout"

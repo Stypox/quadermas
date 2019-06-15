@@ -49,12 +49,30 @@ public class SubjectActivity extends AppCompatActivity
         }
 
         marksLayout = findViewById(R.id.marksLayout);
-        termSpinner = findViewById(R.id.overallAverageTermSpinner);
-        averageTextView = findViewById(R.id.overallAverageTextView);
+        termSpinner = findViewById(R.id.termSpinner);
+        averageTextView = findViewById(R.id.averageTextView);
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkTextView = findViewById(R.id.neededMarkTextView);
 
+        termSpinner.setSelection(data.getMarks().get(0).getTerm(), false);
+        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(data.getMarks().get(0).getTerm())))));
+        updateAverage();
+        updateNeededMark();
+
+        setupListeners();
+
+        showInfo();
+        showMarks();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.subject, menu);
+        return true;
+    }
+
+    private void setupListeners() {
         termSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -75,9 +93,7 @@ public class SubjectActivity extends AppCompatActivity
                 termSpinner.setSelection(0, true);
             }
         });
-        termSpinner.setSelection(data.getMarks().get(0).getTerm(), false);
 
-        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(data.getMarks().get(0).getTerm())))));
         aimMarkEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -89,6 +105,7 @@ public class SubjectActivity extends AppCompatActivity
                 updateNeededMark();
             }
         });
+
         remainingTestsEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -97,22 +114,12 @@ public class SubjectActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() != 0 && Integer.valueOf(s.toString()) <= 0) {
+                if (s.length() != 0 && s.charAt(0) == '0') {
                     s.clear();
                 }
                 updateNeededMark();
             }
         });
-        updateNeededMark();
-
-        showInfo();
-        showMarks();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.subject, menu);
-        return true;
     }
 
 
@@ -155,12 +162,22 @@ public class SubjectActivity extends AppCompatActivity
         intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
         startActivity(intent);
     }
+    private void openStatisticsActivity() {
+        Intent intent = new Intent(this, StatisticsActivity.class);
+        ArrayList<SubjectData> subjects = new ArrayList<>();
+        subjects.add(this.data);
+        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.showMarksAction:
                 openMarksActivity();
+                return true;
+            case R.id.showStatisticsAction:
+                openStatisticsActivity();
                 return true;
             default:
                 return false;

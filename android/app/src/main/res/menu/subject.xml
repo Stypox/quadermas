@@ -8,4 +8,10 @@
         android:title="@string/action_show_marks"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/showStatisticsAction"
+        android:icon="@drawable/ic_menu_statistics"
+        android:title="@string/action_show_marks"
+        app:showAsAction="ifRoom" />
+
 </menu>

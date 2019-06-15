@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
         <TextView
-            android:id="@+id/overallAverageTextView"
+            android:id="@+id/averageTextView"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider3"
-            app:layout_constraintEnd_toStartOf="@+id/overallAverageTextView"
+            app:layout_constraintEnd_toStartOf="@+id/averageTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider5">
 

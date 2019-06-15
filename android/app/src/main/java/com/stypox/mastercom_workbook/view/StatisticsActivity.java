@@ -1,8 +1,8 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -26,7 +26,6 @@ import com.stypox.mastercom_workbook.util.DateFormatting;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,9 +50,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
         subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
         buildMarksArray();
-        if (marks.isEmpty()) {
-            finish();
-        }
 
         overallAverageTermSpinner = findViewById(R.id.overallAverageTermSpinner);
         overallAverageModeSpinner = findViewById(R.id.overallAverageModeSpinner);
@@ -61,14 +57,27 @@ public class StatisticsActivity extends AppCompatActivity {
         marksChart = findViewById(R.id.marksChart);
         markLayout = findViewById(R.id.markLayout);
 
-        connectListeners();
-        overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
+        if (marks.isEmpty()) {
+            finish();
+        }
+        if (subjects.size() == 1) {
+            ConstraintLayout overallAverageLayout = findViewById(R.id.overallAverageLayout);
+            TextView overallAverageModeTextView = findViewById(R.id.overallAverageModeTextView);
+
+            overallAverageLayout.setVisibility(View.GONE);
+            overallAverageModeTextView.setVisibility(View.GONE);
+            overallAverageModeSpinner.setVisibility(View.GONE);
+        } else {
+            overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
+        }
+
+        setupListeners();
 
         fillMarksChart();
         formatMarksChart();
     }
 
-    private void connectListeners() {
+    private void setupListeners() {
         overallAverageTermSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
