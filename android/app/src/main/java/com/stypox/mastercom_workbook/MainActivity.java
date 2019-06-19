@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
@@ -124,14 +125,21 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onError(Extractor.Error error) {
-                Snackbar.make(findViewById(android.R.id.content),
-                        error.toString(getApplicationContext()), Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.retry), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                authenticate();
-                            }
-                        }).show();
+                if (error == Extractor.Error.invalid_credentials) {
+                    Toast.makeText(getApplicationContext(),
+                            error.toString(getApplicationContext()),
+                            Toast.LENGTH_LONG).show();
+                    openLoginDialogThenReload();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content),
+                            error.toString(getApplicationContext()), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.retry), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    authenticate();
+                                }
+                            }).show();
+                }
                 refreshLayout.setRefreshing(false);
             }
         });
