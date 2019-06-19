@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -68,19 +69,11 @@ public class Extractor {
     }
 
     private static JSONObject fetchJsonAuthenticated(URL url) throws IOException, JSONException {
-        try {
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.addRequestProperty("Cookie", authenticationCookie); // auth cookie
-            String response = readAll(urlConnection);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.addRequestProperty("Cookie", authenticationCookie); // auth cookie
+        String response = readAll(urlConnection);
 
-            return new JSONObject(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        return new JSONObject(response);
     }
 
 
@@ -114,11 +107,11 @@ public class Extractor {
 
                 cookieToSet = urlConnection.getHeaderField("Set-Cookie"); // only takes the last Set-Cookie it finds
                 jsonResponse = new JSONObject(response);
+            } catch (UnknownHostException e) {
+                publishProgress(Error.malformed_url);
             } catch (IOException e) {
-                e.printStackTrace();
                 publishProgress(Error.network);
             } catch (JSONException e) {
-                e.printStackTrace();
                 publishProgress(Error.not_json);
             }
 
@@ -151,7 +144,6 @@ public class Extractor {
             // TODO capitalize only first letters of the name
             callback.onAuthenticationCompleted(fullNameUppercase);
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onError(Error.unsuitable_json);
         }
     }
@@ -164,7 +156,6 @@ public class Extractor {
                     .replace("{user}", user)
                     .replace("{password}", password)));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             callback.onError(Error.malformed_url);
         }
     }
@@ -186,6 +177,8 @@ public class Extractor {
         protected Void doInBackground(URL... urls) {
             try {
                 jsonResponse = fetchJsonAuthenticated(urls[0]);
+            } catch (UnknownHostException e) {
+                publishProgress(Error.malformed_url);
             } catch (IOException e) {
                 publishProgress(Error.network);
             } catch (JSONException e) {
@@ -219,7 +212,6 @@ public class Extractor {
 
             callback.onFetchSubjectsCompleted(subjects);
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onError(Error.unsuitable_json);
         }
     }
@@ -230,7 +222,6 @@ public class Extractor {
             fetchSubjectsTask.execute(new URL(subjectsUrl
                     .replace("{APIUrl}", APIUrl)));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             callback.onError(Error.malformed_url);
         }
     }
@@ -253,6 +244,8 @@ public class Extractor {
         protected Void doInBackground(URL... urls) {
             try {
                 jsonResponse = fetchJsonAuthenticated(urls[0]);
+            } catch (UnknownHostException e) {
+                publishProgress(Error.malformed_url);
             } catch (IOException e) {
                 publishProgress(Error.network);
             } catch (JSONException e) {
@@ -286,7 +279,6 @@ public class Extractor {
 
             callback.onFetchMarksCompleted(marks);
         } catch (Throwable e) {
-            e.printStackTrace();
             callback.onError(Error.unsuitable_json);
         }
     }
@@ -298,7 +290,6 @@ public class Extractor {
                     .replace("{APIUrl}", APIUrl)
                     .replace("{subject_id}", subjectId)));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             callback.onError(Error.malformed_url);
         }
     }

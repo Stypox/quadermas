@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onError(Extractor.Error error) {
-                if (error == Extractor.Error.invalid_credentials) {
+                if (error == Extractor.Error.invalid_credentials || error == Extractor.Error.malformed_url) {
                     Toast.makeText(getApplicationContext(),
                             error.toString(getApplicationContext()),
                             Toast.LENGTH_LONG).show();
