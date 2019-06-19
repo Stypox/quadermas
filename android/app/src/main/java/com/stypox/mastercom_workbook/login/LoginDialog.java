@@ -22,6 +22,9 @@ public class LoginDialog extends AppCompatActivity {
         userEdit = findViewById(R.id.userEdit);
         passwordEdit = findViewById(R.id.passwordEdit);
 
+        APIUrlEdit.setText(LoginData.getAPIUrl(getApplicationContext()));
+        userEdit.setText(LoginData.getUser(getApplicationContext()));
+
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,8 +32,6 @@ public class LoginDialog extends AppCompatActivity {
                 String APIUrl = APIUrlEdit.getText().toString();
                 String user = userEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
-
-                // TODO check if credentials are ok
 
                 LoginData.setCredentials(getApplicationContext(), APIUrl, user, password);
                 finish();

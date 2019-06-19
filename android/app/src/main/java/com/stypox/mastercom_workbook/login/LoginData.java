@@ -2,7 +2,6 @@ package com.stypox.mastercom_workbook.login;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class LoginData {
     private static final String loginPreferenceKey = "login";
@@ -19,15 +18,15 @@ public class LoginData {
 
     public static String getAPIUrl(Context context) {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(APIUrlKey, null);
+        return sp.getString(APIUrlKey, "");
     }
     public static String getUser(Context context) {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(userKey, null);
+        return sp.getString(userKey, "");
     }
     public static String getPassword(Context context) {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(passwordKey, null);
+        return sp.getString(passwordKey, "");
     }
 
     public static void setCredentials(Context context, String APIUrl, String user, String password) {
