@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity
     /////////////
 
     private void authenticate() {
+        Extractor.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
         Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
             @Override
             public void onAuthenticationCompleted(String fullName) {

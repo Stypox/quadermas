@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.stypox.mastercom_workbook.R;
 
 public class LoginDialog extends AppCompatActivity {
+    private EditText APIUrlEdit;
     private EditText userEdit;
     private EditText passwordEdit;
 
@@ -17,6 +18,7 @@ public class LoginDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_dialog);
 
+        APIUrlEdit = findViewById(R.id.APIUrlEdit);
         userEdit = findViewById(R.id.userEdit);
         passwordEdit = findViewById(R.id.passwordEdit);
 
@@ -24,12 +26,13 @@ public class LoginDialog extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String APIUrl = APIUrlEdit.getText().toString();
                 String user = userEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
 
                 // TODO check if credentials are ok
 
-                LoginData.setCredentials(getApplicationContext(), user, password);
+                LoginData.setCredentials(getApplicationContext(), APIUrl, user, password);
                 finish();
             }
         });

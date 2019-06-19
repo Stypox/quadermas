@@ -21,11 +21,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Extractor {
-    private static final String authenticationUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
-    private static final String subjectsUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
-    private static final String marksUrl = "https://rosmini-tn.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
+    private static final String authenticationUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
+    private static final String subjectsUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
+    private static final String marksUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
 
     private static String authenticationCookie;
+    private static String APIUrl; // e.g. rosmini-tn
 
 
     public enum Error {
@@ -80,6 +81,15 @@ public class Extractor {
             e.printStackTrace();
             throw e;
         }
+    }
+
+
+    /////////////////////
+    // API URL SETTING //
+    /////////////////////
+
+    public static void setAPIUrl(String newAPIUrl) {
+        APIUrl = newAPIUrl;
     }
 
 
@@ -150,6 +160,7 @@ public class Extractor {
         AuthenticationTask authenticationTask = new AuthenticationTask(callback);
         try {
             authenticationTask.execute(new URL(authenticationUrl
+                    .replace("{APIUrl}", APIUrl)
                     .replace("{user}", user)
                     .replace("{password}", password)));
         } catch (MalformedURLException e) {
@@ -216,7 +227,8 @@ public class Extractor {
     public static void fetchSubjects(FetchSubjectsCallback callback) {
         FetchSubjectsTask fetchSubjectsTask = new FetchSubjectsTask(callback);
         try {
-            fetchSubjectsTask.execute(new URL(subjectsUrl));
+            fetchSubjectsTask.execute(new URL(subjectsUrl
+                    .replace("{APIUrl}", APIUrl)));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             callback.onError(Error.malformed_url);
@@ -283,6 +295,7 @@ public class Extractor {
         FetchMarksTask fetchMarksTask = new FetchMarksTask(callback);
         try {
             fetchMarksTask.execute(new URL(marksUrl
+                    .replace("{APIUrl}", APIUrl)
                     .replace("{subject_id}", subjectId)));
         } catch (MalformedURLException e) {
             e.printStackTrace();

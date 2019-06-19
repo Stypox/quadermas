@@ -10,4 +10,9 @@
         <item>subjects\' averages</item>
         <item>all marks</item>
     </string-array>
+
+    <string-array name="API_urls">
+        <item>rosmini-tn</item>
+        <item>marconi-tn</item>
+    </string-array>
 </resources>

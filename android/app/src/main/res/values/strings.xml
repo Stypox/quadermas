@@ -43,4 +43,5 @@
 
     <string name="overall_average_title">Overall average</string>
     <string name="overall_average_mode_title">Display average of:</string>
+    <string name="login_APIUrl">School:</string>
 </resources>

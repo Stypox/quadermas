@@ -7,4 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="chartCircleRadius">1.3dp</dimen>
+
+    <dimen name="loginPartsDistance">30dp</dimen>
 </resources>
