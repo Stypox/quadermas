@@ -2,9 +2,12 @@ package com.stypox.mastercom_workbook.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 
@@ -22,20 +25,35 @@ public class LoginDialog extends AppCompatActivity {
         userEdit = findViewById(R.id.userEdit);
         passwordEdit = findViewById(R.id.passwordEdit);
 
+        // show old credentials
         APIUrlEdit.setText(LoginData.getAPIUrl(getApplicationContext()));
         userEdit.setText(LoginData.getUser(getApplicationContext()));
+
+        passwordEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    completeLogin();
+                }
+                return false;
+            }
+        });
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String APIUrl = APIUrlEdit.getText().toString();
-                String user = userEdit.getText().toString();
-                String password = passwordEdit.getText().toString();
-
-                LoginData.setCredentials(getApplicationContext(), APIUrl, user, password);
-                finish();
+                completeLogin();
             }
         });
+    }
+
+    private void completeLogin() {
+        String APIUrl = APIUrlEdit.getText().toString();
+        String user = userEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+
+        LoginData.setCredentials(getApplicationContext(), APIUrl, user, password);
+        finish();
     }
 }
