@@ -37,4 +37,11 @@ public class LoginData {
         editor.putString(passwordKey, password);
         editor.apply();
     }
+
+    public static void logout(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(passwordKey);
+        editor.apply();
+    }
 }

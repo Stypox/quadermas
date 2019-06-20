@@ -63,12 +63,6 @@ public class MainActivity extends AppCompatActivity
         fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
         fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
 
-        if (!LoginData.isLoggedIn(getApplicationContext())) {
-            openLoginDialogThenReload();
-        } else {
-            reloadSubjects();
-        }
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -81,6 +75,8 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        reloadIfLoggedIn();
     }
 
     @Override
@@ -95,7 +91,16 @@ public class MainActivity extends AppCompatActivity
     // LOGIN AND LOAD //
     ////////////////////
 
+    private void reloadIfLoggedIn() {
+        if (LoginData.isLoggedIn(getApplicationContext())) {
+            reloadSubjects();
+        } else {
+            openLoginDialogThenReload();
+        }
+    }
+
     private void openLoginDialogThenReload() {
+        LoginData.logout(getApplicationContext());
         Intent intent = new Intent(this, LoginDialog.class);
         startActivityForResult(intent, requestCodeLoginDialog); // see onActivityResult
     }
@@ -103,7 +108,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case requestCodeLoginDialog:
-                reloadSubjects();
+                reloadIfLoggedIn();
                 break;
         }
     }

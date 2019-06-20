@@ -8,7 +8,7 @@
     <string name="report_bug_url">https://github.com/Stypox/mastercom-workbook/issues</string>
 
     <string name="menu_account_actions_title">Your account</string>
-    <string name="menu_login">Login</string>
+    <string name="menu_logout">Logout</string>
     <string name="menu_marks_actions_title">Manage marks</string>
     <string name="menu_subjects">Subjects</string>
     <string name="menu_marks">Marks</string>
