@@ -11,7 +11,18 @@ public class MarkFormatting {
             throw new IllegalArgumentException();
         } else {
             int decimalDigits = maxLength - nonDecimalDigits;
-            return String.format("%."+decimalDigits+"f", f+Math.pow(10, -decimalDigits-2)); // sum is to prevent floating number problems when the number ends with 5
+            String string = String.format("%."+decimalDigits+"f", f+Math.pow(10, -decimalDigits-2)); // sum is to prevent floating number problems when the number ends with 5
+
+            // remove padding zeros
+            while (decimalDigits > 0) {
+                if (string.endsWith("0")) {
+                    string = string.substring(0, string.length()-(decimalDigits == 1 ? 2 : 1)); // also remove point
+                    --decimalDigits;
+                } else {
+                    break;
+                }
+            }
+            return string;
         }
     }
 
