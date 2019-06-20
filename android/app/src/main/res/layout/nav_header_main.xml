@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/ic_launcher_background"
@@ -13,17 +14,17 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
-        android:id="@+id/nav_fullName"
+        android:id="@+id/nav_fullNameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Nome Cognome"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="John Smith" />
 
     <TextView
-        android:id="@+id/nav_server"
+        android:id="@+id/nav_fullAPIUrlView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="https://server.com/workbook/" />
+        tools:text="server.registroelettronico.com" />
 
 </LinearLayout>

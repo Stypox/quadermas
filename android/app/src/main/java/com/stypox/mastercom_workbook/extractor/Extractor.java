@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.FullNameFormatting;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Extractor {
+    private static final String APIUrlToShow = "{APIUrl}.registroelettronico.com";
     private static final String authenticationUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
     private static final String subjectsUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
     private static final String marksUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
@@ -85,6 +87,10 @@ public class Extractor {
         APIUrl = newAPIUrl;
     }
 
+    public static String getFullAPIUrlToShow() {
+        return APIUrlToShow.replace("{APIUrl}", APIUrl);
+    }
+
 
     ////////////////////
     // AUTHENTICATION //
@@ -141,8 +147,7 @@ public class Extractor {
 
             authenticationCookie = cookieToSet.substring(0, "PHPSESSID=00000000000000000000000000".length());
             String fullNameUppercase = jsonResponse.getJSONObject("result").getString("full_name");
-            // TODO capitalize only first letters of the name
-            callback.onAuthenticationCompleted(fullNameUppercase);
+            callback.onAuthenticationCompleted(FullNameFormatting.capitalize(fullNameUppercase));
         } catch (JSONException e) {
             callback.onError(Error.unsuitable_json);
         }

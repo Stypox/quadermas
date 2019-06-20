@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -16,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stypox.mastercom_workbook.data.MarkData;
@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity
 
     private LinearLayout subjectsLayout;
     private SwipeRefreshLayout refreshLayout;
+    private TextView fullNameView;
+    private TextView fullAPIUrlView;
+
     private ArrayList<SubjectData> subjects;
 
     @Override
@@ -52,6 +55,12 @@ public class MainActivity extends AppCompatActivity
 
         subjectsLayout = findViewById(R.id.subjectsLayout);
         refreshLayout = findViewById(R.id.refreshLayout);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerLayout = navigationView.getHeaderView(0);
+        fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
+        fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
 
         if (!LoginData.isLoggedIn(getApplicationContext())) {
             openLoginDialogThenReload();
@@ -66,8 +75,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -119,6 +126,8 @@ public class MainActivity extends AppCompatActivity
 
     private void authenticate() {
         Extractor.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
+        fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
+
         Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
             @Override
             public void onAuthenticationCompleted(String fullName) {
@@ -147,6 +156,8 @@ public class MainActivity extends AppCompatActivity
         });
     }
     private void onAuthenticationCompleted(String fullName) {
+        fullNameView.setText(fullName);
+
         Snackbar.make(findViewById(android.R.id.content), "Authenticated " + fullName, Snackbar.LENGTH_LONG).show();
 
         fetchSubjects();
