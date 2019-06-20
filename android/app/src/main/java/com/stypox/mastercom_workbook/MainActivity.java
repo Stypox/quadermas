@@ -166,8 +166,6 @@ public class MainActivity extends AppCompatActivity
     private void onAuthenticationCompleted(String fullName) {
         fullNameView.setText(fullName);
 
-        Snackbar.make(findViewById(android.R.id.content), "Authenticated " + fullName, Snackbar.LENGTH_LONG).show();
-
         fetchSubjects();
     }
 
