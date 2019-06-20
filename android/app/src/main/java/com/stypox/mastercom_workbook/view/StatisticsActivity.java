@@ -143,6 +143,9 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void formatMarksChart() {
+        marksChart.getDescription().setEnabled(false);
+        marksChart.getLegend().setEnabled(false);
+
         XAxis xAxis = marksChart.getXAxis();
         xAxis.setLabelCount(4);
         xAxis.setValueFormatter(new ValueFormatter() {
