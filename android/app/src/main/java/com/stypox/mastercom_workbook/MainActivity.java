@@ -125,7 +125,9 @@ public class MainActivity extends AppCompatActivity
     /////////////
 
     private void authenticate() {
+        // show data in drawer header
         Extractor.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
+        fullNameView.setText("");
         fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
         Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
