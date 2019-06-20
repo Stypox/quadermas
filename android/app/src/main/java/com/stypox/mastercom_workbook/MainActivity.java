@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -250,6 +251,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void openUrlInBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
+
 
     ////////////////
     // GUI EVENTS //
@@ -293,6 +299,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.menu_statistics:
                 openStatisticsActivity();
+                break;
+            case R.id.menu_source_code:
+                openUrlInBrowser(getResources().getString(R.string.source_code_url));
+                break;
+            case R.id.menu_report_bug:
+                openUrlInBrowser(getResources().getString(R.string.report_bug_url));
                 break;
         }
 
