@@ -61,7 +61,7 @@ public class SubjectItem extends ConstraintLayout implements View.OnClickListene
     public void showAverage() {
         try {
             float average = data.getAverage(data.getMarks().get(0).getTerm()); // current average
-            averageTextView.setText(MarkFormatting.floatToString(average, 3));
+            averageTextView.setText(MarkFormatting.floatToString(average, 2));
             averageTextView.setTextColor(MarkFormatting.colorOf(getContext(), average));
         } catch (Throwable e) {
             averageTextView.setText("?");

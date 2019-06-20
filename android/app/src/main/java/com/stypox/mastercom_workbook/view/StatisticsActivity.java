@@ -269,7 +269,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 throw new ArithmeticException(); // just in case
         }
 
-        overallAverageTextView.setText(MarkFormatting.floatToString(overallAverage, 4));
+        overallAverageTextView.setText(MarkFormatting.floatToString(overallAverage, 3));
         overallAverageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), overallAverage));
     }
 }

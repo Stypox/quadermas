@@ -138,7 +138,7 @@ public class SubjectActivity extends AppCompatActivity
     private void updateAverage() throws ArithmeticException {
         try {
             float average = data.getAverage(termSpinner.getSelectedItemPosition());
-            averageTextView.setText(MarkFormatting.floatToString(average, 4));
+            averageTextView.setText(MarkFormatting.floatToString(average, 3));
             averageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), average));
         } catch (Throwable e) {
             averageTextView.setText("");
@@ -148,7 +148,7 @@ public class SubjectActivity extends AppCompatActivity
     private void updateNeededMark() {
         try {
             float neededMark = data.getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
-            neededMarkTextView.setText(MarkFormatting.floatToString(neededMark, 4));
+            neededMarkTextView.setText(MarkFormatting.floatToString(neededMark, 3));
         } catch (Throwable e) {
             neededMarkTextView.setText("");
         }

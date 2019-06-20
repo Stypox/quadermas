@@ -6,17 +6,13 @@ import com.stypox.mastercom_workbook.R;
 
 public class MarkFormatting {
     public static String floatToString(float f, int maxLength) {
-        if (f > Math.pow(10, maxLength-1)) {
+        int nonDecimalDigits = String.valueOf((int)f).length();
+        if (nonDecimalDigits > maxLength) {
             throw new IllegalArgumentException();
+        } else {
+            int decimalDigits = maxLength - nonDecimalDigits;
+            return String.format("%."+decimalDigits+"f", f+Math.pow(10, -decimalDigits-2)); // sum is to prevent floating number problems when the number ends with 5
         }
-
-        String str = String.valueOf(f);
-        str = str.substring(0, Math.min(maxLength, str.length()));
-        if (str.endsWith(".")) {
-            str = str.substring(0, str.length() - 1);
-        }
-
-        return str;
     }
 
     public static int colorOf(Context context, float mark) {
