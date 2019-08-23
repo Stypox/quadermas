@@ -16,9 +16,18 @@ public class APIUrlEdit extends AppCompatEditText implements AdapterView.OnItemC
     String[] strings;
     ListPopupWindow listPopupWindow;
 
-    APIUrlEdit(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.APIUrlEdit,0, 0);
+    public APIUrlEdit(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        init(context, attributeSet);
+    }
+
+    public APIUrlEdit(Context context, AttributeSet attributeSet, int defStyle) {
+        super(context, attributeSet, defStyle);
+        init(context, attributeSet);
+    }
+
+    private void init(Context context, AttributeSet attributeSet) {
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.APIUrlEdit,0, 0);
 
         try {
             int stringsId = typedArray.getResourceId(R.styleable.APIUrlEdit_list_entries, 0);
