@@ -2,10 +2,12 @@ package com.stypox.mastercom_workbook.extractor;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Pair;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.util.FullNameFormatting;
 
 import org.json.JSONArray;
@@ -21,6 +23,10 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 public class Extractor {
     private static final String APIUrlToShow = "{APIUrl}.registroelettronico.com";
@@ -78,6 +84,19 @@ public class Extractor {
         return new JSONObject(response);
     }
 
+    private static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) throws ExtractorError {
+        if (throwable instanceof UnknownHostException || throwable instanceof MalformedURLException) {
+            return new ExtractorError(Type.malformed_url, throwable);
+        } else if (throwable instanceof JSONException) {
+            if (jsonAlreadyParsed) {
+                return new ExtractorError(Type.unsuitable_json, throwable);
+            } else {
+                return new ExtractorError(Type.not_json, throwable);
+            }
+        } else { // throwable instanceof IOException
+            return new ExtractorError(Type.network, throwable);
+        }
+    }
 
     /////////////////////
     // API URL SETTING //
@@ -96,73 +115,36 @@ public class Extractor {
     // AUTHENTICATION //
     ////////////////////
 
-    private static class AuthenticationTask extends AsyncTask<URL, Error, Void> {
-        private AuthenticationCallback callback;
-        private String cookieToSet = null;
-        private JSONObject jsonResponse = null;
-
-        AuthenticationTask(AuthenticationCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected Void doInBackground(URL... urls) {
+    public static Single<String> authenticate(String user, String password) {
+        return Single.fromCallable(() -> {
             try {
-                HttpURLConnection urlConnection = (HttpURLConnection) urls[0].openConnection();
+                URL url = new URL(authenticationUrl
+                        .replace("{APIUrl}", APIUrl)
+                        .replace("{user}", user)
+                        .replace("{password}", password));
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 String response = readAll(urlConnection);
 
-                cookieToSet = urlConnection.getHeaderField("Set-Cookie"); // only takes the last Set-Cookie it finds
-                jsonResponse = new JSONObject(response);
-            } catch (UnknownHostException e) {
-                publishProgress(Error.malformed_url);
-            } catch (IOException e) {
-                publishProgress(Error.network);
+                String cookieToSet = urlConnection.getHeaderField("Set-Cookie"); // only takes the last Set-Cookie it finds
+                JSONObject jsonResponse = new JSONObject(response);
+                return new Pair<>(cookieToSet, jsonResponse);
+            } catch (Throwable e) {
+                throw asExtractorError(e, false);
+            }
+        }).map(cookieAndResponse -> {
+            try {
+                //noinspection PointlessBooleanExpression
+                if (cookieAndResponse.second.getBoolean("auth") == false) {
+                    throw new ExtractorError(Type.invalid_credentials);
+                }
+
+                authenticationCookie = cookieAndResponse.first.substring(0, "PHPSESSID=00000000000000000000000000".length());
+                String fullNameUppercase = cookieAndResponse.second.getJSONObject("result").getString("full_name");
+                return FullNameFormatting.capitalize(fullNameUppercase);
             } catch (JSONException e) {
-                publishProgress(Error.not_json);
+                throw asExtractorError(e, true);
             }
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Error... error) {
-            callback.onError(error[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Void v) {
-            super.onPostExecute(v);
-            if (jsonResponse != null) {
-                Extractor.authenticationCallback(cookieToSet, jsonResponse, callback);
-            }
-        }
-    }
-
-    private static void authenticationCallback(String cookieToSet, JSONObject jsonResponse, AuthenticationCallback callback) {
-        try {
-            if (jsonResponse.getBoolean("auth") == false) {
-                callback.onError(Error.invalid_credentials);
-                return;
-            }
-
-            authenticationCookie = cookieToSet.substring(0, "PHPSESSID=00000000000000000000000000".length());
-            String fullNameUppercase = jsonResponse.getJSONObject("result").getString("full_name");
-            callback.onAuthenticationCompleted(FullNameFormatting.capitalize(fullNameUppercase));
-        } catch (JSONException e) {
-            callback.onError(Error.unsuitable_json);
-        }
-    }
-
-    public static void authenticate(String user, String password, AuthenticationCallback callback) {
-        AuthenticationTask authenticationTask = new AuthenticationTask(callback);
-        try {
-            authenticationTask.execute(new URL(authenticationUrl
-                    .replace("{APIUrl}", APIUrl)
-                    .replace("{user}", user)
-                    .replace("{password}", password)));
-        } catch (MalformedURLException e) {
-            callback.onError(Error.malformed_url);
-        }
+        });
     }
 
 
@@ -170,65 +152,26 @@ public class Extractor {
     // SUBJECTS //
     //////////////
 
-    private static class FetchSubjectsTask extends AsyncTask<URL, Error, Void> {
-        private FetchSubjectsCallback callback;
-        private JSONObject jsonResponse = null;
-
-        FetchSubjectsTask(FetchSubjectsCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected Void doInBackground(URL... urls) {
+    public static Single<ArrayList<SubjectData>> fetchSubjects() {
+        return Single.fromCallable(() -> {
+            boolean jsonAlreadyParsed = false;
             try {
-                jsonResponse = fetchJsonAuthenticated(urls[0]);
-            } catch (UnknownHostException e) {
-                publishProgress(Error.malformed_url);
-            } catch (IOException e) {
-                publishProgress(Error.network);
-            } catch (JSONException e) {
-                publishProgress(Error.not_json);
+                URL url = new URL(subjectsUrl
+                        .replace("{APIUrl}", APIUrl));
+
+                JSONObject jsonResponse = fetchJsonAuthenticated(url);
+                jsonAlreadyParsed = true;
+                JSONArray result = jsonResponse.getJSONArray("result");
+
+                ArrayList<SubjectData> subjects = new ArrayList<SubjectData>();
+                for (int i = 0; i < result.length(); i++) {
+                    subjects.add(new SubjectData(result.getJSONObject(i)));
+                }
+                return subjects;
+            } catch (Throwable e) {
+                throw asExtractorError(e, jsonAlreadyParsed);
             }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Error... error) {
-            callback.onError(error[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Void v) {
-            super.onPostExecute(v);
-            if (jsonResponse != null) {
-                Extractor.fetchSubjectsCallback(jsonResponse, callback);
-            }
-        }
-    }
-
-    private static void fetchSubjectsCallback(JSONObject jsonResponse, FetchSubjectsCallback callback) {
-        try {
-            JSONArray result = jsonResponse.getJSONArray("result");
-
-            ArrayList<SubjectData> subjects = new ArrayList<SubjectData>();
-            for (int i = 0; i < result.length(); i++) {
-                subjects.add(new SubjectData(result.getJSONObject(i)));
-            }
-
-            callback.onFetchSubjectsCompleted(subjects);
-        } catch (JSONException e) {
-            callback.onError(Error.unsuitable_json);
-        }
-    }
-
-    public static void fetchSubjects(FetchSubjectsCallback callback) {
-        FetchSubjectsTask fetchSubjectsTask = new FetchSubjectsTask(callback);
-        try {
-            fetchSubjectsTask.execute(new URL(subjectsUrl
-                    .replace("{APIUrl}", APIUrl)));
-        } catch (MalformedURLException e) {
-            callback.onError(Error.malformed_url);
-        }
+        });
     }
 
 

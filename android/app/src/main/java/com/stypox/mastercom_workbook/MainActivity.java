@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.extractor.AuthenticationCallback;
 import com.stypox.mastercom_workbook.extractor.Extractor;
+import com.stypox.mastercom_workbook.extractor.ExtractorError;
+import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
-import com.stypox.mastercom_workbook.extractor.FetchSubjectsCallback;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.MarksActivity;
@@ -33,12 +33,18 @@ import com.stypox.mastercom_workbook.view.SubjectItem;
 
 import java.util.ArrayList;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final int requestCodeLoginDialog = 0;
 
     private int fetchedSubjectsSoFar;
     private boolean areSubjectsLoaded = false;
+
+    private CompositeDisposable disposables;
 
     private LinearLayout subjectsLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -54,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        disposables = new CompositeDisposable();
+
         subjectsLayout = findViewById(R.id.subjectsLayout);
         refreshLayout = findViewById(R.id.refreshLayout);
 
@@ -63,12 +71,7 @@ public class MainActivity extends AppCompatActivity
         fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
         fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                reloadSubjects();
-            }
-        });
+        refreshLayout.setOnRefreshListener(this::reloadSubjects);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -86,6 +89,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+    }
 
     ////////////////////
     // LOGIN AND LOAD //
@@ -117,6 +125,8 @@ public class MainActivity extends AppCompatActivity
         areSubjectsLoaded = false;
         refreshLayout.setRefreshing(true);
         subjectsLayout.removeAllViews();
+
+        disposables.clear();
         authenticate();
     }
     private void onReloadSubjectsCompleted(ArrayList<SubjectData> subjects) {
@@ -136,32 +146,27 @@ public class MainActivity extends AppCompatActivity
         fullNameView.setText("");
         fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
-        Extractor.authenticate(LoginData.getUser(getApplicationContext()), LoginData.getPassword(getApplicationContext()), new AuthenticationCallback() {
-            @Override
-            public void onAuthenticationCompleted(String fullName) {
-                MainActivity.this.onAuthenticationCompleted(fullName);
-            }
+        disposables.add(Extractor.authenticate(LoginData.getUser(this), LoginData.getPassword(this))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        this::onAuthenticationCompleted,
+                        throwable -> {
+                            if(!(throwable instanceof ExtractorError)) return;
+                            ExtractorError error = (ExtractorError) throwable;
+                            error.printStackTrace();
 
-            @Override
-            public void onError(Extractor.Error error) {
-                if (error == Extractor.Error.invalid_credentials || error == Extractor.Error.malformed_url) {
-                    Toast.makeText(getApplicationContext(),
-                            error.toString(getApplicationContext()),
-                            Toast.LENGTH_LONG).show();
-                    openLoginDialogThenReload();
-                } else {
-                    Snackbar.make(findViewById(android.R.id.content),
-                            error.toString(getApplicationContext()), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.retry), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    authenticate();
-                                }
-                            }).show();
-                }
-                refreshLayout.setRefreshing(false);
-            }
-        });
+                            if (error.isType(Type.invalid_credentials) || error.isType(Type.malformed_url)) {
+                                Toast.makeText(getApplicationContext(), error.getMessage(this), Toast.LENGTH_LONG)
+                                        .show();
+                                openLoginDialogThenReload();
+                            } else {
+                                Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
+                                        .setAction(getString(R.string.retry), v -> authenticate())
+                                        .show();
+                            }
+                            refreshLayout.setRefreshing(false);
+                        }));
     }
     private void onAuthenticationCompleted(String fullName) {
         fullNameView.setText(fullName);
@@ -170,27 +175,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fetchSubjects() {
-        Extractor.fetchSubjects(new FetchSubjectsCallback() {
-            @Override
-            public void onFetchSubjectsCompleted(ArrayList<SubjectData> subjects) {
-                MainActivity.this.onFetchSubjectsCompleted(subjects);
-            }
+        disposables.add(Extractor.fetchSubjects()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        this::onFetchSubjectsCompleted,
+                        throwable -> {
+                            if(!(throwable instanceof ExtractorError)) return;
+                            ExtractorError error = (ExtractorError) throwable;
 
-            @Override
-            public void onError(Extractor.Error error) {
-                Snackbar.make(findViewById(android.R.id.content), error.toString(getApplicationContext()), Snackbar.LENGTH_LONG).show();
-            }
-        });
+                            Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
+                                    .show();
+                        }));
     }
     private void onFetchSubjectsCompleted(final ArrayList<SubjectData> subjects) {
         fetchedSubjectsSoFar = 0;
-        final Runnable onSubjectFetched = new Runnable() {
-            @Override
-            public void run() {
-                ++fetchedSubjectsSoFar;
-                if (fetchedSubjectsSoFar == subjects.size()) {
-                    onReloadSubjectsCompleted(subjects);
-                }
+        final Runnable onSubjectFetched = () -> {
+            ++fetchedSubjectsSoFar;
+            if (fetchedSubjectsSoFar == subjects.size()) {
+                onReloadSubjectsCompleted(subjects);
             }
         };
 
