@@ -29,23 +29,15 @@ public class LoginDialog extends AppCompatActivity {
         APIUrlEdit.setText(LoginData.getAPIUrl(getApplicationContext()));
         userEdit.setText(LoginData.getUser(getApplicationContext()));
 
-        passwordEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    completeLogin();
-                }
-                return false;
+        passwordEdit.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                completeLogin();
             }
+            return false;
         });
 
         Button loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                completeLogin();
-            }
-        });
+        loginButton.setOnClickListener(v -> completeLogin());
     }
 
     private void completeLogin() {

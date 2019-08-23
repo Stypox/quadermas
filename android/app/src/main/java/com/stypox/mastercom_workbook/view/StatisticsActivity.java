@@ -135,12 +135,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         // sort by date, so that marks[0].getTerm() returns the current term
-        Collections.sort(marks, new Comparator<MarkData>() {
-            @Override
-            public int compare(MarkData o1, MarkData o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        Collections.sort(marks, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
 
     private void formatMarksChart() {

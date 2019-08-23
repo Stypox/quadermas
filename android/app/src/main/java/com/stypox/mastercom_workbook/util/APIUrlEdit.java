@@ -2,18 +2,17 @@ package com.stypox.mastercom_workbook.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListPopupWindow;
 
 import com.stypox.mastercom_workbook.R;
 
-public class APIUrlEdit extends android.support.v7.widget.AppCompatEditText implements AdapterView.OnItemClickListener {
+public class APIUrlEdit extends AppCompatEditText implements AdapterView.OnItemClickListener {
     String[] strings;
     ListPopupWindow listPopupWindow;
 
@@ -56,10 +55,6 @@ public class APIUrlEdit extends android.support.v7.widget.AppCompatEditText impl
             default:
                 return false;
         }
-    }
-    @Override
-    public boolean performClick() {
-        return super.performClick();
     }
 
     @Override
