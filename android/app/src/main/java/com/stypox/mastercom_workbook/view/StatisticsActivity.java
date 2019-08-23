@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.view;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -70,7 +71,7 @@ public class StatisticsActivity extends AppCompatActivity {
             overallAverageModeSpinner.setVisibility(View.GONE);
             overallAverageDivider.setVisibility(View.GONE);
         } else {
-            overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
+            overallAverageTermSpinner.setSelection(marks.isEmpty() ? 0 : marks.get(0).getTerm(), false);
         }
 
         setupListeners();
@@ -155,15 +156,17 @@ public class StatisticsActivity extends AppCompatActivity {
             }
         });
 
-        int initialTerm = marks.get(0).getTerm();
-        int index = 0;
-        for(MarkData mark : marks) {
-            if (mark.getTerm() != initialTerm) {
-                xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
+        if (!marks.isEmpty()) {
+            int initialTerm = marks.get(0).getTerm();
+            int index = 0;
+            for(MarkData mark : marks) {
+                if (mark.getTerm() != initialTerm) {
+                    xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
+                }
+                ++index;
             }
-            ++index;
+            xAxis.setAxisMaximum(marks.get(0).getDate().getTime());
         }
-        xAxis.setAxisMaximum(marks.get(0).getDate().getTime());
 
         ValueFormatter markFormatter = new ValueFormatter() {
             @Override
