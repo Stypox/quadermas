@@ -69,7 +69,7 @@ public class StatisticsActivity extends AppCompatActivity {
             overallAverageModeSpinner.setVisibility(View.GONE);
             overallAverageDivider.setVisibility(View.GONE);
         } else {
-            overallAverageTermSpinner.setSelection(marks.isEmpty() ? 0 : marks.get(0).getTerm(), false);
+            overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
         }
 
         setupListeners();
@@ -149,17 +149,15 @@ public class StatisticsActivity extends AppCompatActivity {
             }
         });
 
-        if (!marks.isEmpty()) {
-            int initialTerm = marks.get(0).getTerm();
-            int index = 0;
-            for(MarkData mark : marks) {
-                if (mark.getTerm() != initialTerm) {
-                    xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
-                }
-                ++index;
+        int initialTerm = marks.get(0).getTerm();
+        int index = 0;
+        for(MarkData mark : marks) {
+            if (mark.getTerm() != initialTerm) {
+                xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
             }
-            xAxis.setAxisMaximum(marks.get(0).getDate().getTime());
+            ++index;
         }
+        xAxis.setAxisMaximum(marks.get(0).getDate().getTime());
 
         ValueFormatter markFormatter = new ValueFormatter() {
             @Override
