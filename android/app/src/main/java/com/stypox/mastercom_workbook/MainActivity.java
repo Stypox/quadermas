@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -129,7 +128,6 @@ public class MainActivity extends AppCompatActivity
         authenticate();
     }
     private void onReloadSubjectsCompleted() {
-        Log.w("MAIN", "onComplete");
         areSubjectsLoaded = true;
         refreshLayout.setRefreshing(false);
     }
@@ -198,7 +196,6 @@ public class MainActivity extends AppCompatActivity
                 }));
     }
     private void onSubjectFetched(SubjectData subjectData) {
-        Log.w("MAIN", subjectData.getName());
         subjects.add(subjectData);
         subjectsLayout.addView(new SubjectItem(this, subjectData));
     }

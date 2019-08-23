@@ -3,7 +3,6 @@ package com.stypox.mastercom_workbook.view;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -29,7 +28,6 @@ import com.stypox.mastercom_workbook.util.MarkFormatting;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class StatisticsActivity extends AppCompatActivity {
     public static final String subjectsIntentKey = "subjects";

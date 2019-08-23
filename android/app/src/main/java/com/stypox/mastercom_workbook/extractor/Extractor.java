@@ -1,6 +1,5 @@
 package com.stypox.mastercom_workbook.extractor;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.stypox.mastercom_workbook.data.MarkData;
@@ -170,7 +169,6 @@ public class Extractor {
                                 subjectData.setError(asExtractorError(e, jsonAlreadyParsed));
                             }
 
-                            Log.w("MAP", Thread.currentThread().getName());
                             return subjectData;
                         })
                         .subscribeOn(Schedulers.newThread())))
