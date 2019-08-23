@@ -38,6 +38,7 @@ import io.reactivex.observers.DisposableObserver;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final int requestCodeLoginDialog = 0;
+    private static final int requestCodeStatisticsActivity = 1;
 
     private boolean areSubjectsLoaded = false;
 
@@ -92,6 +93,22 @@ public class MainActivity extends AppCompatActivity
         disposables.dispose();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case requestCodeLoginDialog:
+                reloadIfLoggedIn();
+                break;
+            case requestCodeStatisticsActivity:
+                if (resultCode == StatisticsActivity.resultErrorNoMarks) {
+                    Snackbar.make(findViewById(android.R.id.content),
+                            getString(R.string.no_marks_for_statistics), Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+        }
+    }
+
     ////////////////////
     // LOGIN AND LOAD //
     ////////////////////
@@ -109,14 +126,6 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, LoginDialog.class);
         startActivityForResult(intent, requestCodeLoginDialog); // see onActivityResult
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case requestCodeLoginDialog:
-                reloadIfLoggedIn();
-                break;
-        }
-    }
 
     private void reloadSubjects() {
         refreshLayout.setRefreshing(true);
@@ -127,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         subjects = new ArrayList<>();
         authenticate();
     }
+
     private void onReloadSubjectsCompleted() {
         areSubjectsLoaded = true;
         refreshLayout.setRefreshing(false);
@@ -221,7 +231,7 @@ public class MainActivity extends AppCompatActivity
         if (areSubjectsLoaded) {
             Intent intent = new Intent(this, StatisticsActivity.class);
             intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-            startActivity(intent);
+            startActivityForResult(intent, requestCodeStatisticsActivity);
         } else {
             Snackbar.make(findViewById(android.R.id.content),
                     getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)

@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,7 @@ import java.util.Collections;
 
 public class StatisticsActivity extends AppCompatActivity {
     public static final String subjectsIntentKey = "subjects";
+    public static final int resultErrorNoMarks = 1;
 
     private ArrayList<SubjectData> subjects;
     private ArrayList<MarkData> marks;
@@ -57,9 +59,10 @@ public class StatisticsActivity extends AppCompatActivity {
         markLayout = findViewById(R.id.markLayout);
 
         if (marks.isEmpty()) {
+            setResult(resultErrorNoMarks);
             finish();
-        }
-        if (subjects.size() == 1) {
+            return;
+        } else if (subjects.size() == 1) {
             ConstraintLayout overallAverageLayout = findViewById(R.id.overallAverageLayout);
             TextView overallAverageModeTextView = findViewById(R.id.overallAverageModeTextView);
             View overallAverageDivider = findViewById(R.id.overallAverageDivider);
