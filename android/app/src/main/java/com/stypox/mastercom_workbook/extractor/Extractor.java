@@ -1,10 +1,8 @@
 package com.stypox.mastercom_workbook.extractor;
 
-import android.content.Context;
-import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
 
-import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
@@ -22,11 +20,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
+import io.reactivex.schedulers.Schedulers;
 
 public class Extractor {
     private static final String APIUrlToShow = "{APIUrl}.registroelettronico.com";
@@ -36,30 +36,6 @@ public class Extractor {
 
     private static String authenticationCookie;
     private static String APIUrl; // e.g. rosmini-tn
-
-
-    public enum Error {
-        malformed_url,
-        network,
-        not_json,
-        unsuitable_json,
-        invalid_credentials;
-
-        public String toString(Context context) {
-            switch (this) {
-                case malformed_url:
-                    return context.getResources().getString(R.string.error_malformed_url);
-                case network:
-                    return context.getResources().getString(R.string.error_network);
-                case not_json:
-                    return context.getResources().getString(R.string.error_not_json);
-                case unsuitable_json:
-                    return context.getResources().getString(R.string.error_unsuitable_json);
-                case invalid_credentials: default: // default is useless
-                    return context.getResources().getString(R.string.error_invalid_credentials);
-            }
-        }
-    }
 
 
     ///////////
@@ -84,7 +60,7 @@ public class Extractor {
         return new JSONObject(response);
     }
 
-    private static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) throws ExtractorError {
+    private static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
         if (throwable instanceof UnknownHostException || throwable instanceof MalformedURLException) {
             return new ExtractorError(Type.malformed_url, throwable);
         } else if (throwable instanceof JSONException) {
@@ -97,6 +73,7 @@ public class Extractor {
             return new ExtractorError(Type.network, throwable);
         }
     }
+
 
     /////////////////////
     // API URL SETTING //
@@ -144,7 +121,7 @@ public class Extractor {
             } catch (JSONException e) {
                 throw asExtractorError(e, true);
             }
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
 
@@ -152,94 +129,51 @@ public class Extractor {
     // SUBJECTS //
     //////////////
 
-    public static Single<ArrayList<SubjectData>> fetchSubjects() {
-        return Single.fromCallable(() -> {
-            boolean jsonAlreadyParsed = false;
-            try {
-                URL url = new URL(subjectsUrl
-                        .replace("{APIUrl}", APIUrl));
+    public static Observable<SubjectData> fetchSubjects() {
+        return Observable
+                .create((ObservableOnSubscribe<SubjectData>) emitter -> {
+                    boolean jsonAlreadyParsed = false;
+                    try {
+                        URL url = new URL(subjectsUrl
+                                .replace("{APIUrl}", APIUrl));
 
-                JSONObject jsonResponse = fetchJsonAuthenticated(url);
-                jsonAlreadyParsed = true;
-                JSONArray result = jsonResponse.getJSONArray("result");
+                        JSONObject jsonResponse = fetchJsonAuthenticated(url);
+                        jsonAlreadyParsed = true;
 
-                ArrayList<SubjectData> subjects = new ArrayList<SubjectData>();
-                for (int i = 0; i < result.length(); i++) {
-                    subjects.add(new SubjectData(result.getJSONObject(i)));
-                }
-                return subjects;
-            } catch (Throwable e) {
-                throw asExtractorError(e, jsonAlreadyParsed);
-            }
-        });
+                        JSONArray list = jsonResponse.getJSONArray("result");
+                        for (int i = 0; i < list.length(); i++) {
+                            emitter.onNext(new SubjectData(list.getJSONObject(i)));
+                        }
+                        emitter.onComplete();
+                    } catch (Throwable e) {
+                        throw asExtractorError(e, jsonAlreadyParsed);
+                    }
+                })
+                .flatMap(subjectData1 -> Observable.defer(() -> Observable.just(subjectData1)
+                        .map(subjectData -> {
+                            boolean jsonAlreadyParsed = false;
+                            try {
+                                URL url = new URL(marksUrl
+                                        .replace("{APIUrl}", APIUrl)
+                                        .replace("{subject_id}", subjectData.getId()));
+
+                                JSONObject jsonResponse = fetchJsonAuthenticated(url);
+                                jsonAlreadyParsed = true;
+
+                                JSONArray list = jsonResponse.getJSONArray("result");
+                                List<MarkData> marks = new ArrayList<>();
+                                for (int i = 0; i < list.length(); i++) {
+                                    marks.add(new MarkData(list.getJSONObject(i)));
+                                }
+                                subjectData.setMarks(marks);
+                            } catch (Throwable e) {
+                                subjectData.setError(asExtractorError(e, jsonAlreadyParsed));
+                            }
+
+                            Log.w("MAP", Thread.currentThread().getName());
+                            return subjectData;
+                        })
+                        .subscribeOn(Schedulers.newThread())))
+                .subscribeOn(Schedulers.io());
     }
-
-
-
-    //////////////
-    // SUBJECTS //
-    //////////////
-
-    private static class FetchMarksTask extends AsyncTask<URL, Error, Void> {
-        private FetchMarksCallback callback;
-        private JSONObject jsonResponse = null;
-
-        FetchMarksTask(FetchMarksCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected Void doInBackground(URL... urls) {
-            try {
-                jsonResponse = fetchJsonAuthenticated(urls[0]);
-            } catch (UnknownHostException e) {
-                publishProgress(Error.malformed_url);
-            } catch (IOException e) {
-                publishProgress(Error.network);
-            } catch (JSONException e) {
-                publishProgress(Error.not_json);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Error... error) {
-            callback.onError(error[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Void v) {
-            super.onPostExecute(v);
-            if (jsonResponse != null) {
-                Extractor.fetchMarksCallback(jsonResponse, callback);
-            }
-        }
-    }
-
-    private static void fetchMarksCallback(JSONObject jsonResponse, FetchMarksCallback callback) {
-        try {
-            JSONArray result = jsonResponse.getJSONArray("result");
-
-            ArrayList<MarkData> marks = new ArrayList<>();
-            for (int i = 0; i < result.length(); i++) {
-                marks.add(new MarkData(result.getJSONObject(i)));
-            }
-
-            callback.onFetchMarksCompleted(marks);
-        } catch (Throwable e) {
-            callback.onError(Error.unsuitable_json);
-        }
-    }
-
-    public static void fetchMarks(String subjectId, FetchMarksCallback callback) {
-        FetchMarksTask fetchMarksTask = new FetchMarksTask(callback);
-        try {
-            fetchMarksTask.execute(new URL(marksUrl
-                    .replace("{APIUrl}", APIUrl)
-                    .replace("{subject_id}", subjectId)));
-        } catch (MalformedURLException e) {
-            callback.onError(Error.malformed_url);
-        }
-    }
-
 }

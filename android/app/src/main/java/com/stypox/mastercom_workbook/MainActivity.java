@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -19,12 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
-import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.MarksActivity;
@@ -35,13 +34,12 @@ import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final int requestCodeLoginDialog = 0;
 
-    private int fetchedSubjectsSoFar;
     private boolean areSubjectsLoaded = false;
 
     private CompositeDisposable disposables;
@@ -122,17 +120,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void reloadSubjects() {
-        areSubjectsLoaded = false;
         refreshLayout.setRefreshing(true);
         subjectsLayout.removeAllViews();
 
+        areSubjectsLoaded = false;
         disposables.clear();
+        subjects = new ArrayList<>();
         authenticate();
     }
-    private void onReloadSubjectsCompleted(ArrayList<SubjectData> subjects) {
+    private void onReloadSubjectsCompleted() {
+        Log.w("MAIN", "onComplete");
         areSubjectsLoaded = true;
         refreshLayout.setRefreshing(false);
-        this.subjects = subjects;
     }
 
 
@@ -147,7 +146,6 @@ public class MainActivity extends AppCompatActivity
         fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
         disposables.add(Extractor.authenticate(LoginData.getUser(this), LoginData.getPassword(this))
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::onAuthenticationCompleted,
@@ -176,46 +174,33 @@ public class MainActivity extends AppCompatActivity
 
     private void fetchSubjects() {
         disposables.add(Extractor.fetchSubjects()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        this::onFetchSubjectsCompleted,
-                        throwable -> {
-                            if(!(throwable instanceof ExtractorError)) return;
-                            ExtractorError error = (ExtractorError) throwable;
+                .subscribeWith(new DisposableObserver<SubjectData>() {
+                    @Override
+                    public void onNext(SubjectData subjectData) {
+                        onSubjectFetched(subjectData);
+                    }
 
-                            Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                                    .show();
-                        }));
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if(!(throwable instanceof ExtractorError)) return;
+                        ExtractorError error = (ExtractorError) throwable;
+                        error.printStackTrace();
+
+                        Snackbar.make(findViewById(android.R.id.content), error.getMessage(MainActivity.this), Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        onReloadSubjectsCompleted();
+                    }
+                }));
     }
-    private void onFetchSubjectsCompleted(final ArrayList<SubjectData> subjects) {
-        fetchedSubjectsSoFar = 0;
-        final Runnable onSubjectFetched = () -> {
-            ++fetchedSubjectsSoFar;
-            if (fetchedSubjectsSoFar == subjects.size()) {
-                onReloadSubjectsCompleted(subjects);
-            }
-        };
-
-        for(SubjectData subjectData : subjects) {
-            final SubjectItem subjectItem = new SubjectItem(getApplicationContext(), subjectData);
-
-            subjectData.fetchMarks(new FetchMarksCallback() {
-                @Override
-                public void onFetchMarksCompleted(ArrayList<MarkData> marks) {
-                    subjectItem.onMarksLoaded(marks);
-                    onSubjectFetched.run();
-                }
-
-                @Override
-                public void onError(Extractor.Error error) {
-                    subjectItem.onMarksLoadingError(error);
-                    onSubjectFetched.run();
-                }
-            });
-
-            subjectsLayout.addView(subjectItem);
-        }
+    private void onSubjectFetched(SubjectData subjectData) {
+        Log.w("MAIN", subjectData.getName());
+        subjects.add(subjectData);
+        subjectsLayout.addView(new SubjectItem(this, subjectData));
     }
 
 
@@ -231,12 +216,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             Snackbar.make(findViewById(android.R.id.content),
                     getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openMarksActivity();
-                        }
-                    }).show();
+                    .setAction(getString(R.string.retry), v -> openMarksActivity()).show();
         }
     }
 
@@ -248,12 +228,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             Snackbar.make(findViewById(android.R.id.content),
                     getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.retry), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openStatisticsActivity();
-                        }
-                    }).show();
+                    .setAction(getString(R.string.retry), v -> openStatisticsActivity()).show();
         }
     }
 

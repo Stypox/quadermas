@@ -8,18 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
-import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
-
-import java.util.ArrayList;
 
 public class SubjectItem extends ConstraintLayout implements View.OnClickListener {
     private SubjectData data;
-
-    private TextView teacherTextView;
-    private TextView averageTextView;
 
     public SubjectItem(Context context, SubjectData data) {
         super(context);
@@ -38,33 +31,25 @@ public class SubjectItem extends ConstraintLayout implements View.OnClickListene
         super.onFinishInflate();
 
         TextView nameView = findViewById(R.id.name);
-        teacherTextView = findViewById(R.id.teacher);
-        averageTextView = findViewById(R.id.average);
+        TextView teacherTextView = findViewById(R.id.teacher);
+        TextView averageTextView = findViewById(R.id.average);
 
         nameView.setText(data.getName());
-    }
+        if (data.getMarks() == null) {
+            teacherTextView.setText(data.getError().getMessage(getContext()));
+            averageTextView.setText("X");
 
-    public void onMarksLoaded(ArrayList<MarkData> marks) {
-        if (marks.isEmpty()) {
-            this.teacherTextView.setText(getContext().getString(R.string.error_no_marks));
+        } else if (data.getMarks().isEmpty()) {
+            teacherTextView.setText(getContext().getString(R.string.error_no_marks));
+            averageTextView.setText("?");
+
         } else {
-            this.teacherTextView.setText(data.getTeacher());
+            teacherTextView.setText(data.getTeacher());
             setOnClickListener(this);
-        }
-        showAverage();
-    }
-    public void onMarksLoadingError(Extractor.Error error) {
-        this.teacherTextView.setText(error.toString(getContext()));
-        showAverage();
-    }
 
-    public void showAverage() {
-        try {
             float average = data.getAverage(data.getMarks().get(0).getTerm()); // current average
             averageTextView.setText(MarkFormatting.floatToString(average, 2));
             averageTextView.setTextColor(MarkFormatting.colorOf(getContext(), average));
-        } catch (Throwable e) {
-            averageTextView.setText("?");
         }
     }
 

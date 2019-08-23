@@ -1,48 +1,42 @@
 package com.stypox.mastercom_workbook.data;
 
-import com.stypox.mastercom_workbook.extractor.Extractor;
-import com.stypox.mastercom_workbook.extractor.FetchMarksCallback;
+import com.stypox.mastercom_workbook.extractor.ExtractorError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public class SubjectData implements Serializable {
     private final String id;
     private final String name;
     private String teacher;
-    private ArrayList<MarkData> marks;
+    private List<MarkData> marks;
+    private ExtractorError extractorError;
 
     public SubjectData(JSONObject json) throws JSONException {
         this.id = json.getString("id");
         this.name = json.getString("nome");
     }
 
-    public void fetchMarks(final FetchMarksCallback callback) {
-        Extractor.fetchMarks(id, new FetchMarksCallback() {
-            @Override
-            public void onFetchMarksCompleted(ArrayList<MarkData> marks) {
-                for (MarkData mark : marks) {
-                    mark.setSubject(name);
-                }
+    public void setMarks(List<MarkData> marks) {
+        for (MarkData mark : marks) {
+            mark.setSubject(name);
+        }
 
-                SubjectData.this.marks = marks;
-                if(marks.isEmpty()) {
-                    teacher = null;
-                } else {
-                    teacher = marks.get(0).getTeacher();
-                }
+        this.marks = marks;
+        if(this.marks.isEmpty()) {
+            teacher = null;
+        } else {
+            teacher = this.marks.get(0).getTeacher();
+        }
+    }
 
-                callback.onFetchMarksCompleted(marks);
-            }
-
-            @Override
-            public void onError(Extractor.Error error) {
-                callback.onError(error);
-            }
-        });
+    public void setError(ExtractorError extractorError) {
+        this.extractorError = extractorError;
+        teacher = null;
+        marks = null;
     }
 
     public String getId() {
@@ -54,9 +48,10 @@ public class SubjectData implements Serializable {
     public String getTeacher() {
         return teacher;
     }
-    public ArrayList<MarkData> getMarks() {
+    public List<MarkData> getMarks() {
         return marks;
     }
+    public ExtractorError getError() { return extractorError; }
 
     public float getAverage(int termToConsider) throws ArithmeticException {
         float marksSum = 0;
