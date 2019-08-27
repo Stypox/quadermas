@@ -61,20 +61,10 @@ public class MarksActivity extends AppCompatActivity
     }
 
     private void sortMarksByDate() {
-        Collections.sort(items, new Comparator<MarkDetailItem>() {
-            @Override
-            public int compare(MarkDetailItem o1, MarkDetailItem o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
+        Collections.sort(items, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
     private void sortMarksByValue() {
-        Collections.sort(items, new Comparator<MarkDetailItem>() {
-            @Override
-            public int compare(MarkDetailItem o1, MarkDetailItem o2) {
-                return Float.compare(o2.getValue(), o1.getValue());
-            }
-        });
+        Collections.sort(items, (o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
     }
 
     private void showMarks() {
