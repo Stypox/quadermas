@@ -25,7 +25,7 @@ public class MarkData implements Serializable {
     private final String teacher;
 
     public MarkData(JSONObject json) throws JSONException, InvalidKeyException, ParseException {
-        this.subject = null;
+        subject = null;
         value = Float.parseFloat(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
         date = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z").parse(json.getString("data"));
