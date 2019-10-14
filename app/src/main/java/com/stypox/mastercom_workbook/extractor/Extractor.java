@@ -60,7 +60,7 @@ public class Extractor {
     }
 
     private static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
-        if (throwable instanceof UnknownHostException || throwable instanceof MalformedURLException) {
+        if (throwable instanceof MalformedURLException) {
             return new ExtractorError(Type.malformed_url, throwable);
         } else if (throwable instanceof JSONException) {
             if (jsonAlreadyParsed) {
