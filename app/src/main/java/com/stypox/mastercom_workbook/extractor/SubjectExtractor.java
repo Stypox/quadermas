@@ -4,12 +4,14 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
@@ -18,7 +20,16 @@ public class SubjectExtractor {
     private static final String subjectsUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
     private static final String marksUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
 
-    public static Observable<SubjectData> fetchSubjects() {
+
+    public interface OnMarkExtractionError {
+        void onMarkExtractionError(String subjectName);
+    }
+
+
+    /**
+     * @param onMarkError will be called on a thread different from the main one
+     */
+    public static Observable<SubjectData> fetchSubjects(OnMarkExtractionError onMarkError) {
         return Observable
                 .create((ObservableOnSubscribe<SubjectData>) emitter -> {
                     boolean jsonAlreadyParsed = false;
@@ -52,7 +63,11 @@ public class SubjectExtractor {
                                 JSONArray list = jsonResponse.getJSONArray("result");
                                 List<MarkData> marks = new ArrayList<>();
                                 for (int i = 0; i < list.length(); i++) {
-                                    marks.add(new MarkData(list.getJSONObject(i)));
+                                    try {
+                                        marks.add(new MarkData(list.getJSONObject(i)));
+                                    } catch (JSONException e) {
+                                        onMarkError.onMarkExtractionError(subjectData.getName());
+                                    }
                                 }
                                 subjectData.setMarks(marks);
                             } catch (Throwable e) {

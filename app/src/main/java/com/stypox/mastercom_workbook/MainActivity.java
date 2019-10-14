@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity
                             error.printStackTrace();
 
                             if (error.isType(Type.invalid_credentials) || error.isType(Type.malformed_url)) {
-                                Toast.makeText(getApplicationContext(), error.getMessage(this), Toast.LENGTH_LONG)
+                                Toast.makeText(this, error.getMessage(this), Toast.LENGTH_LONG)
                                         .show();
                                 openLoginDialogThenReload();
                             } else {
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fetchSubjects() {
-        disposables.add(SubjectExtractor.fetchSubjects()
+        disposables.add(SubjectExtractor.fetchSubjects(this::onMarkExtractionError)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<SubjectData>() {
                     @Override
@@ -209,6 +210,12 @@ public class MainActivity extends AppCompatActivity
                         onReloadSubjectsCompleted();
                     }
                 }));
+    }
+    private void onMarkExtractionError(String subjectName) {
+        new Handler(getMainLooper()).post(() ->
+            Toast.makeText(this, getString(R.string.error_could_not_load_a_mark, subjectName), Toast.LENGTH_LONG)
+                    .show()
+        );
     }
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
