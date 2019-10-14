@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.stypox.mastercom_workbook.R;
 
+import org.json.JSONException;
+
+import java.net.MalformedURLException;
+
 public class ExtractorError extends Exception {
     public enum Type {
         malformed_url,
@@ -45,5 +49,20 @@ public class ExtractorError extends Exception {
 
     public boolean isType(Type type) {
         return this.type == type;
+    }
+
+
+    public static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
+        if (throwable instanceof MalformedURLException) {
+            return new ExtractorError(Type.malformed_url, throwable);
+        } else if (throwable instanceof JSONException) {
+            if (jsonAlreadyParsed) {
+                return new ExtractorError(Type.unsuitable_json, throwable);
+            } else {
+                return new ExtractorError(Type.not_json, throwable);
+            }
+        } else { // throwable instanceof IOException
+            return new ExtractorError(Type.network, throwable);
+        }
     }
 }

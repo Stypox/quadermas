@@ -15,9 +15,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -59,20 +57,6 @@ public class Extractor {
         return new JSONObject(response);
     }
 
-    private static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
-        if (throwable instanceof MalformedURLException) {
-            return new ExtractorError(Type.malformed_url, throwable);
-        } else if (throwable instanceof JSONException) {
-            if (jsonAlreadyParsed) {
-                return new ExtractorError(Type.unsuitable_json, throwable);
-            } else {
-                return new ExtractorError(Type.not_json, throwable);
-            }
-        } else { // throwable instanceof IOException
-            return new ExtractorError(Type.network, throwable);
-        }
-    }
-
 
     /////////////////////
     // API URL SETTING //
@@ -105,7 +89,7 @@ public class Extractor {
                 JSONObject jsonResponse = new JSONObject(response);
                 return new Pair<>(cookieToSet, jsonResponse);
             } catch (Throwable e) {
-                throw asExtractorError(e, false);
+                throw ExtractorError.asExtractorError(e, false);
             }
         }).map(cookieAndResponse -> {
             try {
@@ -118,7 +102,7 @@ public class Extractor {
                 String fullNameUppercase = cookieAndResponse.second.getJSONObject("result").getString("full_name");
                 return FullNameFormatting.capitalize(fullNameUppercase);
             } catch (JSONException e) {
-                throw asExtractorError(e, true);
+                throw ExtractorError.asExtractorError(e, true);
             }
         }).subscribeOn(Schedulers.io());
     }
@@ -145,7 +129,7 @@ public class Extractor {
                         }
                         emitter.onComplete();
                     } catch (Throwable e) {
-                        throw asExtractorError(e, jsonAlreadyParsed);
+                        throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
                     }
                 })
                 .flatMap(subjectData1 -> Observable.defer(() -> Observable.just(subjectData1)
@@ -166,7 +150,7 @@ public class Extractor {
                                 }
                                 subjectData.setMarks(marks);
                             } catch (Throwable e) {
-                                subjectData.setError(asExtractorError(e, jsonAlreadyParsed));
+                                subjectData.setError(ExtractorError.asExtractorError(e, jsonAlreadyParsed));
                             }
 
                             return subjectData;
