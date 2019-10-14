@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.extractor.Extractor;
+import com.stypox.mastercom_workbook.extractor.AuthenticationExtractor;
+import com.stypox.mastercom_workbook.extractor.SubjectExtractor;
+import com.stypox.mastercom_workbook.extractor.ExtractorData;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.login.LoginData;
@@ -149,11 +151,11 @@ public class MainActivity extends AppCompatActivity
 
     private void authenticate() {
         // show data in drawer header
-        Extractor.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
+        ExtractorData.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
         fullNameView.setText("");
-        fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
+        fullAPIUrlView.setText(ExtractorData.getFullAPIUrlToShow());
 
-        disposables.add(Extractor.authenticate(LoginData.getUser(this), LoginData.getPassword(this))
+        disposables.add(AuthenticationExtractor.authenticate(LoginData.getUser(this), LoginData.getPassword(this))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::onAuthenticationCompleted,
@@ -181,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fetchSubjects() {
-        disposables.add(Extractor.fetchSubjects()
+        disposables.add(SubjectExtractor.fetchSubjects()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<SubjectData>() {
                     @Override
