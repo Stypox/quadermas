@@ -151,11 +151,14 @@ public class MainActivity extends AppCompatActivity
 
     private void authenticate() {
         // show data in drawer header
-        ExtractorData.setAPIUrl(LoginData.getAPIUrl(getApplicationContext()));
+        ExtractorData.setAPIUrl(LoginData.getAPIUrl(this));
+        ExtractorData.setUser(LoginData.getUser(this));
+        ExtractorData.setPassword(LoginData.getPassword(this));
+
         fullNameView.setText("");
         fullAPIUrlView.setText(ExtractorData.getFullAPIUrlToShow());
 
-        disposables.add(AuthenticationExtractor.authenticate(LoginData.getUser(this), LoginData.getPassword(this))
+        disposables.add(AuthenticationExtractor.authenticate()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::onAuthenticationCompleted,

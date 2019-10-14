@@ -33,13 +33,13 @@ public class AuthenticationExtractor {
     }
 
 
-    public static Single<String> authenticate(String user, String password) {
+    public static Single<String> authenticate() {
         return Single.fromCallable(() -> {
             try {
                 URL url = new URL(authenticationUrl
                         .replace("{APIUrl}", ExtractorData.getAPIUrl())
-                        .replace("{user}", user)
-                        .replace("{password}", password));
+                        .replace("{user}", ExtractorData.getUser())
+                        .replace("{password}", ExtractorData.getPassword()));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 String response = readAll(urlConnection);
 
