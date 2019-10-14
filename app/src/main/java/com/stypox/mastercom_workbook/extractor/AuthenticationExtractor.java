@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.extractor;
 import android.util.Pair;
 
 import com.stypox.mastercom_workbook.util.FullNameFormatting;
+import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,17 +23,6 @@ public class AuthenticationExtractor {
     private static String authenticationCookie;
 
 
-    private static String readAll(HttpURLConnection urlConnection) throws IOException {
-        try {
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Scanner s = new Scanner(in).useDelimiter("\\A");
-            return s.hasNext() ? s.next() : "";
-        } finally {
-            urlConnection.disconnect();
-        }
-    }
-
-
     public static Single<String> authenticate() {
         return Single.fromCallable(() -> {
             try {
@@ -41,7 +31,7 @@ public class AuthenticationExtractor {
                         .replace("{user}", ExtractorData.getUser())
                         .replace("{password}", ExtractorData.getPassword()));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                String response = readAll(urlConnection);
+                String response = UrlConnectionUtils.readAll(urlConnection);
 
                 String cookieToSet = urlConnection.getHeaderField("Set-Cookie"); // only takes the last Set-Cookie it finds
                 JSONObject jsonResponse = new JSONObject(response);
@@ -66,11 +56,10 @@ public class AuthenticationExtractor {
     }
 
 
-
     static JSONObject fetchJsonAuthenticated(URL url) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.addRequestProperty("Cookie", authenticationCookie); // auth cookie
-        String response = readAll(urlConnection);
+        String response = UrlConnectionUtils.readAll(urlConnection);
 
         return new JSONObject(response);
     }
