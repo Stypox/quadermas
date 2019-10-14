@@ -19,7 +19,7 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class AuthenticationExtractor {
-    private static final String authenticationUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
+    private static final String authenticationUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
     private static String authenticationCookie;
 
 
@@ -27,7 +27,7 @@ public class AuthenticationExtractor {
         return Single.fromCallable(() -> {
             try {
                 URL url = new URL(authenticationUrl
-                        .replace("{APIUrl}", ExtractorData.getAPIUrl())
+                        .replace("{api_url}", ExtractorData.getAPIUrl())
                         .replace("{user}", ExtractorData.getUser())
                         .replace("{password}", ExtractorData.getPassword()));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

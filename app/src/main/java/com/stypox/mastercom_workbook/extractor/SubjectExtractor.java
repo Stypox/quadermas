@@ -17,8 +17,8 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
 
 public class SubjectExtractor {
-    private static final String subjectsUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
-    private static final String marksUrl = "https://{APIUrl}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
+    private static final String subjectsUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
+    private static final String marksUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
 
 
     public interface OnMarkExtractionError {
@@ -35,7 +35,7 @@ public class SubjectExtractor {
                     boolean jsonAlreadyParsed = false;
                     try {
                         URL url = new URL(subjectsUrl
-                                .replace("{APIUrl}", ExtractorData.getAPIUrl()));
+                                .replace("{api_url}", ExtractorData.getAPIUrl()));
 
                         JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
                         jsonAlreadyParsed = true;
@@ -54,7 +54,7 @@ public class SubjectExtractor {
                             boolean jsonAlreadyParsed = false;
                             try {
                                 URL url = new URL(marksUrl
-                                        .replace("{APIUrl}", ExtractorData.getAPIUrl())
+                                        .replace("{api_url}", ExtractorData.getAPIUrl())
                                         .replace("{subject_id}", subjectData.getId()));
 
                                 JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);

@@ -1,7 +1,7 @@
 package com.stypox.mastercom_workbook.extractor;
 
 public class ExtractorData {
-    private static final String APIUrlToShow = "{APIUrl}.registroelettronico.com";
+    private static final String APIUrlToShow = "{api_url}.registroelettronico.com";
 
     private static String APIUrl;
     private static String user;
@@ -29,6 +29,6 @@ public class ExtractorData {
     }
 
     public static String getFullAPIUrlToShow() {
-        return APIUrlToShow.replace("{APIUrl}", APIUrl);
+        return APIUrlToShow.replace("{api_url}", APIUrl);
     }
 }
