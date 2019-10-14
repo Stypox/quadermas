@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
                                 openLoginDialogThenReload();
                             } else {
                                 Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                                        .setAction(getString(R.string.retry), v -> authenticate())
+                                        .setAction(getString(R.string.retry), v -> reloadSubjects())
                                         .show();
                             }
                             refreshLayout.setRefreshing(false);
