@@ -11,28 +11,22 @@ public class ExtractorData {
     public static void setAPIUrl(String APIUrl) {
         ExtractorData.APIUrl = APIUrl;
     }
-
     public static void setUser(String user) {
         ExtractorData.user = user;
     }
-
     public static void setPassword(String password) {
         ExtractorData.password = password;
     }
 
-
     public static String getAPIUrl() {
         return APIUrl;
     }
-
     public static String getUser() {
         return user;
     }
-
     public static String getPassword() {
         return password;
     }
-
 
     public static String getFullAPIUrlToShow() {
         return APIUrlToShow.replace("{APIUrl}", APIUrl);
