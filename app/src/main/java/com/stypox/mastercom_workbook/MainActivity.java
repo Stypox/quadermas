@@ -187,11 +187,13 @@ public class MainActivity extends AppCompatActivity
                             refreshLayout.setRefreshing(false);
                         }));
     }
+    
     private void onAuthenticationCompleted(String fullName) {
         fullNameView.setText(fullName);
 
         fetchSubjects();
     }
+
 
     private void fetchSubjects() {
         disposables.add(SubjectExtractor.fetchSubjects(this::onMarkExtractionError)
@@ -218,12 +220,14 @@ public class MainActivity extends AppCompatActivity
                     }
                 }));
     }
+
     private void onMarkExtractionError(String subjectName) {
         new Handler(getMainLooper()).post(() ->
             Toast.makeText(this, getString(R.string.error_could_not_load_a_mark, subjectName), Toast.LENGTH_LONG)
                     .show()
         );
     }
+
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
         subjectsLayout.addView(new SubjectItem(this, subjectData));
