@@ -34,6 +34,7 @@ import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -239,6 +240,7 @@ public class MainActivity extends AppCompatActivity
 
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
+        Collections.sort(subjects, (o1, o2) -> o1.getName().compareTo(o2.getName()));
         subjectsArrayAdapter.notifyDataSetChanged();
     }
 
