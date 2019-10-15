@@ -16,11 +16,13 @@
             <item
                 android:id="@+id/menu_marks"
                 android:icon="@drawable/ic_menu_marks"
-                android:title="@string/menu_marks" />
+                android:title="@string/menu_marks"
+                android:enabled="false" />
             <item
                 android:id="@+id/menu_statistics"
                 android:icon="@drawable/ic_menu_statistics"
-                android:title="@string/menu_statistics" />
+                android:title="@string/menu_statistics"
+                android:enabled="false" />
         </menu>
     </item>
 

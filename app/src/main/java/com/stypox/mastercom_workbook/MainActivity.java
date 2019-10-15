@@ -43,12 +43,13 @@ public class MainActivity extends AppCompatActivity
     private static final int requestCodeLoginDialog = 0;
     private static final int requestCodeStatisticsActivity = 1;
 
-    private boolean areSubjectsLoaded = false;
-
     private CompositeDisposable disposables;
 
     private LinearLayout subjectsLayout;
     private SwipeRefreshLayout refreshLayout;
+
+    private MenuItem marksMenuItem;
+    private MenuItem statisticsMenuItem;
     private TextView fullNameView;
     private TextView fullAPIUrlView;
 
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        marksMenuItem = navigationView.getMenu().findItem(R.id.menu_marks);
+        statisticsMenuItem = navigationView.getMenu().findItem(R.id.menu_statistics);
+
         View headerLayout = navigationView.getHeaderView(0);
         fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
         fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.getMenu().findItem(R.id.menu_marks).setEnabled(false);
         reloadIfLoggedIn();
     }
 
@@ -131,17 +136,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void reloadSubjects() {
+        marksMenuItem.setEnabled(false);
+        statisticsMenuItem.setEnabled(false);
         refreshLayout.setRefreshing(true);
         subjectsLayout.removeAllViews();
 
-        areSubjectsLoaded = false;
         disposables.clear();
         subjects = new ArrayList<>();
         authenticate();
     }
 
     private void onReloadSubjectsCompleted() {
-        areSubjectsLoaded = true;
+        marksMenuItem.setEnabled(true);
+        statisticsMenuItem.setEnabled(true);
         refreshLayout.setRefreshing(false);
     }
 
@@ -228,27 +235,15 @@ public class MainActivity extends AppCompatActivity
     ////////////////
 
     private void openMarksActivity() {
-        if (areSubjectsLoaded) {
-            Intent intent = new Intent(this, MarksActivity.class);
-            intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
-            startActivity(intent);
-        } else {
-            Snackbar.make(findViewById(android.R.id.content),
-                    getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.retry), v -> openMarksActivity()).show();
-        }
+        Intent intent = new Intent(this, MarksActivity.class);
+        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
+        startActivity(intent);
     }
 
     private void openStatisticsActivity() {
-        if (areSubjectsLoaded) {
-            Intent intent = new Intent(this, StatisticsActivity.class);
-            intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-            startActivityForResult(intent, requestCodeStatisticsActivity);
-        } else {
-            Snackbar.make(findViewById(android.R.id.content),
-                    getString(R.string.error_marks_are_still_loading), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.retry), v -> openStatisticsActivity()).show();
-        }
+        Intent intent = new Intent(this, StatisticsActivity.class);
+        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
+        startActivityForResult(intent, requestCodeStatisticsActivity);
     }
 
     private void openUrlInBrowser(String url) {

@@ -28,7 +28,6 @@
     <string name="error_invalid_credentials">Wrong user or password</string>
     <string name="error_could_not_load_a_mark">Could not load a mark for subject %1$s</string>
     <string name="error_no_marks">No marks</string>
-    <string name="error_marks_are_still_loading">Marks are still loading</string>
     <string name="retry">Retry</string>
 
     <string name="marks_average_title">Marks average</string>
