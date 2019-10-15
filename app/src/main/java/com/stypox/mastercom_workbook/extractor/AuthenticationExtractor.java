@@ -8,12 +8,9 @@ import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Scanner;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
