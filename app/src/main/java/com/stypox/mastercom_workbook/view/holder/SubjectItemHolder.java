@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,11 +35,13 @@ public class SubjectItemHolder implements ItemHolder<SubjectData> {
         if (data.getMarks() == null) {
             teacherTextView.setText(data.getError().getMessage(context));
             averageTextView.setText("X");
+            averageTextView.setTextColor(Color.BLACK);
             view.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
+            averageTextView.setTextColor(Color.BLACK);
             view.setOnClickListener(null);
 
         } else {
