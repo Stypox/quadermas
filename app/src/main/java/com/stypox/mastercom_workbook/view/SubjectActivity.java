@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
+import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
+import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
 
 import java.util.ArrayList;
 
@@ -28,7 +31,6 @@ public class SubjectActivity extends AppCompatActivity
 
     private SubjectData data;
 
-    private LinearLayout marksLayout;
     private Spinner termSpinner;
     private TextView averageTextView;
     private EditText aimMarkEdit;
@@ -48,7 +50,6 @@ public class SubjectActivity extends AppCompatActivity
             throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
         }
 
-        marksLayout = findViewById(R.id.marksLayout);
         termSpinner = findViewById(R.id.termSpinner);
         averageTextView = findViewById(R.id.averageTextView);
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
@@ -128,10 +129,8 @@ public class SubjectActivity extends AppCompatActivity
         ((TextView)findViewById(R.id.teacher)).setText(data.getTeacher());
     }
     private void showMarks() {
-        marksLayout.removeAllViews();
-        for (MarkData mark : data.getMarks()) {
-            marksLayout.addView(new MarkItem(getApplicationContext(), mark));
-        }
+        ListView marksLayout = findViewById(R.id.marksList);
+        marksLayout.setAdapter(new ItemArrayAdapter<>(this, R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
     }
 
 

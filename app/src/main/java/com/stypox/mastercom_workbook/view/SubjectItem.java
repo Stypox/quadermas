@@ -22,7 +22,7 @@ public class SubjectItem extends ConstraintLayout implements View.OnClickListene
 
     private void initializeViews(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.subject_item, this);
+        inflater.inflate(R.layout.item_subject, this);
         onFinishInflate();
     }
 

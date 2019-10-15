@@ -2,8 +2,8 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -25,6 +25,7 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.DateFormatting;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
+import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -201,8 +202,12 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void showMark(MarkData markData) {
-        markLayout.removeAllViews();
-        markLayout.addView(new MarkDetailItem(getApplicationContext(), markData));
+        if (markLayout.getChildCount() == 0) {
+            markLayout.addView(LayoutInflater.from(this).inflate(R.layout.item_mark_detail, markLayout, false));
+        }
+
+        // TODO
+        new MarkDetailItemHolder(markLayout.getChildAt(0)).updateItemData(markData);
     }
     private void hideMark() {
         markLayout.removeAllViews();

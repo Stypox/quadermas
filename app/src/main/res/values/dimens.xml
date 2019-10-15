@@ -9,4 +9,6 @@
     <dimen name="chartCircleRadius">1.3dp</dimen>
 
     <dimen name="loginPartsDistance">30dp</dimen>
+
+    <dimen name="markDetailItemNoDescription">8dp</dimen>
 </resources>

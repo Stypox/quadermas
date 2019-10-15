@@ -1,30 +1,26 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
+import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 public class MarksActivity extends AppCompatActivity
     implements Toolbar.OnMenuItemClickListener {
     public static final String subjectsIntentKey = "subjects";
 
-    private ArrayList<SubjectData> subjects;
-
-    private LinearLayout marksLayout;
-
-    private ArrayList<MarkDetailItem> items;
+    private ItemArrayAdapter<MarkData> marksArrayAdapter;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -36,13 +32,17 @@ public class MarksActivity extends AppCompatActivity
 
         toolbar.setOnMenuItemClickListener(this);
 
-        subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
+        List<SubjectData> subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
+        ArrayList<MarkData> marks = new ArrayList<>();
+        for (SubjectData subject : subjects) {
+            marks.addAll(subject.getMarks());
+        }
 
-        marksLayout = findViewById(R.id.marksLayout);
+        ListView marksView = findViewById(R.id.marksList);
+        marksArrayAdapter = new ItemArrayAdapter<>(this, R.layout.item_mark_detail, marks, new MarkDetailItemHolder.Factory());
+        marksView.setAdapter(marksArrayAdapter);
 
-        buildItemsArray();
         sortMarksByDate();
-        showMarks();
     }
 
     @Override
@@ -51,27 +51,11 @@ public class MarksActivity extends AppCompatActivity
         return true;
     }
 
-    private void buildItemsArray() {
-        items = new ArrayList<>();
-        for (SubjectData subject : subjects) {
-            for (MarkData mark : subject.getMarks()) {
-                items.add(new MarkDetailItem(getApplicationContext(), mark));
-            }
-        }
-    }
-
     private void sortMarksByDate() {
-        Collections.sort(items, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        marksArrayAdapter.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
     }
     private void sortMarksByValue() {
-        Collections.sort(items, (o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
-    }
-
-    private void showMarks() {
-        marksLayout.removeAllViews();
-        for (MarkDetailItem item : items) {
-            marksLayout.addView(item);
-        }
+        marksArrayAdapter.sort((o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
     }
 
     @Override
@@ -79,11 +63,9 @@ public class MarksActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.sortByDateAction:
                 sortMarksByDate();
-                showMarks();
                 return true;
             case R.id.sortByValueAction:
                 sortMarksByValue();
-                showMarks();
                 return true;
             default:
                 return false;
