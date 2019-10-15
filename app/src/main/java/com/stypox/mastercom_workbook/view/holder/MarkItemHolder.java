@@ -1,8 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 

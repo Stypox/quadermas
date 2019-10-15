@@ -16,7 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +30,8 @@ import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
-import com.stypox.mastercom_workbook.view.SubjectItem;
+import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
+import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -45,8 +46,8 @@ public class MainActivity extends AppCompatActivity
 
     private CompositeDisposable disposables;
 
-    private LinearLayout subjectsLayout;
     private SwipeRefreshLayout refreshLayout;
+    private ItemArrayAdapter<SubjectData> subjectsArrayAdapter;
 
     private MenuItem marksMenuItem;
     private MenuItem statisticsMenuItem;
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity
     private TextView fullAPIUrlView;
 
     private ArrayList<SubjectData> subjects;
+
+
+    ////////////////////////
+    // ACTIVITY LIFECYCLE //
+    ////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +70,7 @@ public class MainActivity extends AppCompatActivity
 
         disposables = new CompositeDisposable();
 
-        subjectsLayout = findViewById(R.id.subjectsLayout);
         refreshLayout = findViewById(R.id.refreshLayout);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         marksMenuItem = navigationView.getMenu().findItem(R.id.menu_marks);
@@ -76,6 +80,12 @@ public class MainActivity extends AppCompatActivity
         fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
         fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
 
+        subjects = new ArrayList<>();
+        ListView subjectList = findViewById(R.id.subjectList);
+        subjectsArrayAdapter = new ItemArrayAdapter<>(this, R.layout.item_subject, subjects, new SubjectItemHolder.Factory());
+        subjectList.setAdapter(subjectsArrayAdapter);
+
+
         refreshLayout.setOnRefreshListener(this::reloadSubjects);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,13 +94,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.getMenu().findItem(R.id.menu_marks).setEnabled(false);
         reloadIfLoggedIn();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -117,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     ////////////////////
     // LOGIN AND LOAD //
     ////////////////////
@@ -139,10 +148,10 @@ public class MainActivity extends AppCompatActivity
         marksMenuItem.setEnabled(false);
         statisticsMenuItem.setEnabled(false);
         refreshLayout.setRefreshing(true);
-        subjectsLayout.removeAllViews();
 
         disposables.clear();
-        subjects = new ArrayList<>();
+        subjects.clear();
+        subjectsArrayAdapter.notifyDataSetChanged();
         authenticate();
     }
 
@@ -187,7 +196,7 @@ public class MainActivity extends AppCompatActivity
                             refreshLayout.setRefreshing(false);
                         }));
     }
-    
+
     private void onAuthenticationCompleted(String fullName) {
         fullNameView.setText(fullName);
 
@@ -230,7 +239,7 @@ public class MainActivity extends AppCompatActivity
 
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
-        subjectsLayout.addView(new SubjectItem(this, subjectData));
+        subjectsArrayAdapter.notifyDataSetChanged();
     }
 
 
