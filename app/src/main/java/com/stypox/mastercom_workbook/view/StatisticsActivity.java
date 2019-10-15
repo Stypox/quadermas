@@ -2,8 +2,11 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -44,14 +47,28 @@ public class StatisticsActivity extends AppCompatActivity {
     private LineChart marksChart;
     private LinearLayout markLayout;
 
+
+    ////////////////////////
+    // ACTIVITY LIFECYCLE //
+    ////////////////////////
+
     @Override
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.activity_title_statistics));
+
 
         subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
         buildMarksArray();
+
 
         overallAverageTermSpinner = findViewById(R.id.overallAverageTermSpinner);
         overallAverageModeSpinner = findViewById(R.id.overallAverageModeSpinner);
@@ -72,6 +89,7 @@ public class StatisticsActivity extends AppCompatActivity {
             overallAverageModeTextView.setVisibility(View.GONE);
             overallAverageModeSpinner.setVisibility(View.GONE);
             overallAverageDivider.setVisibility(View.GONE);
+            actionBar.setSubtitle(subjects.get(0).getName());
         } else {
             overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
         }
@@ -81,6 +99,17 @@ public class StatisticsActivity extends AppCompatActivity {
         fillMarksChart();
         formatMarksChart();
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+
+    ////////
+    // UI //
+    ////////
 
     private void setupListeners() {
         overallAverageTermSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -128,7 +157,6 @@ public class StatisticsActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void buildMarksArray() {
         marks = new ArrayList<>();
@@ -182,6 +210,7 @@ public class StatisticsActivity extends AppCompatActivity {
         axisRight.setDrawGridLines(false);
         axisRight.setValueFormatter(markFormatter);
     }
+
     private void fillMarksChart() {
         ArrayList<Entry> chartEntries = new ArrayList<>();
         for(MarkData mark : marks) {
@@ -209,10 +238,15 @@ public class StatisticsActivity extends AppCompatActivity {
         // TODO
         new MarkDetailItemHolder(markLayout.getChildAt(0)).updateItemData(markData);
     }
+
     private void hideMark() {
         markLayout.removeAllViews();
     }
 
+
+    /////////////
+    // AVERAGE //
+    /////////////
 
     private float getOverallAverageOfRoundedAverages(int term) {
         float sum = 0;
@@ -227,6 +261,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         return sum / numberOfSubjects;
     }
+
     private float getOverallAverageOfAverages(int term) {
         float sum = 0;
         int numberOfSubjects = 0;
@@ -240,6 +275,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         return sum / numberOfSubjects;
     }
+
     private float getOverallAverageOfMarks(int term) {
         float sum = 0;
         int numberOfMarks = 0;

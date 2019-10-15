@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -37,6 +38,11 @@ public class SubjectActivity extends AppCompatActivity
     private EditText remainingTestsEdit;
     private TextView neededMarkView;
 
+
+    ////////////////////////
+    // ACTIVITY LIFECYCLE //
+    ////////////////////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +51,19 @@ public class SubjectActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
         if (data.getMarks().isEmpty()) {
             throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
         }
+
+
+        actionBar.setTitle(data.getName());
+        actionBar.setSubtitle(data.getTeacher());
 
 
         termSpinner = findViewById(R.id.termSpinner);
@@ -74,12 +88,30 @@ public class SubjectActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.subject, menu);
 
-        toolbar.setTitle(data.getName());
-        toolbar.setSubtitle(data.getTeacher());
-
         TextView titleView = (TextView) toolbar.getChildAt(0);
         titleView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+
         return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.showMarksAction:
+                openMarksActivity();
+                return true;
+            case R.id.showStatisticsAction:
+                openStatisticsActivity();
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void setupListeners() {
@@ -132,6 +164,27 @@ public class SubjectActivity extends AppCompatActivity
         });
     }
 
+    private void openMarksActivity() {
+        Intent intent = new Intent(this, MarksActivity.class);
+        ArrayList<SubjectData> subjects = new ArrayList<>();
+        subjects.add(this.data);
+        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
+        startActivity(intent);
+    }
+
+    private void openStatisticsActivity() {
+        Intent intent = new Intent(this, StatisticsActivity.class);
+        ArrayList<SubjectData> subjects = new ArrayList<>();
+        subjects.add(this.data);
+        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
+        startActivityForResult(intent, 0);
+    }
+
+
+
+    /////////////
+    // AVERAGE //
+    /////////////
 
     private void updateAverage() throws ArithmeticException {
         try {
@@ -152,33 +205,4 @@ public class SubjectActivity extends AppCompatActivity
         }
     }
 
-
-    private void openMarksActivity() {
-        Intent intent = new Intent(this, MarksActivity.class);
-        ArrayList<SubjectData> subjects = new ArrayList<>();
-        subjects.add(this.data);
-        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
-        startActivity(intent);
-    }
-    private void openStatisticsActivity() {
-        Intent intent = new Intent(this, StatisticsActivity.class);
-        ArrayList<SubjectData> subjects = new ArrayList<>();
-        subjects.add(this.data);
-        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.showMarksAction:
-                openMarksActivity();
-                return true;
-            case R.id.showStatisticsAction:
-                openStatisticsActivity();
-                return true;
-            default:
-                return false;
-        }
-    }
 }

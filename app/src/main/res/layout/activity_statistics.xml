@@ -1,131 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="@style/AppTheme">
+    tools:context=".view.StatisticsActivity">
 
+    <include layout="@layout/app_bar" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/overallAverageLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/overallAverageTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/overall_average_title"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/AppTheme">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout3"
+            android:id="@+id/overallAverageLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/overallAverageTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/term_title"
-                app:layout_constraintBottom_toBottomOf="@+id/overallAverageTermSpinner"
-                app:layout_constraintEnd_toStartOf="@+id/overallAverageTermSpinner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/overallAverageTermSpinner" />
-
-            <Spinner
-                android:id="@+id/overallAverageTermSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:entries="@array/terms_spinner_entries"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/overall_average_title"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/term_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/overallAverageTermSpinner"
+                    app:layout_constraintEnd_toStartOf="@+id/overallAverageTermSpinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/overallAverageTermSpinner" />
+
+                <Spinner
+                    android:id="@+id/overallAverageTermSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:entries="@array/terms_spinner_entries"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
         </android.support.constraint.ConstraintLayout>
 
+
+        <TextView
+            android:id="@+id/overallAverageTextView"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="60sp"
+            app:layout_constraintBottom_toBottomOf="@+id/overallAverageLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/overallAverageLayout"
+            tools:text="7.51" />
+
+        <Spinner
+            android:id="@+id/overallAverageModeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:entries="@array/overall_average_mode_entries"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/overallAverageModeTextView" />
+
+        <TextView
+            android:id="@+id/overallAverageModeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="@string/overall_average_mode_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/overallAverageLayout" />
+
+        <View
+            android:id="@+id/overallAverageDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintTop_toBottomOf="@+id/overallAverageModeSpinner"
+            tools:layout_editor_absoluteX="-7dp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/marksChart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintTop_toBottomOf="@+id/overallAverageDivider" />
+
+        <LinearLayout
+            android:id="@+id/markLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/marksChart"
+            tools:layout_editor_absoluteX="8dp" />
+
     </android.support.constraint.ConstraintLayout>
-
-
-    <TextView
-        android:id="@+id/overallAverageTextView"
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="@+id/overallAverageLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/overallAverageLayout"
-        tools:text="7.51" />
-
-    <Spinner
-        android:id="@+id/overallAverageModeSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:entries="@array/overall_average_mode_entries"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overallAverageModeTextView" />
-
-    <TextView
-        android:id="@+id/overallAverageModeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="@string/overall_average_mode_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overallAverageLayout" />
-
-    <View
-        android:id="@+id/overallAverageDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/overallAverageModeSpinner"
-        tools:layout_editor_absoluteX="-7dp" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/marksChart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintTop_toBottomOf="@+id/overallAverageDivider" />
-
-    <LinearLayout
-        android:id="@+id/markLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/marksChart"
-        tools:layout_editor_absoluteX="8dp" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

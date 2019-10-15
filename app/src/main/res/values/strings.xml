@@ -17,6 +17,9 @@
     <string name="menu_source_code">Source code</string>
     <string name="menu_report_bug">Report bug</string>
 
+    <string name="activity_title_statistics">Mark statistics</string>
+    <string name="activity_title_marks">Mark details</string>
+
     <string name="type_written">Written</string>
     <string name="type_oral">Oral</string>
     <string name="type_practical">Practical</string>

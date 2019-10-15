@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,6 +23,11 @@ public class MarksActivity extends AppCompatActivity
 
     private ItemArrayAdapter<MarkData> marksArrayAdapter;
 
+
+    ////////////////////////
+    // ACTIVITY LIFECYCLE //
+    ////////////////////////
+
     @Override
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +35,21 @@ public class MarksActivity extends AppCompatActivity
         setContentView(R.layout.activity_marks);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         toolbar.setOnMenuItemClickListener(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.activity_title_marks));
+
 
         List<SubjectData> subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
         ArrayList<MarkData> marks = new ArrayList<>();
         for (SubjectData subject : subjects) {
             marks.addAll(subject.getMarks());
+        }
+        if (subjects.size() == 1) {
+            actionBar.setSubtitle(subjects.get(0).getName());
         }
 
         ListView marksView = findViewById(R.id.marksList);
@@ -51,11 +65,10 @@ public class MarksActivity extends AppCompatActivity
         return true;
     }
 
-    private void sortMarksByDate() {
-        marksArrayAdapter.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-    }
-    private void sortMarksByValue() {
-        marksArrayAdapter.sort((o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     @Override
@@ -70,5 +83,18 @@ public class MarksActivity extends AppCompatActivity
             default:
                 return false;
         }
+    }
+
+
+    ///////////////////
+    // SORTING MARKS //
+    ///////////////////
+
+    private void sortMarksByDate() {
+        marksArrayAdapter.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+    }
+
+    private void sortMarksByValue() {
+        marksArrayAdapter.sort((o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
     }
 }

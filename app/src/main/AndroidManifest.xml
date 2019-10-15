@@ -24,8 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.SubjectActivity" />
-        <activity android:name=".login.LoginDialog" />
         <activity android:name=".view.MarksActivity" />
         <activity android:name=".view.StatisticsActivity" />
+        <activity android:name=".login.LoginDialog" />
     </application>
 </manifest>
