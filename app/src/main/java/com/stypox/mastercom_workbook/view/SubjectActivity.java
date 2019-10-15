@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,45 +30,55 @@ public class SubjectActivity extends AppCompatActivity
 
     private SubjectData data;
 
+    private Toolbar toolbar;
     private Spinner termSpinner;
-    private TextView averageTextView;
+    private TextView averageView;
     private EditText aimMarkEdit;
     private EditText remainingTestsEdit;
-    private TextView neededMarkTextView;
+    private TextView neededMarkView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
+
 
         data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
         if (data.getMarks().isEmpty()) {
             throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
         }
 
+
         termSpinner = findViewById(R.id.termSpinner);
-        averageTextView = findViewById(R.id.averageTextView);
+        averageView = findViewById(R.id.averageTextView);
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
-        neededMarkTextView = findViewById(R.id.neededMarkTextView);
+        neededMarkView = findViewById(R.id.neededMarkTextView);
 
         termSpinner.setSelection(data.getMarks().get(0).getTerm(), false);
         aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(data.getMarks().get(0).getTerm())))));
         updateAverage();
         updateNeededMark();
 
-        setupListeners();
+        ListView marksLayout = findViewById(R.id.marksList);
+        marksLayout.setAdapter(new ItemArrayAdapter<>(this, R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
 
-        showInfo();
-        showMarks();
+
+        setupListeners();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.subject, menu);
+
+        toolbar.setTitle(data.getName());
+        toolbar.setSubtitle(data.getTeacher());
+
+        TextView titleView = (TextView) toolbar.getChildAt(0);
+        titleView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
         return true;
     }
 
@@ -122,32 +133,22 @@ public class SubjectActivity extends AppCompatActivity
     }
 
 
-    private void showInfo() {
-        ((TextView)findViewById(R.id.subject_name)).setText(data.getName());
-        ((TextView)findViewById(R.id.teacher)).setText(data.getTeacher());
-    }
-    private void showMarks() {
-        ListView marksLayout = findViewById(R.id.marksList);
-        marksLayout.setAdapter(new ItemArrayAdapter<>(this, R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
-    }
-
-
     private void updateAverage() throws ArithmeticException {
         try {
             float average = data.getAverage(termSpinner.getSelectedItemPosition());
-            averageTextView.setText(MarkFormatting.floatToString(average, 3));
-            averageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), average));
+            averageView.setText(MarkFormatting.floatToString(average, 3));
+            averageView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), average));
         } catch (Throwable e) {
-            averageTextView.setText("");
+            averageView.setText("");
         }
     }
 
     private void updateNeededMark() {
         try {
             float neededMark = data.getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
-            neededMarkTextView.setText(MarkFormatting.floatToString(neededMark, 3));
+            neededMarkView.setText(MarkFormatting.floatToString(neededMark, 3));
         } catch (Throwable e) {
-            neededMarkTextView.setText("");
+            neededMarkView.setText("");
         }
     }
 
