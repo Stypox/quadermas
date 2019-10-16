@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.view.holder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,7 +12,7 @@ import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.view.SubjectActivity;
 
-public class SubjectItemHolder implements ItemHolder<SubjectData> {
+public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private View view;
     private TextView nameView;
     private TextView teacherTextView;
@@ -21,6 +22,8 @@ public class SubjectItemHolder implements ItemHolder<SubjectData> {
 
 
     public SubjectItemHolder(View view) {
+        super(view);
+
         this.view = view;
         nameView = view.findViewById(R.id.name);
         teacherTextView = view.findViewById(R.id.teacher);
@@ -29,6 +32,7 @@ public class SubjectItemHolder implements ItemHolder<SubjectData> {
         context = view.getContext();
     }
 
+    @NonNull
     @Override
     public void updateItemData(SubjectData data) {
         nameView.setText(data.getName());

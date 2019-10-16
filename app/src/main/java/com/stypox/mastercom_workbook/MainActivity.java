@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private CompositeDisposable disposables;
 
     private SwipeRefreshLayout refreshLayout;
-    private ItemArrayAdapter<SubjectData> subjectsArrayAdapter;
+    private ItemArrayAdapter<SubjectData, SubjectItemHolder> subjectsArrayAdapter;
 
     private MenuItem marksMenuItem;
     private MenuItem statisticsMenuItem;
@@ -82,8 +84,9 @@ public class MainActivity extends AppCompatActivity
         fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
 
         subjects = new ArrayList<>();
-        ListView subjectList = findViewById(R.id.subjectList);
-        subjectsArrayAdapter = new ItemArrayAdapter<>(this, R.layout.item_subject, subjects, new SubjectItemHolder.Factory());
+        RecyclerView subjectList = findViewById(R.id.subjectList);
+        subjectList.setLayoutManager(new LinearLayoutManager(this));
+        subjectsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_subject, subjects, new SubjectItemHolder.Factory());
         subjectList.setAdapter(subjectsArrayAdapter);
 
 
@@ -240,8 +243,7 @@ public class MainActivity extends AppCompatActivity
 
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
-        Collections.sort(subjects, (o1, o2) -> o1.getName().compareTo(o2.getName()));
-        subjectsArrayAdapter.notifyDataSetChanged();
+        subjectsArrayAdapter.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
     }
 
 

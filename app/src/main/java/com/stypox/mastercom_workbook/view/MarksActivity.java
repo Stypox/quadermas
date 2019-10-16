@@ -3,6 +3,9 @@ package com.stypox.mastercom_workbook.view;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,13 +18,14 @@ import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MarksActivity extends AppCompatActivity
     implements Toolbar.OnMenuItemClickListener {
     public static final String subjectsIntentKey = "subjects";
 
-    private ItemArrayAdapter<MarkData> marksArrayAdapter;
+    private ItemArrayAdapter<MarkData, MarkDetailItemHolder> marksArrayAdapter;
 
 
     ////////////////////////
@@ -52,8 +56,9 @@ public class MarksActivity extends AppCompatActivity
             actionBar.setSubtitle(subjects.get(0).getName());
         }
 
-        ListView marksView = findViewById(R.id.marksList);
-        marksArrayAdapter = new ItemArrayAdapter<>(this, R.layout.item_mark_detail, marks, new MarkDetailItemHolder.Factory());
+        RecyclerView marksView = findViewById(R.id.marksList);
+        marksView.setLayoutManager(new LinearLayoutManager(this));
+        marksArrayAdapter = new ItemArrayAdapter<>(R.layout.item_mark_detail, marks, new MarkDetailItemHolder.Factory());
         marksView.setAdapter(marksArrayAdapter);
 
         sortMarksByDate();

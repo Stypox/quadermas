@@ -15,13 +15,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".view.MarksActivity">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/marksList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:divider="?android:attr/listDivider"
-            android:showDividers="middle|end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

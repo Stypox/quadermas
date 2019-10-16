@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -77,8 +78,9 @@ public class SubjectActivity extends AppCompatActivity
         updateAverage();
         updateNeededMark();
 
-        ListView marksLayout = findViewById(R.id.marksList);
-        marksLayout.setAdapter(new ItemArrayAdapter<>(this, R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
+        RecyclerView marksLayout = findViewById(R.id.marksList);
+        marksLayout.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
 
 
         setupListeners();

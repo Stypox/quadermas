@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,7 +9,7 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
-public class MarkItemHolder implements ItemHolder<MarkData> {
+public class MarkItemHolder extends ItemHolder<MarkData> {
     private final TextView valueView;
     private final TextView typeView;
     private final TextView dateView;
@@ -17,13 +18,15 @@ public class MarkItemHolder implements ItemHolder<MarkData> {
 
 
     public MarkItemHolder(View view) {
+        super(view);
+        context = view.getContext();
+
         valueView = view.findViewById(R.id.mark_value);
         typeView = view.findViewById(R.id.mark_type);
         dateView = view.findViewById(R.id.mark_date);
-
-        context = view.getContext();
     }
 
+    @NonNull
     @Override
     public void updateItemData(MarkData data) {
         valueView.setText(data.getValueRepresentation());

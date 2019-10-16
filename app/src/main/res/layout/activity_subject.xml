@@ -21,12 +21,10 @@
             tools:layout_editor_absoluteX="-149dp"
             tools:layout_editor_absoluteY="-16dp">
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/marksList"
                 android:layout_width="match_parent"
                 android:layout_height="155dp"
-                android:divider="?android:attr/listDivider"
-                android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
 
