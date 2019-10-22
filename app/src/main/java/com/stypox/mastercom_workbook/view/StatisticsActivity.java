@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +55,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         Toolbar toolbar = findViewById(R.id.toolbar);
