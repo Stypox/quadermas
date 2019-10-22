@@ -19,7 +19,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +36,6 @@ import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
