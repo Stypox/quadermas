@@ -47,7 +47,7 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
             descriptionView.setVisibility(View.VISIBLE);
         }
 
-        teacherDateView.setText(String.format("%s  -  %s", data.getTeacher(), data.getDateRepresentation()));
+        teacherDateView.setText(context.getResources().getString(R.string.two_strings, data.getTeacher(), data.getDateRepresentation()));
     }
 
     public static class Factory implements ItemHolderFactory<MarkDetailItemHolder> {
