@@ -26,7 +26,6 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
         dateView = view.findViewById(R.id.mark_date);
     }
 
-    @NonNull
     @Override
     public void updateItemData(MarkData data) {
         valueView.setText(data.getValueRepresentation());

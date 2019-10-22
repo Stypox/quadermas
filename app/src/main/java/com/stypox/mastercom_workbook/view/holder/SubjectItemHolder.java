@@ -32,7 +32,6 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         context = view.getContext();
     }
 
-    @NonNull
     @Override
     public void updateItemData(SubjectData data) {
         nameView.setText(data.getName());
