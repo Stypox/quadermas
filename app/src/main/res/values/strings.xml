@@ -57,4 +57,5 @@
     <string name="marks_chart_label">Marks</string>
     <string name="no_marks_for_statistics">There are no marks to show in statistics</string>
     <string name="two_strings">%s  -  %s</string>
+    <string name="menu_documents">Documents</string>
 </resources>

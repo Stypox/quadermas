@@ -27,5 +27,6 @@
         <activity android:name=".view.MarksActivity" />
         <activity android:name=".view.StatisticsActivity" />
         <activity android:name=".login.LoginDialog" />
+        <activity android:name=".view.DocumentsActivity" />
     </application>
 </manifest>
