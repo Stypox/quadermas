@@ -10,7 +10,6 @@ import java.util.Date;
 public class DocumentData {
     private final String name;
     private final String id;
-    private final String mime;
     private final String owner;
     private final Date date;
     private final String subject;
@@ -18,7 +17,6 @@ public class DocumentData {
     public DocumentData(JSONObject json) throws JSONException, ParseException {
         name = json.getString("name");
         id = json.getString("id");
-        mime = json.getString("mime");
         owner = json.getString("owner_name") + " " + json.getString("owner_surname");
         date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.getString("received"));
 
@@ -31,9 +29,6 @@ public class DocumentData {
     }
     public String getId() {
         return id;
-    }
-    public String getMime() {
-        return mime;
     }
     public String getOwner() {
         return owner;
