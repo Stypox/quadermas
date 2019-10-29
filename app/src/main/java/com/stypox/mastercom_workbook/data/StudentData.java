@@ -12,13 +12,14 @@ public class StudentData {
 
     public StudentData(JSONObject json) throws JSONException {
         classes = new ArrayList<>();
+        JSONObject channels = json.getJSONObject("result").getJSONObject("channels");
 
-        JSONArray studenti = json.getJSONArray("studenti");
+        JSONArray studenti = channels.getJSONArray("studenti");
         for (int i = 0; i < studenti.length(); ++i) {
             classes.add(new ClassData(studenti.getJSONObject(i)));
         }
 
-        JSONArray professori = json.getJSONArray("professori");
+        JSONArray professori = channels.getJSONArray("professori");
         for (int i = 0; i < professori.length(); ++i) {
             classes.add(new ClassData(professori.getJSONObject(i)));
         }
