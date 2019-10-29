@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity
         fullNameView.setText("");
         fullAPIUrlView.setText(ExtractorData.getFullAPIUrlToShow());
 
-        disposables.add(AuthenticationExtractor.authenticate()
+        disposables.add(AuthenticationExtractor.authenticateMain()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::onAuthenticationCompleted,
