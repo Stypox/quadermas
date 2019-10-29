@@ -21,7 +21,11 @@ public class DocumentData {
         date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.getString("received"));
 
         String quotedSubject = json.getJSONArray("tags").getString(0);
-        subject = quotedSubject.substring(1, quotedSubject.length()-1);
+        if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {
+            subject = quotedSubject.substring(1, quotedSubject.length()-1);
+        } else {
+            subject = quotedSubject;
+        }
     }
 
     public String getName() {
