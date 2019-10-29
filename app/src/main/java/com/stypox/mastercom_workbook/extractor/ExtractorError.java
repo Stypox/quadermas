@@ -53,7 +53,9 @@ public class ExtractorError extends Exception {
 
 
     public static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
-        if (throwable instanceof MalformedURLException) {
+        if (throwable instanceof ExtractorError) {
+            return (ExtractorError) throwable;
+        } else if (throwable instanceof MalformedURLException) {
             return new ExtractorError(Type.malformed_url, throwable);
         } else if (throwable instanceof JSONException) {
             if (jsonAlreadyParsed) {
