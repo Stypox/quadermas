@@ -6,18 +6,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class DocumentsExtractor {
     private static final String documentsUrl = "https://{api_url}.registroelettronico.com/messenger/1.0/documents/{year_id}";
 
 
-    public static Observable<DocumentData> fetchDocuments(String yearId) {
-        return Observable
-                .create((ObservableOnSubscribe<DocumentData>) emitter -> {
+    public static Single<List<DocumentData>> fetchDocuments(String yearId) {
+        return Single.fromCallable(() -> {
                     boolean jsonAlreadyParsed = false;
                     try {
                         URL url = new URL(documentsUrl
@@ -27,11 +27,12 @@ public class DocumentsExtractor {
                         JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
                         jsonAlreadyParsed = true;
 
-                        JSONArray list = jsonResponse.getJSONArray("results");
-                        for (int i = 0; i < list.length(); i++) {
-                            emitter.onNext(new DocumentData(list.getJSONObject(i)));
+                        JSONArray jsonDocuments = jsonResponse.getJSONArray("results");
+                        List<DocumentData> documents = new ArrayList<>();
+                        for (int i = 0; i < jsonDocuments.length(); i++) {
+                            documents.add(new DocumentData(jsonDocuments.getJSONObject(i)));
                         }
-                        emitter.onComplete();
+                        return documents;
                     } catch (Throwable e) {
                         throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
                     }
