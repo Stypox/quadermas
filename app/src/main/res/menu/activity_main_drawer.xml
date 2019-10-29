@@ -3,26 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <group>
+        <item
+            android:id="@+id/menu_marks"
+            android:icon="@drawable/ic_menu_marks"
+            android:title="@string/menu_marks"
+            android:enabled="false" />
+        <item
+            android:id="@+id/menu_statistics"
+            android:icon="@drawable/ic_menu_statistics"
+            android:title="@string/menu_statistics"
+            android:enabled="false" />
+
+        <item
+            android:id="@+id/menu_documents"
+            android:icon="@drawable/ic_menu_documents"
+            android:title="@string/menu_documents" />
+
+    </group>
+
     <item android:title="@string/menu_account_actions_title">
         <menu>
             <item
                 android:id="@+id/menu_login"
                 android:icon="@drawable/ic_menu_login"
                 android:title="@string/menu_logout" />
-        </menu>
-    </item>
-    <item android:title="@string/menu_marks_actions_title">
-        <menu>
-            <item
-                android:id="@+id/menu_marks"
-                android:icon="@drawable/ic_menu_marks"
-                android:title="@string/menu_marks"
-                android:enabled="false" />
-            <item
-                android:id="@+id/menu_statistics"
-                android:icon="@drawable/ic_menu_statistics"
-                android:title="@string/menu_statistics"
-                android:enabled="false" />
         </menu>
     </item>
 

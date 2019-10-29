@@ -30,6 +30,7 @@ import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginDialog;
+import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
 import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
@@ -44,7 +45,6 @@ import io.reactivex.observers.DisposableObserver;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final int requestCodeLoginDialog = 0;
-    private static final int requestCodeStatisticsActivity = 1;
 
     private CompositeDisposable disposables;
 
@@ -110,22 +110,6 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         disposables.dispose();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case requestCodeLoginDialog:
-                reloadIfLoggedIn();
-                break;
-            case requestCodeStatisticsActivity:
-                if (resultCode == StatisticsActivity.resultErrorNoMarks) {
-                    Snackbar.make(findViewById(android.R.id.content),
-                            getString(R.string.no_marks_for_statistics), Snackbar.LENGTH_SHORT)
-                            .show();
-                }
-                break;
-        }
     }
 
 
@@ -250,6 +234,15 @@ public class MainActivity extends AppCompatActivity
     // ACTIVITIES //
     ////////////////
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case requestCodeLoginDialog:
+                reloadIfLoggedIn();
+                break;
+        }
+    }
+
     private void openMarksActivity() {
         Intent intent = new Intent(this, MarksActivity.class);
         intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
@@ -259,7 +252,12 @@ public class MainActivity extends AppCompatActivity
     private void openStatisticsActivity() {
         Intent intent = new Intent(this, StatisticsActivity.class);
         intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-        startActivityForResult(intent, requestCodeStatisticsActivity);
+        startActivity(intent);
+    }
+
+    private void openDocumentsActivity() {
+        Intent intent = new Intent(this, DocumentsActivity.class);
+        startActivity(intent);
     }
 
     private void openUrlInBrowser(String url) {
@@ -284,10 +282,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch (id) {
+        switch (item.getItemId()) {
             case R.id.menu_login:
                 openLoginDialogThenReload();
                 break;
@@ -296,6 +291,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.menu_statistics:
                 openStatisticsActivity();
+                break;
+            case R.id.menu_documents:
+                openDocumentsActivity();
                 break;
             case R.id.menu_source_code:
                 openUrlInBrowser(getResources().getString(R.string.source_code_url));
