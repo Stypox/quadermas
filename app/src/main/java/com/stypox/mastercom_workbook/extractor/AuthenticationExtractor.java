@@ -18,7 +18,6 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class AuthenticationExtractor {
     private static final String phpsessidAuthenticationUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?user={user}&password={password}";
@@ -85,9 +84,13 @@ public class AuthenticationExtractor {
     }
 
 
+    static String getCookie() {
+        return phpsessidCookie + "; " + messengerCookie;
+    }
+
     static JSONObject fetchJsonAuthenticated(URL url) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.addRequestProperty("Cookie", phpsessidCookie + "; " + messengerCookie); // auth cookie
+        urlConnection.addRequestProperty("Cookie", getCookie()); // auth cookie
         String response = UrlConnectionUtils.readAll(urlConnection);
 
         return new JSONObject(response);
