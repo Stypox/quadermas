@@ -66,6 +66,7 @@ public class DocumentsActivity extends AppCompatActivity {
         RecyclerView documentList = findViewById(R.id.documentList);
         documentList.setLayoutManager(new LinearLayoutManager(this));
         documentsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_document, documents, new DocumentItemHolder.Factory());
+        documentsArrayAdapter.setOnItemClickListener(this::downloadDocument);
         documentList.setAdapter(documentsArrayAdapter);
 
 
