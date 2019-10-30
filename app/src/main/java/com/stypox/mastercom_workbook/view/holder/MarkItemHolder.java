@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view.holder;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,13 +18,13 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
     private final Context context;
 
 
-    public MarkItemHolder(View view) {
-        super(view);
-        context = view.getContext();
+    public MarkItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<MarkData> adapter) {
+        super(itemView, adapter);
+        context = itemView.getContext();
 
-        valueView = view.findViewById(R.id.mark_value);
-        typeView = view.findViewById(R.id.mark_type);
-        dateView = view.findViewById(R.id.mark_date);
+        valueView = itemView.findViewById(R.id.mark_value);
+        typeView = itemView.findViewById(R.id.mark_type);
+        dateView = itemView.findViewById(R.id.mark_date);
     }
 
     @Override
@@ -34,10 +35,10 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
         dateView.setText(data.getDateRepresentation());
     }
 
-    public static class Factory implements ItemHolderFactory<MarkItemHolder> {
+    public static class Factory implements ItemHolderFactory<MarkData> {
         @Override
-        public MarkItemHolder buildItemHolder(View view) {
-            return new MarkItemHolder(view);
+        public MarkItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<MarkData> adapter) {
+            return new MarkItemHolder(itemView, adapter);
         }
     }
 }

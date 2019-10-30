@@ -33,6 +33,7 @@ import com.stypox.mastercom_workbook.login.LoginDialog;
 import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
+import com.stypox.mastercom_workbook.view.SubjectActivity;
 import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private CompositeDisposable disposables;
 
     private SwipeRefreshLayout refreshLayout;
-    private ItemArrayAdapter<SubjectData, SubjectItemHolder> subjectsArrayAdapter;
+    private ItemArrayAdapter<SubjectData> subjectsArrayAdapter;
 
     private MenuItem marksMenuItem;
     private MenuItem statisticsMenuItem;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView subjectList = findViewById(R.id.subjectList);
         subjectList.setLayoutManager(new LinearLayoutManager(this));
         subjectsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_subject, subjects, new SubjectItemHolder.Factory());
+        subjectsArrayAdapter.setOnItemClickListener(this::openSubjectActivity);
         subjectList.setAdapter(subjectsArrayAdapter);
 
 
@@ -241,6 +243,12 @@ public class MainActivity extends AppCompatActivity
                 reloadIfLoggedIn();
                 break;
         }
+    }
+
+    private void openSubjectActivity(SubjectData subjectData) {
+        Intent intent = new Intent(this, SubjectActivity.class);
+        intent.putExtra(SubjectActivity.subjectDataIntentKey, subjectData);
+        startActivity(intent);
     }
 
     private void openMarksActivity() {

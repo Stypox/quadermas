@@ -40,7 +40,7 @@ public class DocumentsActivity extends AppCompatActivity {
     private DocumentData lastDownloadDocument;
 
     private SwipeRefreshLayout refreshLayout;
-    private ItemArrayAdapter<DocumentData, DocumentItemHolder> documentsArrayAdapter;
+    private ItemArrayAdapter<DocumentData> documentsArrayAdapter;
 
     private int nrClasses;
     private int nrClassesFetched;

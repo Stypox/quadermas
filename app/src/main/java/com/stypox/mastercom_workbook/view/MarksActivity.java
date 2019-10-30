@@ -26,7 +26,7 @@ public class MarksActivity extends AppCompatActivity
     implements Toolbar.OnMenuItemClickListener {
     public static final String subjectsIntentKey = "subjects";
 
-    private ItemArrayAdapter<MarkData, MarkDetailItemHolder> marksArrayAdapter;
+    private ItemArrayAdapter<MarkData> marksArrayAdapter;
 
 
     ////////////////////////

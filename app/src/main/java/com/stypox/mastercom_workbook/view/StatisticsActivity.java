@@ -237,7 +237,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         // TODO
-        new MarkDetailItemHolder(markLayout.getChildAt(0)).updateItemData(markData);
+        new MarkDetailItemHolder(markLayout.getChildAt(0), null).updateItemData(markData);
     }
 
     private void hideMark() {

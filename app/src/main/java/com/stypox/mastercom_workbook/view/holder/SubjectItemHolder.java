@@ -1,16 +1,15 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
-import com.stypox.mastercom_workbook.view.SubjectActivity;
 
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private TextView nameView;
@@ -20,14 +19,14 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private Context context;
 
 
-    public SubjectItemHolder(View view) {
-        super(view);
+    public SubjectItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
+        super(itemView, adapter);
 
-        nameView = view.findViewById(R.id.name);
-        teacherTextView = view.findViewById(R.id.teacher);
-        averageTextView = view.findViewById(R.id.average);
+        nameView = itemView.findViewById(R.id.name);
+        teacherTextView = itemView.findViewById(R.id.teacher);
+        averageTextView = itemView.findViewById(R.id.average);
 
-        context = view.getContext();
+        context = itemView.getContext();
     }
 
     @Override
@@ -52,18 +51,16 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
             averageTextView.setText(MarkFormatting.floatToString(average, 2));
             averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
 
-            itemView.setOnClickListener(v -> {
-                Intent openSubjectActivity = new Intent(context, SubjectActivity.class);
-                openSubjectActivity.putExtra(SubjectActivity.subjectDataIntentKey, data);
-                context.startActivity(openSubjectActivity);
-            });
+            if (adapter != null) {
+                itemView.setOnClickListener(v -> adapter.onItemClick(data));
+            }
         }
     }
 
-    public static class Factory implements ItemHolderFactory<SubjectItemHolder> {
+    public static class Factory implements ItemHolderFactory<SubjectData> {
         @Override
-        public SubjectItemHolder buildItemHolder(View view) {
-            return new SubjectItemHolder(view);
+        public SubjectItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
+            return new SubjectItemHolder(itemView, adapter);
         }
     }
 }
