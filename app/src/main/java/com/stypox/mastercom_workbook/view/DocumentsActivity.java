@@ -1,8 +1,13 @@
 package com.stypox.mastercom_workbook.view;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +34,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class DocumentsActivity extends AppCompatActivity {
+    private final int requestCodePermissionDialog = 0;
+
     private CompositeDisposable disposables;
+    private DocumentData lastDownloadDocument;
 
     private SwipeRefreshLayout refreshLayout;
     private ItemArrayAdapter<DocumentData, DocumentItemHolder> documentsArrayAdapter;
@@ -136,6 +144,42 @@ public class DocumentsActivity extends AppCompatActivity {
         } else {
             Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
                     .show();
+        }
+    }
+
+
+    //////////////
+    // DOWNLOAD //
+    //////////////
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case requestCodePermissionDialog:
+                if (lastDownloadDocument != null) {
+                    downloadDocument(lastDownloadDocument);
+                    lastDownloadDocument = null;
+                }
+                break;
+        }
+    }
+
+    public void downloadDocument(DocumentData documentData) {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (lastDownloadDocument != null) {
+                // user just denied permission
+                return;
+            }
+
+            // onActivityResult waits for when we are ready to download
+            lastDownloadDocument = documentData;
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    requestCodePermissionDialog);
+
+        } else {
+            DocumentsExtractor.downloadDocument(documentData, this);
         }
     }
 }
