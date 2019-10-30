@@ -13,7 +13,6 @@ import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.view.SubjectActivity;
 
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
-    private View view;
     private TextView nameView;
     private TextView teacherTextView;
     private TextView averageTextView;
@@ -24,7 +23,6 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     public SubjectItemHolder(View view) {
         super(view);
 
-        this.view = view;
         nameView = view.findViewById(R.id.name);
         teacherTextView = view.findViewById(R.id.teacher);
         averageTextView = view.findViewById(R.id.average);
@@ -39,13 +37,13 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
             teacherTextView.setText(data.getError().getMessage(context));
             averageTextView.setText("X");
             averageTextView.setTextColor(Color.BLACK);
-            view.setOnClickListener(null);
+            itemView.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
             averageTextView.setTextColor(Color.BLACK);
-            view.setOnClickListener(null);
+            itemView.setOnClickListener(null);
 
         } else {
             teacherTextView.setText(data.getTeacher());
@@ -54,7 +52,7 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
             averageTextView.setText(MarkFormatting.floatToString(average, 2));
             averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
 
-            view.setOnClickListener(v -> {
+            itemView.setOnClickListener(v -> {
                 Intent openSubjectActivity = new Intent(context, SubjectActivity.class);
                 openSubjectActivity.putExtra(SubjectActivity.subjectDataIntentKey, data);
                 context.startActivity(openSubjectActivity);
