@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.DocumentData;
+import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
     private TextView nameView;
@@ -26,55 +27,9 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
         nameView = itemView.findViewById(R.id.name);
         subjectAndOwnerView = itemView.findViewById(R.id.subjectAndOwner);
         nameScrollView = itemView.findViewById(R.id.nameScrollView);
+        nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
 
         context = itemView.getContext();
-
-
-        nameScrollView.setOnTouchListener(new View.OnTouchListener() {
-            boolean moved;
-
-            private boolean textCanScroll() {
-                View child = nameScrollView.getChildAt(0);
-                if (child == null) {
-                    return false;
-                }
-
-                int childWidth = (child).getWidth();
-                return nameScrollView.getWidth() < childWidth + nameScrollView.getPaddingLeft() + nameScrollView.getPaddingRight();
-
-            }
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // beginning of touch event
-                        moved = false;
-                        itemView.onTouchEvent(event);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (textCanScroll()) {
-                            moved = true;
-                            event.setAction(MotionEvent.ACTION_CANCEL);
-                            itemView.onTouchEvent(event);
-                            event.setAction(MotionEvent.ACTION_MOVE);
-                        } else {
-                            itemView.onTouchEvent(event);
-                        }
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                        itemView.onTouchEvent(event);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (!moved) {
-                            itemView.onTouchEvent(event);
-                        }
-                        break;
-                }
-
-                return false;
-            }
-        });
     }
 
     @Override
