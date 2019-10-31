@@ -116,8 +116,21 @@ public class DocumentsActivity extends AppCompatActivity {
             disposables.add(DocumentsExtractor.fetchDocuments(classData.getId())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            this::onDocumentsFetched,
-                            throwable -> onError(throwable, false)));
+                            (documentData) -> {
+                                onDocumentsFetched(documentData);
+                                increaseFetchedClasses();
+                            },
+                            throwable -> {
+                                onError(throwable, false);
+                                increaseFetchedClasses();
+                            }));
+        }
+    }
+
+    private void increaseFetchedClasses() {
+        ++nrClassesFetched;
+        if (nrClassesFetched == nrClasses) {
+            refreshLayout.setRefreshing(false);
         }
     }
 
@@ -125,11 +138,6 @@ public class DocumentsActivity extends AppCompatActivity {
         documents.addAll(fetchedDocuments);
         Collections.sort(documents, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         documentsArrayAdapter.notifyDataSetChanged();
-
-        ++nrClassesFetched;
-        if (nrClassesFetched == nrClasses) {
-            refreshLayout.setRefreshing(false);
-        }
     }
 
     private void onError(Throwable throwable, boolean fatal) {
