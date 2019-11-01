@@ -25,14 +25,14 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     @SuppressLint("ClickableViewAccessibility")
     public SubjectItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
         super(itemView, adapter);
+        context = itemView.getContext();
 
         nameView = itemView.findViewById(R.id.name);
         teacherTextView = itemView.findViewById(R.id.teacher);
         averageTextView = itemView.findViewById(R.id.average);
+
         HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
         nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
-
-        context = itemView.getContext();
     }
 
     @Override
