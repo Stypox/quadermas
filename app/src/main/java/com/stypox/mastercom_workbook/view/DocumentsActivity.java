@@ -268,7 +268,7 @@ public class DocumentsActivity extends AppCompatActivity
         }
 
         String[] options = new String[schoolYears.size() + 1];
-        options[0] = getString(R.string.all);
+        options[0] = getString(R.string.all_years);
 
         int i = 1;
         for (Integer schoolYear : schoolYears.descendingSet()) {
@@ -297,7 +297,7 @@ public class DocumentsActivity extends AppCompatActivity
         }
 
         String[] options = new String[subjects.size() + 1];
-        options[0] = getString(R.string.all);
+        options[0] = getString(R.string.all_subjects);
 
         int i = 1;
         for (String subject : subjects) {

@@ -60,7 +60,10 @@
 
     <string name="marks_chart_label">Marks</string>
     <string name="no_marks_for_statistics">There are no marks to show in statistics</string>
+
+    <string name="all_years">All school years</string>
+    <string name="all_subjects">All subjects</string>
+
     <string name="two_strings">%s  -  %s</string>
     <string name="three_strings">%s  -  %s  -  %s</string>
-    <string name="all">All</string>
 </resources>
