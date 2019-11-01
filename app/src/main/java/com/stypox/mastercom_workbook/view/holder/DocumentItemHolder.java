@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
     private TextView nameView;
     private TextView subjectAndOwnerView;
-    private HorizontalScrollView nameScrollView;
 
     private Context context;
 
@@ -26,7 +24,7 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
 
         nameView = itemView.findViewById(R.id.name);
         subjectAndOwnerView = itemView.findViewById(R.id.subjectAndOwner);
-        nameScrollView = itemView.findViewById(R.id.nameScrollView);
+        HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
         nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
 
         context = itemView.getContext();
