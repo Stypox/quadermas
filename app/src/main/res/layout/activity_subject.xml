@@ -24,7 +24,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/marksList"
                 android:layout_width="match_parent"
-                android:layout_height="155dp"
+                android:layout_height="@dimen/item_mark_height"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
 

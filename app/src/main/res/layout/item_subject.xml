@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="wrap_content"
     android:background="?selectableItemBackground">
 
     <TextView
         android:id="@+id/average"
         android:layout_width="80dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/highlightedText"
@@ -48,5 +48,6 @@
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/average"
+        app:layout_constraintTop_toBottomOf="@+id/nameScrollView"
         tools:text="John Smith" />
 </android.support.constraint.ConstraintLayout>

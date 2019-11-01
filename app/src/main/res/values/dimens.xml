@@ -7,9 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="chartCircleRadius">1.3dp</dimen>
-
-    <dimen name="loginPartsDistance">30dp</dimen>
-
-    <dimen name="markDetailItemNoDescription">8dp</dimen>
-    <dimen name="document_item_height">64dp</dimen>
+    <dimen name="item_mark_height">112dp</dimen>
+    <dimen name="item_mark_width">80dp</dimen>
 </resources>
