@@ -70,9 +70,6 @@ public class MarkData implements Serializable {
         }
         return ""; // useless
     }
-    public String getDateRepresentation() {
-        return DateFormatting.formatDate(date);
-    }
 
     public int getTerm() {
         if (date.getMonth() > 6) {
