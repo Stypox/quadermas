@@ -23,7 +23,7 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
         super(itemView, adapter);
 
         nameView = itemView.findViewById(R.id.name);
-        subjectAndOwnerView = itemView.findViewById(R.id.subjectAndOwner);
+        subjectAndOwnerView = itemView.findViewById(R.id.dateSubjectOwner);
         HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
         nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
 
