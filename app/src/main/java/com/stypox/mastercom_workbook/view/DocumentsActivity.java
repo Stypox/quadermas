@@ -277,7 +277,6 @@ public class DocumentsActivity extends AppCompatActivity
         }
 
         new AlertDialog.Builder(this)
-                .setTitle("Pick a year")
                 .setSingleChoiceItems(options, getCheckedItemIndex(options, schoolYearRepresentation(selectedYear)), (dialog, which) -> {
                     if (which == 0) {
                         selectedYear = null;
@@ -307,7 +306,6 @@ public class DocumentsActivity extends AppCompatActivity
         }
 
         new AlertDialog.Builder(this)
-                .setTitle("Pick a year")
                 .setSingleChoiceItems(options, getCheckedItemIndex(options, selectedSubject), (dialog, which) -> {
                     if (which == 0) {
                         selectedSubject = null;
