@@ -251,10 +251,8 @@ public class DocumentsActivity extends AppCompatActivity
     private void filterAndShowDocuments() {
         filteredDocuments.clear();
         for (DocumentData document : documents) {
-            if (selectedYear == null || selectedYear == DateUtils.schoolYear(document.getDate())) {
-                if (selectedSubject == null || selectedSubject.equals(document.getSubject())) {
-                    filteredDocuments.add(document);
-                }
+            if (isYearInsideFilter(document) && isSubjectInsideFilter(document)) {
+                filteredDocuments.add(document);
             }
         }
 
@@ -264,7 +262,9 @@ public class DocumentsActivity extends AppCompatActivity
     private void showSelectYearDialog() {
         Set<Integer> schoolYears = new TreeSet<>();
         for (DocumentData document : documents) {
-            schoolYears.add(DateUtils.schoolYear(document.getDate()));
+            if (isSubjectInsideFilter(document)) {
+                schoolYears.add(DateUtils.schoolYear(document.getDate()));
+            }
         }
 
         String[] options = new String[schoolYears.size() + 1];
@@ -292,7 +292,9 @@ public class DocumentsActivity extends AppCompatActivity
     private void showSelectSubjectDialog() {
         Set<String> subjects = new TreeSet<>();
         for (DocumentData document : documents) {
-            subjects.add(document.getSubject());
+            if (isYearInsideFilter(document)) {
+                subjects.add(document.getSubject());
+            }
         }
 
         String[] options = new String[subjects.size() + 1];
@@ -315,6 +317,16 @@ public class DocumentsActivity extends AppCompatActivity
                     filterAndShowDocuments();
                     dialog.dismiss();
                 }).show();
+    }
+
+    private boolean isYearInsideFilter(DocumentData document) {
+        return  selectedYear == null ||
+                selectedYear == DateUtils.schoolYear(document.getDate());
+    }
+
+    private boolean isSubjectInsideFilter(DocumentData document) {
+        return  selectedSubject == null ||
+                selectedSubject.equals(document.getSubject());
     }
 
     @Nullable
