@@ -27,7 +27,7 @@ public class SubjectData implements Serializable {
         }
 
         this.marks = marks;
-        if(this.marks.isEmpty()) {
+        if (this.marks.isEmpty()) {
             teacher = null;
         } else {
             teacher = this.marks.get(0).getTeacher();
@@ -82,6 +82,6 @@ public class SubjectData implements Serializable {
             }
         }
 
-        return (aimMark*(numberOfMarks + remainingTests) - marksSum) / remainingTests;
+        return (aimMark * (numberOfMarks + remainingTests) - marksSum) / remainingTests;
     }
 }

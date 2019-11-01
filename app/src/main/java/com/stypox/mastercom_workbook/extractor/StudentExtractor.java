@@ -22,7 +22,7 @@ public class StudentExtractor {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         String response = UrlConnectionUtils.readAll(urlConnection);
 
-        return new JSONObject(response.substring(1, response.length()-2));
+        return new JSONObject(response.substring(1, response.length() - 2));
     }
 
     public static Single<StudentData> fetchStudent() {

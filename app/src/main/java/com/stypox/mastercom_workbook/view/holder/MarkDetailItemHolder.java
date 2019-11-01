@@ -42,8 +42,7 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
         if (data.getDescription().isEmpty()) {
             descriptionView.setText("");
             descriptionView.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             descriptionView.setText(data.getDescription());
             descriptionView.setVisibility(View.VISIBLE);
         }

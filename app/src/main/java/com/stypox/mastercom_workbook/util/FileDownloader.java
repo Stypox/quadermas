@@ -11,9 +11,9 @@ public class FileDownloader {
                                 Context context) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
-        if (title != null       && !title.isEmpty())       request.setTitle(title);
+        if (title != null && !title.isEmpty()) request.setTitle(title);
         if (description != null && !description.isEmpty()) request.setDescription(title);
-        if (cookie != null      && !cookie.isEmpty())      request.addRequestHeader("Cookie", cookie);
+        if (cookie != null && !cookie.isEmpty()) request.addRequestHeader("Cookie", cookie);
 
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

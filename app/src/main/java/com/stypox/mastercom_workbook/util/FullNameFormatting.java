@@ -8,7 +8,7 @@ public class FullNameFormatting {
             if (Character.isLetter(chars[i]) && afterSpace) {
                 chars[i] = Character.toUpperCase(chars[i]);
                 afterSpace = false;
-            } else if (Character.isWhitespace(chars[i]) || chars[i]=='\'') {
+            } else if (Character.isWhitespace(chars[i]) || chars[i] == '\'') {
                 afterSpace = true;
             }
         }

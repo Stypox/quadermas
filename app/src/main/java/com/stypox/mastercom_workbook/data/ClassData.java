@@ -16,6 +16,7 @@ public class ClassData {
     public String getYear() {
         return year;
     }
+
     public String getId() {
         return id;
     }

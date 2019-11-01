@@ -29,7 +29,7 @@ import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
 import java.util.ArrayList;
 
 public class SubjectActivity extends AppCompatActivity
-    implements Toolbar.OnMenuItemClickListener {
+        implements Toolbar.OnMenuItemClickListener {
     public static final String subjectDataIntentKey = "subject_data";
 
     private SubjectData data;

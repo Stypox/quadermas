@@ -22,7 +22,7 @@ public class DocumentData {
 
         String quotedSubject = json.getJSONArray("tags").getString(0);
         if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {
-            subject = quotedSubject.substring(1, quotedSubject.length()-1);
+            subject = quotedSubject.substring(1, quotedSubject.length() - 1);
         } else {
             subject = quotedSubject;
         }
@@ -31,15 +31,19 @@ public class DocumentData {
     public String getName() {
         return name;
     }
+
     public String getId() {
         return id;
     }
+
     public String getOwner() {
         return owner;
     }
+
     public Date getDate() {
         return date;
     }
+
     public String getSubject() {
         return subject;
     }

@@ -10,12 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MarkData implements Serializable {
-    private String subject;
     private final float value;
     private final MarkType type;
     private final Date date;
     private final String description;
     private final String teacher;
+
+    private String subject;
 
     public MarkData(JSONObject json) throws JSONException, InvalidKeyException, ParseException {
         subject = null;
@@ -26,25 +27,30 @@ public class MarkData implements Serializable {
         teacher = json.getString("docente");
     }
 
+    public String getSubject() {
+        return subject == null ? "" : subject;
+    }
+
     public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    public String getSubject() {
-        return subject == null ? "" : subject;
-    }
     public float getValue() {
         return value;
     }
+
     public MarkType getType() {
         return type;
     }
+
     public Date getDate() {
         return date;
     }
+
     public String getDescription() {
         return description;
     }
+
     public String getTeacher() {
         return teacher;
     }

@@ -34,10 +34,12 @@ public class ExtractorError extends Exception {
 
     private Type type;
 
+
     ExtractorError(Type type, Throwable e) {
         super(e);
         this.type = type;
     }
+
     ExtractorError(Type type) {
         super();
         this.type = type;

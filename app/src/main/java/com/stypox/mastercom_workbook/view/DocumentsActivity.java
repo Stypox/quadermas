@@ -191,7 +191,7 @@ public class DocumentsActivity extends AppCompatActivity
     }
 
     private void onError(Throwable throwable, boolean fatal) {
-        if(!(throwable instanceof ExtractorError)) return;
+        if (!(throwable instanceof ExtractorError)) return;
         ExtractorError error = (ExtractorError) throwable;
         error.printStackTrace();
 

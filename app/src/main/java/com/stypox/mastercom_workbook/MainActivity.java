@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
                 .subscribe(
                         this::onAuthenticationCompleted,
                         throwable -> {
-                            if(!(throwable instanceof ExtractorError)) return;
+                            if (!(throwable instanceof ExtractorError)) return;
                             ExtractorError error = (ExtractorError) throwable;
                             error.printStackTrace();
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onError(Throwable throwable) {
-                        if(!(throwable instanceof ExtractorError)) return;
+                        if (!(throwable instanceof ExtractorError)) return;
                         ExtractorError error = (ExtractorError) throwable;
                         error.printStackTrace();
 
@@ -220,8 +220,8 @@ public class MainActivity extends AppCompatActivity
 
     private void onMarkExtractionError(String subjectName) {
         new Handler(getMainLooper()).post(() ->
-            Toast.makeText(this, getString(R.string.error_could_not_load_a_mark, subjectName), Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(this, getString(R.string.error_could_not_load_a_mark, subjectName), Toast.LENGTH_LONG)
+                        .show()
         );
     }
 

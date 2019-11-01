@@ -148,7 +148,7 @@ public class StatisticsActivity extends AppCompatActivity {
         marksChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                showMark((MarkData)e.getData());
+                showMark((MarkData) e.getData());
             }
 
             @Override
@@ -160,7 +160,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void buildMarksArray() {
         marks = new ArrayList<>();
-        for(SubjectData subject : subjects) {
+        for (SubjectData subject : subjects) {
             marks.addAll(subject.getMarks());
         }
 
@@ -177,13 +177,13 @@ public class StatisticsActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return DateUtils.formatDate(new Date((long)value));
+                return DateUtils.formatDate(new Date((long) value));
             }
         });
 
         int initialTerm = DateUtils.getTerm(marks.get(0).getDate());
         int index = 0;
-        for(MarkData mark : marks) {
+        for (MarkData mark : marks) {
             if (DateUtils.getTerm(mark.getDate()) != initialTerm) {
                 xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
             }
@@ -213,7 +213,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void fillMarksChart() {
         ArrayList<Entry> chartEntries = new ArrayList<>();
-        for(MarkData mark : marks) {
+        for (MarkData mark : marks) {
             chartEntries.add(new Entry(mark.getDate().getTime(), mark.getValue(), mark));
         }
         Collections.sort(chartEntries, new EntryXComparator());
@@ -252,7 +252,7 @@ public class StatisticsActivity extends AppCompatActivity {
         float sum = 0;
         int numberOfSubjects = 0;
 
-        for(SubjectData subject : subjects) {
+        for (SubjectData subject : subjects) {
             if (!subject.getMarks().isEmpty()) {
                 sum += Math.round(subject.getAverage(term));
                 ++numberOfSubjects;
@@ -266,7 +266,7 @@ public class StatisticsActivity extends AppCompatActivity {
         float sum = 0;
         int numberOfSubjects = 0;
 
-        for(SubjectData subject : subjects) {
+        for (SubjectData subject : subjects) {
             if (!subject.getMarks().isEmpty()) {
                 sum += subject.getAverage(term);
                 ++numberOfSubjects;
@@ -280,7 +280,7 @@ public class StatisticsActivity extends AppCompatActivity {
         float sum = 0;
         int numberOfMarks = 0;
 
-        for(MarkData mark : marks) {
+        for (MarkData mark : marks) {
             if (DateUtils.getTerm(mark.getDate()) == term) {
                 sum += mark.getValue();
                 ++numberOfMarks;

@@ -20,10 +20,12 @@ public class LoginData {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
         return sp.getString(APIUrlKey, "");
     }
+
     public static String getUser(Context context) {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
         return sp.getString(userKey, "");
     }
+
     public static String getPassword(Context context) {
         SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
         return sp.getString(passwordKey, "");
