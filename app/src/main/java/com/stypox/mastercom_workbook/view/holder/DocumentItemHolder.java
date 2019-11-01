@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.DocumentData;
-import com.stypox.mastercom_workbook.util.DateFormatting;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
@@ -37,7 +37,7 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
     public void updateItemData(DocumentData data) {
         nameView.setText(data.getName());
         dateSubjectOwnerView.setText(context.getResources().getString(R.string.three_strings,
-                DateFormatting.formatDate(data.getDate()), data.getSubject(), data.getOwner()));
+                DateUtils.formatDate(data.getDate()), data.getSubject(), data.getOwner()));
 
         if (adapter == null) {
             itemView.setOnClickListener(null);

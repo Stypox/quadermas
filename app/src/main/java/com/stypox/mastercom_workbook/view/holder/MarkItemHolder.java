@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
-import com.stypox.mastercom_workbook.util.DateFormatting;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
 public class MarkItemHolder extends ItemHolder<MarkData> {
@@ -33,7 +33,7 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
         valueView.setText(MarkFormatting.valueRepresentation(data.getValue()));
         valueView.setTextColor(MarkFormatting.colorOf(context, data.getValue()));
         typeView.setText(MarkFormatting.typeRepresentation(context, data.getType()));
-        dateView.setText(DateFormatting.formatDate(data.getDate()));
+        dateView.setText(DateUtils.formatDate(data.getDate()));
     }
 
     public static class Factory implements ItemHolderFactory<MarkData> {

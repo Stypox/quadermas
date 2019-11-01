@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
@@ -53,7 +54,7 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         } else {
             teacherTextView.setText(data.getTeacher());
 
-            float average = data.getAverage(data.getMarks().get(0).getTerm()); // current average
+            float average = data.getAverage(DateUtils.getTerm(data.getMarks().get(0).getDate())); // current average
             averageTextView.setText(MarkFormatting.floatToString(average, 2));
             averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
 

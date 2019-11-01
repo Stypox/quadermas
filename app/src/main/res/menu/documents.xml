@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/selectYearAction"
+        android:icon="@drawable/ic_calendar"
+        android:enabled="false"
+        android:title="@string/action_select_year"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/selectSubjectAction"
+        android:icon="@drawable/ic_select_subject"
+        android:enabled="false"
+        android:title="@string/action_select_subject"
+        app:showAsAction="ifRoom" />
+</menu>

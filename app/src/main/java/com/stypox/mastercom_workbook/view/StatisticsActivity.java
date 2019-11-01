@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -27,7 +26,7 @@ import com.github.mikephil.charting.utils.EntryXComparator;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.util.DateFormatting;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
@@ -92,7 +91,7 @@ public class StatisticsActivity extends AppCompatActivity {
             overallAverageDivider.setVisibility(View.GONE);
             actionBar.setSubtitle(subjects.get(0).getName());
         } else {
-            overallAverageTermSpinner.setSelection(marks.get(0).getTerm(), false);
+            overallAverageTermSpinner.setSelection(DateUtils.getTerm(marks.get(0).getDate()), false);
         }
 
         setupListeners();
@@ -178,14 +177,14 @@ public class StatisticsActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return DateFormatting.formatDate(new Date((long)value));
+                return DateUtils.formatDate(new Date((long)value));
             }
         });
 
-        int initialTerm = marks.get(0).getTerm();
+        int initialTerm = DateUtils.getTerm(marks.get(0).getDate());
         int index = 0;
         for(MarkData mark : marks) {
-            if (mark.getTerm() != initialTerm) {
+            if (DateUtils.getTerm(mark.getDate()) != initialTerm) {
                 xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
             }
             ++index;
@@ -282,7 +281,7 @@ public class StatisticsActivity extends AppCompatActivity {
         int numberOfMarks = 0;
 
         for(MarkData mark : marks) {
-            if (mark.getTerm() == term) {
+            if (DateUtils.getTerm(mark.getDate()) == term) {
                 sum += mark.getValue();
                 ++numberOfMarks;
             }

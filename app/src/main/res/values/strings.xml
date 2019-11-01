@@ -52,6 +52,8 @@
     <string name="action_sort_by_date">Sort by date</string>
     <string name="action_sort_by_value">Sort by value</string>
     <string name="action_show_marks">Show mark details</string>
+    <string name="action_select_subject">Select subject</string>
+    <string name="action_select_year">Select year</string>
 
     <string name="overall_average_title">Overall average</string>
     <string name="overall_average_mode_title">Display average of:</string>
@@ -60,4 +62,5 @@
     <string name="no_marks_for_statistics">There are no marks to show in statistics</string>
     <string name="two_strings">%s  -  %s</string>
     <string name="three_strings">%s  -  %s  -  %s</string>
+    <string name="all">All</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
+import com.stypox.mastercom_workbook.util.DateUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +59,7 @@ public class SubjectData implements Serializable {
         int numberOfMarks = 0;
 
         for (MarkData mark : marks) {
-            if (mark.getTerm() == termToConsider) {
+            if (DateUtils.getTerm(mark.getDate()) == termToConsider) {
                 marksSum += mark.getValue();
                 ++numberOfMarks;
             }
@@ -73,9 +74,9 @@ public class SubjectData implements Serializable {
         float marksSum = 0;
         int numberOfMarks = 0;
 
-        int currentTerm = MarkData.currentTerm();
+        int currentTerm = DateUtils.currentTerm();
         for (MarkData mark : marks) {
-            if (mark.getTerm() == currentTerm) {
+            if (DateUtils.getTerm(mark.getDate()) == currentTerm) {
                 marksSum += mark.getValue();
                 ++numberOfMarks;
             }

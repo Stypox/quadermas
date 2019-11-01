@@ -1,11 +1,5 @@
 package com.stypox.mastercom_workbook.data;
 
-import android.content.Context;
-
-import com.stypox.mastercom_workbook.R;
-import com.stypox.mastercom_workbook.util.DateFormatting;
-import com.stypox.mastercom_workbook.util.MarkFormatting;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +7,6 @@ import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MarkData implements Serializable {
@@ -54,20 +47,5 @@ public class MarkData implements Serializable {
     }
     public String getTeacher() {
         return teacher;
-    }
-
-    public int getTerm() {
-        if (date.getMonth() > 6) {
-            return 0; // first term
-        } else {
-            return 1; // second term
-        }
-    }
-    static public int currentTerm() {
-        if (Calendar.getInstance().get(Calendar.MONTH) > 6) {
-            return 0; // first term
-        } else {
-            return 1; // second term
-        }
     }
 }

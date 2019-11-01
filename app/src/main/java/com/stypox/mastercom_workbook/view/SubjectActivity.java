@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
@@ -74,8 +75,9 @@ public class SubjectActivity extends AppCompatActivity
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkView = findViewById(R.id.neededMarkTextView);
 
-        termSpinner.setSelection(data.getMarks().get(0).getTerm(), false);
-        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(data.getMarks().get(0).getTerm())))));
+        int selectedTerm = DateUtils.getTerm(data.getMarks().get(0).getDate());
+        termSpinner.setSelection(selectedTerm, false);
+        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(selectedTerm)))));
         updateAverage();
         updateNeededMark();
 

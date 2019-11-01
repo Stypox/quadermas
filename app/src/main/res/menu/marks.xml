@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/sortByDateAction"
-        android:icon="@drawable/ic_sort_by_date"
+        android:icon="@drawable/ic_calendar"
         android:title="@string/action_sort_by_date"
         app:showAsAction="ifRoom" />
 
