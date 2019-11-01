@@ -35,7 +35,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -285,7 +284,8 @@ public class DocumentsActivity extends AppCompatActivity
                     }
                     filterAndShowDocuments();
                     dialog.dismiss();
-                }).show();
+                })
+                .show();
     }
 
     private void showSelectSubjectDialog() {
@@ -314,7 +314,8 @@ public class DocumentsActivity extends AppCompatActivity
                     }
                     filterAndShowDocuments();
                     dialog.dismiss();
-                }).show();
+                })
+                .show();
     }
 
     private boolean isYearInsideFilter(DocumentData document) {
