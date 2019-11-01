@@ -1,14 +1,17 @@
 package com.stypox.mastercom_workbook.view.holder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
@@ -19,12 +22,15 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private Context context;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     public SubjectItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
         super(itemView, adapter);
 
         nameView = itemView.findViewById(R.id.name);
         teacherTextView = itemView.findViewById(R.id.teacher);
         averageTextView = itemView.findViewById(R.id.average);
+        HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
+        nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
 
         context = itemView.getContext();
     }

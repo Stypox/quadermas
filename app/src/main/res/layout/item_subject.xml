@@ -19,16 +19,27 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="7.5" />
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/nameScrollView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textColor="@color/highlightedText"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/average"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Lingua e Cultura Straniera (inglese)" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/average"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textColor="@color/highlightedText"
+            android:textSize="16sp"
+            tools:text="Lingua e Cultura Straniera (inglese)" />
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/teacher"
