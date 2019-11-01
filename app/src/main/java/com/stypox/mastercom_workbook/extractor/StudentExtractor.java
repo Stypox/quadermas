@@ -1,9 +1,6 @@
 package com.stypox.mastercom_workbook.extractor;
 
-import android.util.Pair;
-
 import com.stypox.mastercom_workbook.data.StudentData;
-import com.stypox.mastercom_workbook.util.FullNameFormatting;
 import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 
 import org.json.JSONException;
