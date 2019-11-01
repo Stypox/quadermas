@@ -10,30 +10,34 @@ import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.DocumentData;
+import com.stypox.mastercom_workbook.util.DateFormatting;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
     private TextView nameView;
-    private TextView subjectAndOwnerView;
+    private TextView dateSubjectOwnerView;
 
     private Context context;
 
     @SuppressLint("ClickableViewAccessibility")
     public DocumentItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<DocumentData> adapter) {
         super(itemView, adapter);
+        context = itemView.getContext();
 
         nameView = itemView.findViewById(R.id.name);
-        subjectAndOwnerView = itemView.findViewById(R.id.dateSubjectOwner);
-        HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
-        nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
+        dateSubjectOwnerView = itemView.findViewById(R.id.dateSubjectOwner);
 
-        context = itemView.getContext();
+        HorizontalScrollView nameScrollView = itemView.findViewById(R.id.nameScrollView);
+        HorizontalScrollView dateSubjectOwnerScrollView = itemView.findViewById(R.id.dateSubjectOwnerScrollView);
+        nameScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
+        dateSubjectOwnerScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
     }
 
     @Override
     public void updateItemData(DocumentData data) {
         nameView.setText(data.getName());
-        subjectAndOwnerView.setText(context.getResources().getString(R.string.two_strings, data.getSubject(), data.getOwner()));
+        dateSubjectOwnerView.setText(context.getResources().getString(R.string.three_strings,
+                DateFormatting.formatDate(data.getDate()), data.getSubject(), data.getOwner()));
 
         if (adapter == null) {
             itemView.setOnClickListener(null);
