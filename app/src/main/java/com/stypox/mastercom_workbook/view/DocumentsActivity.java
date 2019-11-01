@@ -260,7 +260,7 @@ public class DocumentsActivity extends AppCompatActivity
     }
 
     private void showSelectYearDialog() {
-        Set<Integer> schoolYears = new TreeSet<>();
+        TreeSet<Integer> schoolYears = new TreeSet<>();
         for (DocumentData document : documents) {
             if (isSubjectInsideFilter(document)) {
                 schoolYears.add(DateUtils.schoolYear(document.getDate()));
@@ -271,7 +271,7 @@ public class DocumentsActivity extends AppCompatActivity
         options[0] = getString(R.string.all);
 
         int i = 1;
-        for (Integer schoolYear : schoolYears) {
+        for (Integer schoolYear : schoolYears.descendingSet()) {
             options[i] = schoolYearRepresentation(schoolYear);
             ++i;
         }
@@ -281,7 +281,7 @@ public class DocumentsActivity extends AppCompatActivity
                     if (which == 0) {
                         selectedYear = null;
                     } else {
-                        selectedYear = (Integer) schoolYears.toArray()[which-1];
+                        selectedYear = (Integer) schoolYears.toArray()[schoolYears.size() - which];
                     }
                     filterAndShowDocuments();
                     dialog.dismiss();
