@@ -6,8 +6,11 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DocumentData {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT);
+
     private final String name;
     private final String id;
     private final String owner;
@@ -18,7 +21,7 @@ public class DocumentData {
         name = json.getString("name");
         id = json.getString("id");
         owner = json.getString("owner_name") + " " + json.getString("owner_surname");
-        date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(json.getString("received"));
+        date = dateFormat.parse(json.getString("received"));
 
         String quotedSubject = json.getJSONArray("tags").getString(0);
         if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {

@@ -8,21 +8,23 @@ import java.security.InvalidKeyException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MarkData implements Serializable {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ROOT);
+
     private final float value;
     private final MarkType type;
     private final Date date;
     private final String description;
     private final String teacher;
-
     private String subject;
 
     public MarkData(JSONObject json) throws JSONException, InvalidKeyException, ParseException {
         subject = null;
         value = Float.parseFloat(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
-        date = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z").parse(json.getString("data"));
+        date = dateFormat.parse(json.getString("data"));
         description = json.getString("note");
         teacher = json.getString("docente");
     }
