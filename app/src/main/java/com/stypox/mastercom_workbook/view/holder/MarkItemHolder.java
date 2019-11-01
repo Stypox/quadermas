@@ -30,9 +30,9 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
 
     @Override
     public void updateItemData(MarkData data) {
-        valueView.setText(data.getValueRepresentation());
+        valueView.setText(MarkFormatting.valueRepresentation(data.getValue()));
         valueView.setTextColor(MarkFormatting.colorOf(context, data.getValue()));
-        typeView.setText(data.getTypeRepresentation(context));
+        typeView.setText(MarkFormatting.typeRepresentation(context, data.getType()));
         dateView.setText(DateFormatting.formatDate(data.getDate()));
     }
 

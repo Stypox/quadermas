@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.util;
 import android.content.Context;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.data.MarkType;
 
 public class MarkFormatting {
     public static String floatToString(float f, int maxLength) {
@@ -49,6 +50,19 @@ public class MarkFormatting {
             return baseValue + "½";
         } else {//(delta == 0.75)
             return (baseValue+1) + "-";
+        }
+    }
+
+    public static String typeRepresentation(Context context, MarkType markType) {
+        switch (markType) {
+            case written:
+                return context.getString(R.string.type_written);
+            case oral:
+                return context.getString(R.string.type_oral);
+            case practical:
+                return context.getString(R.string.type_practical);
+            default:
+                return ""; // useless
         }
     }
 }

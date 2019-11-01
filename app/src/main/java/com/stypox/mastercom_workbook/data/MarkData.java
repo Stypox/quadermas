@@ -56,21 +56,6 @@ public class MarkData implements Serializable {
         return teacher;
     }
 
-    public String getValueRepresentation() {
-        return MarkFormatting.valueRepresentation(value);
-    }
-    public String getTypeRepresentation(Context context) {
-        switch (type) {
-            case written:
-                return context.getString(R.string.type_written);
-            case oral:
-                return context.getString(R.string.type_oral);
-            case practical:
-                return context.getString(R.string.type_practical);
-        }
-        return ""; // useless
-    }
-
     public int getTerm() {
         if (date.getMonth() > 6) {
             return 0; // first term
