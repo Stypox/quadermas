@@ -2,15 +2,12 @@
     <string name="app_name">Mastercom Workbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
 
     <string name="source_code_url">https://github.com/Stypox/mastercom-workbook</string>
     <string name="report_bug_url">https://github.com/Stypox/mastercom-workbook/issues</string>
 
     <string name="menu_account_actions_title">Your account</string>
     <string name="menu_logout">Logout</string>
-    <string name="menu_marks_actions_title">Manage marks</string>
-    <string name="menu_subjects">Subjects</string>
     <string name="menu_marks">Marks</string>
     <string name="menu_statistics">Statistics</string>
     <string name="menu_info_actions_title">App info</string>
@@ -59,7 +56,6 @@
     <string name="overall_average_mode_title">Display average of:</string>
 
     <string name="marks_chart_label">Marks</string>
-    <string name="no_marks_for_statistics">There are no marks to show in statistics</string>
 
     <string name="all_years">All school years</string>
     <string name="all_subjects">All subjects</string>
