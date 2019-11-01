@@ -23,7 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MarksActivity extends AppCompatActivity
-    implements Toolbar.OnMenuItemClickListener {
+        implements Toolbar.OnMenuItemClickListener {
     public static final String subjectsIntentKey = "subjects";
 
     private ItemArrayAdapter<MarkData> marksArrayAdapter;
