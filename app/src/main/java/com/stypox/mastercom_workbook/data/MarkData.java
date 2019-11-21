@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.security.InvalidKeyException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +19,7 @@ public class MarkData implements Serializable {
     private final String teacher;
     private String subject;
 
-    public MarkData(JSONObject json) throws JSONException, InvalidKeyException, ParseException {
+    public MarkData(JSONObject json) throws JSONException, ParseException {
         subject = null;
         value = Float.parseFloat(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
