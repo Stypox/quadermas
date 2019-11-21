@@ -70,6 +70,8 @@ public class SubjectExtractor {
                                 }
                                 subjectData.setMarks(marks);
                             } catch (Throwable e) {
+                                e.printStackTrace();
+                                subjectData.setMarks(new ArrayList<>());
                                 subjectData.setError(ExtractorError.asExtractorError(e, jsonAlreadyParsed));
                             }
 
