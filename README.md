@@ -13,7 +13,7 @@
 - Calculate which mark you need to get in the next `N` tests so that your average becomes `M`. `N` and `M` can both be chosen.
 
 ## Marks
-- Every mark has a value, a description, a teacher and a date.
+- Every mark has a value, a description, a teacher and a date. Not-classified marks are supported (e.g. "A", or Absent).
 - The `marks` view shows marks (from a subject, or all) in a list that can be sorted by value and by date.
 - The `statistics` view shows a graph of marks (from a subject, or all). Clicking on a point in the graph shows the mark info.
 
