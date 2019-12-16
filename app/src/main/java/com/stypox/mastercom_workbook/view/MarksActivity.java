@@ -98,6 +98,6 @@ public class MarksActivity extends AppCompatActivity
     }
 
     private void sortMarksByValue() {
-        marksArrayAdapter.sort((o1, o2) -> Float.compare(o2.getValue(), o1.getValue()));
+        marksArrayAdapter.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
     }
 }

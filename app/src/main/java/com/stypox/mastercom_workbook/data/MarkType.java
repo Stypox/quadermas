@@ -1,6 +1,8 @@
 package com.stypox.mastercom_workbook.data;
 
-public enum MarkType {
+import java.io.Serializable;
+
+public enum MarkType implements Serializable {
     written,
     oral,
     practical;

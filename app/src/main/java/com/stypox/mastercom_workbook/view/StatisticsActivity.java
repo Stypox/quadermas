@@ -214,7 +214,9 @@ public class StatisticsActivity extends AppCompatActivity {
     private void fillMarksChart() {
         ArrayList<Entry> chartEntries = new ArrayList<>();
         for (MarkData mark : marks) {
-            chartEntries.add(new Entry(mark.getDate().getTime(), mark.getValue(), mark));
+            if (mark.getValue().isNumber()) {
+                chartEntries.add(new Entry(mark.getDate().getTime(), mark.getValue().getNumber(), mark));
+            }
         }
         Collections.sort(chartEntries, new EntryXComparator());
 
@@ -281,8 +283,8 @@ public class StatisticsActivity extends AppCompatActivity {
         int numberOfMarks = 0;
 
         for (MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == term) {
-                sum += mark.getValue();
+            if (DateUtils.getTerm(mark.getDate()) == term && mark.getValue().isNumber()) {
+                sum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }
         }

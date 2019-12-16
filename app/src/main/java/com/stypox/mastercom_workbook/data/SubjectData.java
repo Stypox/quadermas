@@ -59,8 +59,8 @@ public class SubjectData implements Serializable {
         int numberOfMarks = 0;
 
         for (MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == termToConsider) {
-                marksSum += mark.getValue();
+            if (DateUtils.getTerm(mark.getDate()) == termToConsider && mark.getValue().isNumber()) {
+                marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }
         }
@@ -76,8 +76,8 @@ public class SubjectData implements Serializable {
 
         int currentTerm = DateUtils.currentTerm();
         for (MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == currentTerm) {
-                marksSum += mark.getValue();
+            if (DateUtils.getTerm(mark.getDate()) == currentTerm && mark.getValue().isNumber()) {
+                marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }
         }

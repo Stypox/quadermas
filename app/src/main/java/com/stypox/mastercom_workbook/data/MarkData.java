@@ -12,7 +12,7 @@ import java.util.Locale;
 public class MarkData implements Serializable {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ROOT);
 
-    private final float value;
+    private final MarkValue value;
     private final MarkType type;
     private final Date date;
     private final String description;
@@ -21,7 +21,7 @@ public class MarkData implements Serializable {
 
     public MarkData(JSONObject json) throws JSONException, ParseException {
         subject = null;
-        value = Float.parseFloat(json.getString("valore"));
+        value = new MarkValue(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
         date = dateFormat.parse(json.getString("data"));
         description = json.getString("note");
@@ -36,7 +36,7 @@ public class MarkData implements Serializable {
         this.subject = subject;
     }
 
-    public float getValue() {
+    public MarkValue getValue() {
         return value;
     }
 

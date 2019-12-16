@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkType;
+import com.stypox.mastercom_workbook.data.MarkValue;
 
 public class MarkFormatting {
+
     public static String floatToString(float f, int maxLength) {
         int nonDecimalDigits = String.valueOf((int) f).length();
         if (nonDecimalDigits > maxLength) {
@@ -27,15 +29,25 @@ public class MarkFormatting {
         }
     }
 
-    public static int colorOf(Context context, float mark) {
-        if (mark < 6) {
+
+    public static int colorOf(Context context, float value) {
+        if (value < 6) {
             return context.getResources().getColor(R.color.failingMark);
-        } else if (mark < 8) {
+        } else if (value < 8) {
             return context.getResources().getColor(R.color.halfwayMark);
         } else {
             return context.getResources().getColor(R.color.excellentMark);
         }
     }
+
+    public static int colorOf(Context context, MarkValue markValue) {
+        if (markValue.isNumber()) {
+            return colorOf(context, markValue.getNumber());
+        } else {
+            return context.getResources().getColor(R.color.notClassifiedMark);
+        }
+    }
+
 
     public static String valueRepresentation(float value) {
         float quarterPrecision = ((float) Math.round(value * 4)) / 4; // 0.25 intervals: 0.0; 0.25; 0.5; 0.75; 1.0; ...
@@ -52,6 +64,15 @@ public class MarkFormatting {
             return (baseValue + 1) + "-";
         }
     }
+
+    public static String valueRepresentation(MarkValue markValue) {
+        if (markValue.isNumber()) {
+            return valueRepresentation(markValue.getNumber());
+        } else {
+            return markValue.getText();
+        }
+    }
+
 
     public static String typeRepresentation(Context context, MarkType markType) {
         switch (markType) {
