@@ -1,5 +1,5 @@
 # Mastercom Workbook client
-[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "Workbook" (in italian "Quaderno Elettronico") made for students to access marks, timetables, files... This app is an Android client that wraps around the website and is (currently only) able to show marks and subjects. It is lightweight and uses Material Design.
+[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "Workbook" (in italian "Quaderno Elettronico") made for students to access marks, timetables, files... This app is an Android client that wraps around the website and is (currently only) able to show marks, subjects and documents. It is lightweight and uses Material Design.
 
 # Features
 
@@ -16,3 +16,7 @@
 - Every mark has a value, a description, a teacher and a date.
 - The `marks` view shows marks (from a subject, or all) in a list that can be sorted by value and by date.
 - The `statistics` view shows a graph of marks (from a subject, or all). Clicking on a point in the graph shows the mark info.
+
+## Documents
+- Find the documents you need thanks to filters (by year and by subject).
+- Download a document by just tapping on it: an Android notification will show up. When the download has finished the notification can be clicked to view the downloaded document.
