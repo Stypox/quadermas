@@ -64,7 +64,7 @@ public class SubjectExtractor {
                                 for (int i = 0; i < list.length(); i++) {
                                     try {
                                         marks.add(new MarkData(list.getJSONObject(i)));
-                                    } catch (JSONException e) {
+                                    } catch (Throwable e) {
                                         onMarkError.onMarkExtractionError(subjectData.getName());
                                     }
                                 }
