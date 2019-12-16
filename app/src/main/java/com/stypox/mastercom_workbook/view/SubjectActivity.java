@@ -77,14 +77,19 @@ public class SubjectActivity extends AppCompatActivity
 
         int selectedTerm = DateUtils.getTerm(data.getMarks().get(0).getDate());
         termSpinner.setSelection(selectedTerm, false);
-        aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(selectedTerm)))));
+        try {
+            aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(selectedTerm)))));
+        } catch (ArithmeticException e) {
+            aimMarkEdit.setText(String.valueOf(6));
+        }
+
         updateAverage();
         updateNeededMark();
+
 
         RecyclerView marksLayout = findViewById(R.id.marksList);
         marksLayout.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
-
 
         setupListeners();
     }

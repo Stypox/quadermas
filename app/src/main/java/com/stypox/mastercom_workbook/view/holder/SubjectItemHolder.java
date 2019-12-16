@@ -42,21 +42,26 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         if (data.getMarks() == null) {
             teacherTextView.setText(data.getError().getMessage(context));
             averageTextView.setText("X");
-            averageTextView.setTextColor(Color.BLACK);
+            averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
             itemView.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
-            averageTextView.setTextColor(Color.BLACK);
+            averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
             itemView.setOnClickListener(null);
 
         } else {
             teacherTextView.setText(data.getTeacher());
 
-            float average = data.getAverage(DateUtils.getTerm(data.getMarks().get(0).getDate())); // current average
-            averageTextView.setText(MarkFormatting.floatToString(average, 2));
-            averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
+            try {
+                float average = data.getAverage(DateUtils.getTerm(data.getMarks().get(0).getDate())); // current average
+                averageTextView.setText(MarkFormatting.floatToString(average, 2));
+                averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
+            } catch (ArithmeticException e) {
+                averageTextView.setText("-");
+                averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
+            }
 
             if (adapter != null) {
                 itemView.setOnClickListener(v -> adapter.onItemClick(data));

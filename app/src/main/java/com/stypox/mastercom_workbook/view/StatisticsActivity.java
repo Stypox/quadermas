@@ -255,9 +255,11 @@ public class StatisticsActivity extends AppCompatActivity {
         int numberOfSubjects = 0;
 
         for (SubjectData subject : subjects) {
-            if (!subject.getMarks().isEmpty()) {
+            try {
                 sum += Math.round(subject.getAverage(term));
                 ++numberOfSubjects;
+            } catch (ArithmeticException ignored) {
+
             }
         }
 
@@ -269,9 +271,11 @@ public class StatisticsActivity extends AppCompatActivity {
         int numberOfSubjects = 0;
 
         for (SubjectData subject : subjects) {
-            if (!subject.getMarks().isEmpty()) {
+            try {
                 sum += subject.getAverage(term);
                 ++numberOfSubjects;
+            } catch (ArithmeticException ignored) {
+
             }
         }
 
@@ -294,25 +298,29 @@ public class StatisticsActivity extends AppCompatActivity {
         return sum / numberOfMarks;
     }
 
-    private void updateOverallAverage() throws ArithmeticException {
-        float overallAverage;
-        int term = overallAverageTermSpinner.getSelectedItemPosition();
+    private void updateOverallAverage() {
+        try {
+            float overallAverage;
+            int term = overallAverageTermSpinner.getSelectedItemPosition();
 
-        switch (overallAverageModeSpinner.getSelectedItemPosition()) {
-            case 0:
-                overallAverage = getOverallAverageOfRoundedAverages(term);
-                break;
-            case 1:
-                overallAverage = getOverallAverageOfAverages(term);
-                break;
-            case 2:
-                overallAverage = getOverallAverageOfMarks(term);
-                break;
-            default:
-                throw new ArithmeticException(); // just in case
+            switch (overallAverageModeSpinner.getSelectedItemPosition()) {
+                case 0:
+                    overallAverage = getOverallAverageOfRoundedAverages(term);
+                    break;
+                case 1:
+                    overallAverage = getOverallAverageOfAverages(term);
+                    break;
+                case 2:
+                    overallAverage = getOverallAverageOfMarks(term);
+                    break;
+                default:
+                    throw new ArithmeticException(); // just in case
+            }
+
+            overallAverageTextView.setText(MarkFormatting.floatToString(overallAverage, 3));
+            overallAverageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), overallAverage));
+        } catch (ArithmeticException e) {
+            overallAverageTextView.setText("");
         }
-
-        overallAverageTextView.setText(MarkFormatting.floatToString(overallAverage, 3));
-        overallAverageTextView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), overallAverage));
     }
 }
