@@ -13,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout_editor_absoluteX="-149dp"
-        tools:layout_editor_absoluteY="-16dp"
         tools:context=".view.SubjectActivity">
 
         <android.support.v7.widget.RecyclerView
@@ -25,13 +23,14 @@
             tools:layout_editor_absoluteX="0dp" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toTopOf="@+id/divider3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -109,7 +108,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
             app:layout_constraintEnd_toEndOf="parent"
@@ -227,5 +226,60 @@
                 tools:text="7.5" />
 
         </android.support.constraint.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/detail_control_panel"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/marksList"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:id="@+id/marksButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:drawableTop="@drawable/ic_menu_marks"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="@string/activity_title_marks"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/statisticsButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:drawableTop="@drawable/ic_menu_statistics"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="@string/activity_title_statistics"
+                    android:textSize="12sp" />
+            </FrameLayout>
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

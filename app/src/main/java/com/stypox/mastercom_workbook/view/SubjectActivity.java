@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,13 +29,11 @@ import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
 
 import java.util.ArrayList;
 
-public class SubjectActivity extends AppCompatActivity
-        implements Toolbar.OnMenuItemClickListener {
+public class SubjectActivity extends AppCompatActivity {
     public static final String subjectDataIntentKey = "subject_data";
 
     private SubjectData data;
 
-    private Toolbar toolbar;
     private Spinner termSpinner;
     private TextView averageView;
     private EditText aimMarkEdit;
@@ -50,9 +49,8 @@ public class SubjectActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -74,6 +72,12 @@ public class SubjectActivity extends AppCompatActivity
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkView = findViewById(R.id.neededMarkTextView);
+        View marksButton = findViewById(R.id.marksButton);
+        View statisticsButton = findViewById(R.id.statisticsButton);
+
+        marksButton.setOnClickListener((v) -> openMarksActivity());
+        statisticsButton.setOnClickListener((v) -> openStatisticsActivity());
+
 
         int selectedTerm = DateUtils.getTerm(data.getMarks().get(0).getDate());
         termSpinner.setSelection(selectedTerm, false);
@@ -95,33 +99,9 @@ public class SubjectActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.subject, menu);
-
-        TextView titleView = (TextView) toolbar.getChildAt(0);
-        titleView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
-
-        return true;
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.showMarksAction:
-                openMarksActivity();
-                return true;
-            case R.id.showStatisticsAction:
-                openStatisticsActivity();
-                return true;
-            default:
-                return false;
-        }
     }
 
     private void setupListeners() {
