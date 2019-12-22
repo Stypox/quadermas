@@ -25,10 +25,6 @@ public class TopicData {
         assignment = json.getString("assegnazioni");
     }
 
-    public static SimpleDateFormat getDateFormat() {
-        return dateFormat;
-    }
-
     public Date getDate() {
         return date;
     }
