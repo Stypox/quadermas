@@ -46,6 +46,8 @@
     <string name="login_password">Password:</string>
     <string name="login_login">LOGIN</string>
 
+    <string name="action_details">Details</string>
+    <string name="action_statistics">Statistics</string>
     <string name="action_sort_by_date">Sort by date</string>
     <string name="action_sort_by_value">Sort by value</string>
     <string name="action_select_subject">Select subject</string>
