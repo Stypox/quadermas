@@ -220,7 +220,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
         Collections.sort(chartEntries, new EntryXComparator());
 
-        LineDataSet chartDataSet = new LineDataSet(chartEntries, getResources().getString(R.string.marks_chart_label));
+        LineDataSet chartDataSet = new LineDataSet(chartEntries, getResources().getString(R.string.label_marks_chart));
         chartDataSet.setColor(getResources().getColor(R.color.chartLine));
         chartDataSet.setCircleColor(getResources().getColor(R.color.chartLine));
         chartDataSet.setCircleHoleColor(getResources().getColor(R.color.chartLine));

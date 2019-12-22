@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:text="@string/term_title"
+                    android:text="@string/label_term"
                     app:layout_constraintBottom_toBottomOf="@+id/overallAverageTermSpinner"
                     app:layout_constraintEnd_toStartOf="@+id/overallAverageTermSpinner"
                     app:layout_constraintStart_toStartOf="parent"

@@ -303,10 +303,10 @@ public class MainActivity extends AppCompatActivity
                 openDocumentsActivity();
                 break;
             case R.id.menu_source_code:
-                openUrlInBrowser(getResources().getString(R.string.source_code_url));
+                openUrlInBrowser(getResources().getString(R.string.url_source_code));
                 break;
             case R.id.menu_report_bug:
-                openUrlInBrowser(getResources().getString(R.string.report_bug_url));
+                openUrlInBrowser(getResources().getString(R.string.url_report_bug));
                 break;
         }
 

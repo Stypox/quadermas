@@ -3,8 +3,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="source_code_url">https://github.com/Stypox/mastercom-workbook</string>
-    <string name="report_bug_url">https://github.com/Stypox/mastercom-workbook/issues</string>
+    <string name="url_source_code">https://github.com/Stypox/mastercom-workbook</string>
+    <string name="url_report_bug">https://github.com/Stypox/mastercom-workbook/issues</string>
 
     <string name="menu_account_actions_title">Your account</string>
     <string name="menu_logout">Logout</string>
@@ -32,12 +32,12 @@
     <string name="error_no_marks">No marks</string>
     <string name="retry">Retry</string>
 
-    <string name="marks_average_title">Marks average</string>
-    <string name="term_title">Term:</string>
+    <string name="label_marks_average">Marks average</string>
+    <string name="label_term">Term:</string>
 
-    <string name="wanted_mark_title">Wanted mark</string>
-    <string name="aim_mark_title">Aim mark:</string>
-    <string name="remaining_tests_title">Remaining tests:</string>
+    <string name="label_wanted_mark">Wanted mark</string>
+    <string name="label_aim_mark">Aim mark:</string>
+    <string name="label_remaining_tests">Remaining tests:</string>
     <string name="default_remaining_tests">1</string>
 
     <string name="login_APIUrl">School:</string>
@@ -56,7 +56,7 @@
     <string name="overall_average_title">Overall average</string>
     <string name="overall_average_mode_title">Display average of:</string>
 
-    <string name="marks_chart_label">Marks</string>
+    <string name="label_marks_chart">Marks</string>
 
     <string name="all_years">All school years</string>
     <string name="all_subjects">All subjects</string>
