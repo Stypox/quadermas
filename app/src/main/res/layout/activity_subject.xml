@@ -280,6 +280,28 @@
                     android:text="@string/action_statistics"
                     android:textSize="12sp" />
             </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/topicsButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:drawableTop="@drawable/ic_menu_topics"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:text="@string/action_topics"
+                    android:textSize="12sp" />
+            </FrameLayout>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -70,9 +70,11 @@ public class SubjectActivity extends AppCompatActivity {
         neededMarkView = findViewById(R.id.neededMarkTextView);
         View marksButton = findViewById(R.id.marksButton);
         View statisticsButton = findViewById(R.id.statisticsButton);
+        View topicsButton = findViewById(R.id.topicsButton);
 
         marksButton.setOnClickListener((v) -> openMarksActivity());
         statisticsButton.setOnClickListener((v) -> openStatisticsActivity());
+        topicsButton.setOnClickListener((v) -> openTopicsActivity());
 
 
         int selectedTerm = DateUtils.getTerm(data.getMarks().get(0).getDate());
@@ -163,6 +165,12 @@ public class SubjectActivity extends AppCompatActivity {
         ArrayList<SubjectData> subjects = new ArrayList<>();
         subjects.add(this.data);
         intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
+        startActivityForResult(intent, 0);
+    }
+
+    private void openTopicsActivity() {
+        Intent intent = new Intent(this, TopicsActivity.class);
+        intent.putExtra(TopicsActivity.subjectDataIntentKey, data);
         startActivityForResult(intent, 0);
     }
 
