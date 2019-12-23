@@ -19,8 +19,10 @@
             android:id="@+id/marksList"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_mark_height"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -51,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_marks_average"
                     android:textColor="@android:color/black"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/size_section_header"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="60sp"
+                android:textSize="@dimen/size_mark_calculated"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -143,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_wanted_mark"
                     android:textColor="@android:color/black"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/size_section_header"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -219,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="60sp"
+                android:textSize="@dimen/size_mark_calculated"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -229,22 +231,24 @@
 
 
         <LinearLayout
-            android:id="@+id/detail_control_panel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:padding="8dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@id/marksList"
-            android:baselineAligned="false">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marksList">
 
             <FrameLayout
                 android:id="@+id/marksButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless">
+                android:focusable="true">
 
                 <Button
                     android:layout_width="match_parent"
@@ -256,7 +260,7 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:text="@string/action_details"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/size_action" />
             </FrameLayout>
 
             <FrameLayout
@@ -264,9 +268,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless">
+                android:focusable="true">
 
                 <Button
                     android:layout_width="match_parent"
@@ -278,7 +282,7 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:text="@string/action_statistics"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/size_action" />
             </FrameLayout>
 
             <FrameLayout
@@ -286,9 +290,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless">
+                android:focusable="true">
 
                 <Button
                     android:layout_width="match_parent"
@@ -300,7 +304,7 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:text="@string/action_topics"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/size_action" />
             </FrameLayout>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

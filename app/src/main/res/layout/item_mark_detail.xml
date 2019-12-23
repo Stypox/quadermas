@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textColor="@color/highlightedText"
-            android:textSize="17sp"
+            android:textSize="@dimen/size_item_title"
             tools:text="Lingua e Cultura Straniera (inglese)" />
 
         <TextView
@@ -40,17 +40,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textSize="13sp"
+            android:textSize="@dimen/size_item_info"
             tools:text="John Smith  -  06/11/2019" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="73dp"
+        android:layout_width="@dimen/item_mark_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +63,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="50sp"
+            android:textSize="@dimen/size_mark_detail"
             tools:text="7.5" />
 
         <TextView
@@ -72,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="17sp"
+            android:textSize="@dimen/size_item_title"
             tools:text="Pratical" />
     </LinearLayout>
 

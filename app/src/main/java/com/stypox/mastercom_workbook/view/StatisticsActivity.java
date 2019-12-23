@@ -224,7 +224,7 @@ public class StatisticsActivity extends AppCompatActivity {
         chartDataSet.setColor(getResources().getColor(R.color.chartLine));
         chartDataSet.setCircleColor(getResources().getColor(R.color.chartLine));
         chartDataSet.setCircleHoleColor(getResources().getColor(R.color.chartLine));
-        chartDataSet.setCircleRadius(getResources().getDimension(R.dimen.chart_circle_radius));
+        chartDataSet.setCircleRadius(getResources().getDimension(R.dimen.radius_chart_circle));
         chartDataSet.setDrawValues(false);
 
         LineData chartData = new LineData(chartDataSet);

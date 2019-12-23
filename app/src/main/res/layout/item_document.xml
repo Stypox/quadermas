@@ -27,7 +27,7 @@
             android:ellipsize="middle"
             android:singleLine="true"
             android:textColor="@color/highlightedText"
-            android:textSize="16sp"
+            android:textSize="@dimen/size_item_title"
             tools:text="esercizi sulla teoria cinetica dei gas.pdf" />
     </HorizontalScrollView>
 

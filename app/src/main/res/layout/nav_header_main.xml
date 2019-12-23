@@ -2,21 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="@dimen/navigation_header_height"
     android:background="@drawable/ic_menu_drawer_header_background"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:padding="@dimen/navigation_header_padding"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
         android:id="@+id/navigationFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingTop="@dimen/navigation_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         tools:text="John Smith" />
 
