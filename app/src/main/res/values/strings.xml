@@ -19,6 +19,7 @@
     <string name="activity_title_marks">Mark details</string>
     <string name="activity_title_documents">Documents</string>
     <string name="activity_title_topics">Topics</string>
+    <string name="activity_title_login">Log in to Mastercom Workbook</string>
 
     <string name="type_written">Written</string>
     <string name="type_oral">Oral</string>

@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +27,7 @@ import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.extractor.SubjectExtractor;
 import com.stypox.mastercom_workbook.login.LoginData;
-import com.stypox.mastercom_workbook.login.LoginDialog;
+import com.stypox.mastercom_workbook.login.LoginActivity;
 import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
@@ -44,7 +43,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final int requestCodeLoginDialog = 0;
+    private static final int requestCodeLoginActivity = 0;
 
     private CompositeDisposable disposables;
 
@@ -116,14 +115,14 @@ public class MainActivity extends AppCompatActivity
         if (LoginData.isLoggedIn(getApplicationContext())) {
             reloadSubjects();
         } else {
-            openLoginDialogThenReload();
+            openLoginActivityThenReload();
         }
     }
 
-    private void openLoginDialogThenReload() {
+    private void openLoginActivityThenReload() {
         LoginData.logout(getApplicationContext());
-        Intent intent = new Intent(this, LoginDialog.class);
-        startActivityForResult(intent, requestCodeLoginDialog); // see onActivityResult
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, requestCodeLoginActivity); // see onActivityResult
     }
 
     private void reloadSubjects() {
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity
                             if (error.isType(Type.invalid_credentials) || error.isType(Type.malformed_url)) {
                                 Toast.makeText(this, error.getMessage(this), Toast.LENGTH_LONG)
                                         .show();
-                                openLoginDialogThenReload();
+                                openLoginActivityThenReload();
                             } else {
                                 Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
                                         .setAction(getString(R.string.retry), v -> reloadSubjects())
@@ -232,7 +231,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case requestCodeLoginDialog:
+            case requestCodeLoginActivity:
                 reloadIfLoggedIn();
                 break;
         }
@@ -285,7 +284,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.loginAction:
-                openLoginDialogThenReload();
+                openLoginActivityThenReload();
                 break;
             case R.id.marksAction:
                 openMarksActivity();
