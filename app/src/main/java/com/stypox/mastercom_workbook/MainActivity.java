@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity
     ////////////////////
 
     private void reloadIfLoggedIn() {
-        if (LoginData.isLoggedIn(getApplicationContext())) {
+        if (LoginData.isLoggedIn(this)) {
             reloadSubjects();
         } else {
             openLoginActivityThenReload();
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openLoginActivityThenReload() {
-        LoginData.logout(getApplicationContext());
+        LoginData.logout(this);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, requestCodeLoginActivity); // see onActivityResult
     }

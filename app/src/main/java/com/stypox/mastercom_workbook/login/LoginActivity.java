@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // show old credentials
-        APIUrlEdit.setText(LoginData.getAPIUrl(getApplicationContext()));
-        userEdit.setText(LoginData.getUser(getApplicationContext()));
+        APIUrlEdit.setText(LoginData.getAPIUrl(this));
+        userEdit.setText(LoginData.getUser(this));
 
         passwordEdit.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         String user = userEdit.getText().toString();
         String password = passwordEdit.getText().toString();
 
-        LoginData.setCredentials(getApplicationContext(), APIUrl, user, password);
+        LoginData.setCredentials(this, APIUrl, user, password);
         finish();
     }
 }

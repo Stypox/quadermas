@@ -184,7 +184,7 @@ public class SubjectActivity extends AppCompatActivity {
         try {
             float average = data.getAverage(termSpinner.getSelectedItemPosition());
             averageView.setText(MarkFormatting.floatToString(average, 3));
-            averageView.setTextColor(MarkFormatting.colorOf(getApplicationContext(), average));
+            averageView.setTextColor(MarkFormatting.colorOf(this, average));
         } catch (Throwable e) {
             averageView.setText("");
         }
