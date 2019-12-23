@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="terms_spinner_entries">
+    <string-array name="entries_term_spinner">
         <item>1st</item>
         <item>2nd</item>
     </string-array>
 
-    <string-array name="overall_average_mode_entries">
+    <string-array name="entries_overall_average_mode">
         <item>subjects\' rounded averages</item>
         <item>subjects\' averages</item>
         <item>all marks</item>

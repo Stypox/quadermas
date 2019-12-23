@@ -30,8 +30,8 @@ public class APIUrlEdit extends AppCompatEditText implements AdapterView.OnItemC
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.APIUrlEdit,0, 0);
 
         try {
-            int stringsId = typedArray.getResourceId(R.styleable.APIUrlEdit_list_entries, 0);
-            if (stringsId == 0) throw new IllegalArgumentException("Must specify list_entries for APIUrlEdit");
+            int stringsId = typedArray.getResourceId(R.styleable.APIUrlEdit_entries, 0);
+            if (stringsId == 0) throw new IllegalArgumentException("Must specify entries for APIUrlEdit");
 
             strings = getResources().getStringArray(stringsId);
             if (strings.length == 0) throw new IllegalArgumentException("APIUrlEdit's list_entries cannot be empty");

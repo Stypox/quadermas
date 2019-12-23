@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="APIUrlEdit">
-        <attr name="list_entries" format="reference" />
+        <attr name="entries" format="reference" />
     </declare-styleable>
 </resources>

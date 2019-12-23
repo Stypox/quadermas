@@ -31,7 +31,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/divider3"
+            app:layout_constraintBottom_toTopOf="@id/divider3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/averageTextView"
+                app:layout_constraintEnd_toStartOf="@id/averageTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -69,7 +69,7 @@
                         android:id="@+id/termSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
-                        android:entries="@array/terms_spinner_entries"
+                        android:entries="@array/entries_term_spinner"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -110,7 +110,7 @@
             android:layout_marginRight="32dp"
             android:layout_marginBottom="24dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayout10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -133,7 +133,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/neededMarkTextView"
+                app:layout_constraintEnd_toStartOf="@id/neededMarkTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -233,8 +233,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/marksList"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@id/marksList"
             android:baselineAligned="false">
 
             <FrameLayout

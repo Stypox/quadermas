@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity
 
         refreshLayout = findViewById(R.id.refreshLayout);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        marksMenuItem = navigationView.getMenu().findItem(R.id.menu_marks);
-        statisticsMenuItem = navigationView.getMenu().findItem(R.id.menu_statistics);
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        marksMenuItem = navigationView.getMenu().findItem(R.id.marksAction);
+        statisticsMenuItem = navigationView.getMenu().findItem(R.id.statisticsAction);
 
         View headerLayout = navigationView.getHeaderView(0);
-        fullNameView = headerLayout.findViewById(R.id.nav_fullNameView);
-        fullAPIUrlView = headerLayout.findViewById(R.id.nav_fullAPIUrlView);
+        fullNameView = headerLayout.findViewById(R.id.navigationFullName);
+        fullAPIUrlView = headerLayout.findViewById(R.id.navigationAPIUrl);
 
         subjects = new ArrayList<>();
         RecyclerView subjectList = findViewById(R.id.subjectList);
@@ -99,12 +99,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         reloadIfLoggedIn();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -290,22 +284,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_login:
+            case R.id.loginAction:
                 openLoginDialogThenReload();
                 break;
-            case R.id.menu_marks:
+            case R.id.marksAction:
                 openMarksActivity();
                 break;
-            case R.id.menu_statistics:
+            case R.id.statisticsAction:
                 openStatisticsActivity();
                 break;
-            case R.id.menu_documents:
+            case R.id.documentsAction:
                 openDocumentsActivity();
                 break;
-            case R.id.menu_source_code:
+            case R.id.sourceCodeAction:
                 openUrlInBrowser(getResources().getString(R.string.url_source_code));
                 break;
-            case R.id.menu_report_bug:
+            case R.id.reportBugAction:
                 openUrlInBrowser(getResources().getString(R.string.url_report_bug));
                 break;
         }

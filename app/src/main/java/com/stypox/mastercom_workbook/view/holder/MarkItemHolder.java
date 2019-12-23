@@ -23,9 +23,9 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
         super(itemView, adapter);
         context = itemView.getContext();
 
-        valueView = itemView.findViewById(R.id.mark_value);
-        typeView = itemView.findViewById(R.id.mark_type);
-        dateView = itemView.findViewById(R.id.mark_date);
+        valueView = itemView.findViewById(R.id.value);
+        typeView = itemView.findViewById(R.id.type);
+        dateView = itemView.findViewById(R.id.date);
     }
 
     @Override

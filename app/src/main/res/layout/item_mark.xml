@@ -7,32 +7,32 @@
     android:layout_height="@dimen/item_mark_height">
 
     <TextView
-        android:id="@+id/mark_value"
+        android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/mark_type"
+        app:layout_constraintBottom_toTopOf="@id/type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="7.5" />
 
     <TextView
-        android:id="@+id/mark_type"
+        android:id="@+id/type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:textAlignment="center"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/mark_date"
+        app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Pratical" />
 
     <TextView
-        android:id="@+id/mark_date"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"

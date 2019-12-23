@@ -24,7 +24,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/overallAverageTextView"
+            app:layout_constraintEnd_toStartOf="@id/overallAverageTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -46,7 +46,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9">
+                app:layout_constraintTop_toBottomOf="@id/textView9">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,16 +54,16 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="@string/label_term"
-                    app:layout_constraintBottom_toBottomOf="@+id/overallAverageTermSpinner"
-                    app:layout_constraintEnd_toStartOf="@+id/overallAverageTermSpinner"
+                    app:layout_constraintBottom_toBottomOf="@id/overallAverageTermSpinner"
+                    app:layout_constraintEnd_toStartOf="@id/overallAverageTermSpinner"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/overallAverageTermSpinner" />
+                    app:layout_constraintTop_toTopOf="@id/overallAverageTermSpinner" />
 
                 <Spinner
                     android:id="@+id/overallAverageTermSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:entries="@array/terms_spinner_entries"
+                    android:entries="@array/entries_term_spinner"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -81,20 +81,20 @@
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="60sp"
-            app:layout_constraintBottom_toBottomOf="@+id/overallAverageLayout"
+            app:layout_constraintBottom_toBottomOf="@id/overallAverageLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/overallAverageLayout"
+            app:layout_constraintTop_toTopOf="@id/overallAverageLayout"
             tools:text="7.51" />
 
         <Spinner
             android:id="@+id/overallAverageModeSpinner"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:entries="@array/overall_average_mode_entries"
+            android:entries="@array/entries_overall_average_mode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/overallAverageModeTextView" />
+            app:layout_constraintTop_toBottomOf="@id/overallAverageModeTextView" />
 
         <TextView
             android:id="@+id/overallAverageModeTextView"
@@ -105,7 +105,7 @@
             android:text="@string/overall_average_mode_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/overallAverageLayout" />
+            app:layout_constraintTop_toBottomOf="@id/overallAverageLayout" />
 
         <View
             android:id="@+id/overallAverageDivider"
@@ -119,16 +119,15 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/overallAverageModeSpinner" />
+            app:layout_constraintTop_toBottomOf="@id/overallAverageModeSpinner" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/marksChart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/markLayout"
-            app:layout_constraintDimensionRatio=""
-            app:layout_constraintTop_toBottomOf="@+id/overallAverageDivider" />
+            app:layout_constraintBottom_toTopOf="@id/markLayout"
+            app:layout_constraintTop_toBottomOf="@id/overallAverageDivider" />
 
         <LinearLayout
             android:id="@+id/markLayout"

@@ -16,11 +16,11 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toEndOf="@id/linearLayout"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/mark_subject"
+            android:id="@+id/subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -29,14 +29,14 @@
             tools:text="Lingua e Cultura Straniera (inglese)" />
 
         <TextView
-            android:id="@+id/mark_description"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
 
         <TextView
-            android:id="@+id/mark_teacher_date"
+            android:id="@+id/teacherDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/mark_value"
+            android:id="@+id/value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
@@ -68,7 +68,7 @@
             tools:text="7.5" />
 
         <TextView
-            android:id="@+id/mark_type"
+            android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
