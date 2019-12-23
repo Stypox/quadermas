@@ -3,8 +3,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="url_source_code">https://github.com/Stypox/mastercom-workbook</string>
-    <string name="url_report_bug">https://github.com/Stypox/mastercom-workbook/issues</string>
+    <string name="url_source_code" translatable="false">https://github.com/Stypox/mastercom-workbook</string>
+    <string name="url_report_bug" translatable="false">https://github.com/Stypox/mastercom-workbook/issues</string>
 
     <string name="menu_account_actions_title">Your account</string>
     <string name="menu_logout">Logout</string>
@@ -40,7 +40,7 @@
     <string name="label_wanted_mark">Wanted mark</string>
     <string name="label_aim_mark">Aim mark:</string>
     <string name="label_remaining_tests">Remaining tests:</string>
-    <string name="default_remaining_tests">1</string>
+    <string name="default_remaining_tests" translatable="false">1</string>
 
     <string name="login_API_url">School:</string>
     <string name="login_user">User:</string>
@@ -64,6 +64,6 @@
     <string name="all_years">All school years</string>
     <string name="all_subjects">All subjects</string>
 
-    <string name="two_strings">%s  -  %s</string>
-    <string name="three_strings">%s  -  %s  -  %s</string>
+    <string name="two_strings" translatable="false">%s  -  %s</string>
+    <string name="three_strings" translatable="false">%s  -  %s  -  %s</string>
 </resources>
