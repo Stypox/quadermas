@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="entries_term_spinner">
-        <item>1st</item>
-        <item>2nd</item>
+        <item>@string/term_first</item>
+        <item>@string/term_second</item>
     </string-array>
 
     <string-array name="entries_overall_average_mode">
-        <item>subjects\' rounded averages</item>
-        <item>subjects\' averages</item>
-        <item>all marks</item>
+        <item>@string/overall_average_mode_subjects_rounded_averages</item>
+        <item>@string/overall_average_mode_subjects_averages</item>
+        <item>@string/overall_average_mode_all_marks</item>
     </string-array>
 
     <string-array name="API_urls">

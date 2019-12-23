@@ -36,6 +36,8 @@
 
     <string name="label_marks_average">Marks average</string>
     <string name="label_term">Term:</string>
+    <string name="term_first">first</string>
+    <string name="term_second">second</string>
 
     <string name="label_wanted_mark">Wanted mark</string>
     <string name="label_aim_mark">Aim mark:</string>
@@ -44,7 +46,7 @@
 
     <string name="login_API_url">School:</string>
     <string name="login_user">User:</string>
-    <string name="login_user_hint">012345</string>
+    <string name="login_user_hint" translatable="false">012345</string>
     <string name="login_password">Password:</string>
     <string name="login_login">LOGIN</string>
 
@@ -56,8 +58,11 @@
     <string name="action_select_subject">Select subject</string>
     <string name="action_select_year">Select year</string>
 
-    <string name="overall_average_title">Overall average</string>
-    <string name="overall_average_mode_title">Display average of:</string>
+    <string name="label_overall_average">Overall average</string>
+    <string name="label_overall_average_mode">Display average of:</string>
+    <string name="overall_average_mode_subjects_rounded_averages">subjects\' rounded averages</string>
+    <string name="overall_average_mode_subjects_averages">subjects\' averages</string>
+    <string name="overall_average_mode_all_marks">all marks</string>
 
     <string name="label_marks_chart">Marks</string>
 
