@@ -41,7 +41,7 @@
     <string name="label_remaining_tests">Remaining tests:</string>
     <string name="default_remaining_tests">1</string>
 
-    <string name="login_APIUrl">School:</string>
+    <string name="login_API_url">School:</string>
     <string name="login_user">User:</string>
     <string name="login_user_hint">012345</string>
     <string name="login_password">Password:</string>
