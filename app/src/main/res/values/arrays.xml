@@ -14,5 +14,8 @@
     <string-array name="API_urls">
         <item>rosmini-tn</item>
         <item>marconi-tn</item>
+        <item>galilei-tn</item>
+        <item>davinci-tn</item>
+        <item>rosmini-trento-tn</item>
     </string-array>
 </resources>
