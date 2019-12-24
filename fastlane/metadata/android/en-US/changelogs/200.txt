@@ -5,7 +5,7 @@ Features:
 - Toolbars always show a back button and the title is not always "Mastercom Workbook" anymore.
 - Sort subjects by name in main screen.
 
-Bugs fixed
+Bugs fixed:
 - Fix extractor errors and login: now correct messages are shown.
 - All lists are faster to load, show and scroll through. Using RecyclerView.
 - Fix many layouts. Now most distances are relative so that layouts work on every phone.
