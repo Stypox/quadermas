@@ -1,0 +1,8 @@
+Features:
+- Add support for viewing topics for a subject
+- Move subject actions (mark details, statistics and topics) from the toolbar to the center of the screen
+- Add italian translations
+
+Bugs fixed:
+- Improve login dialog: add app bar and fix back button presses
+- Improve many layouts to make the app more consistant and pleasing to the eye
