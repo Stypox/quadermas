@@ -1,0 +1,3 @@
+Bugs fixed:
+- Fix marks with invalid type not being loaded (now considered as "Oral").
+- Fix NullPointerException when a subject could not load any of its marks due to errors.

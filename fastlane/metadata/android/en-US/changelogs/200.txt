@@ -1,0 +1,14 @@
+Features:
+- Add activity displaying documents. By tapping on them they can be downloaded.
+- Improve subject screen layout: now it is more pleasing to the eye, though it probably needs some more work.
+- Scrollable text views for subject names and document names.
+- Toolbars always show a back button and the title is not always "Mastercom Workbook" anymore.
+- Sort subjects by name in main screen.
+
+Bugs fixed
+- Fix extractor errors and login: now correct messages are shown.
+- All lists are faster to load, show and scroll through. Using RecyclerView.
+- Fix many layouts. Now most distances are relative so that layouts work on every phone.
+- Prevent user from clicking on buttons when content is not ready.
+- Other minor bug fixes...
+

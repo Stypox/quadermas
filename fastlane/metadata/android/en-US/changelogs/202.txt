@@ -1,0 +1,7 @@
+Features:
+- Add support for not-classified marks (such as "A", or Absent). These marks have no numerical value and are thus completely ignored when calculating averages.
+
+Bugs fixed
+- Fix when a mark fails to load all of the subject fails
+- Fix various crashes caused by subject having only not-classified marks
+
