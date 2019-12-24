@@ -1,0 +1,7 @@
+This is an unofficial client for the Mastercom Workbook, a tool for school students.
+
+Features:
+- Login support for many schools.
+- Subjects: calculates averages and needed marks, creates graphs and shows topics.
+- Marks: shows all marks in a list or in a graph, and calculates the overall average.
+- Documents: find and download documents.
