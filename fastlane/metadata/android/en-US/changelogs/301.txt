@@ -1,0 +1,2 @@
+Bugs fixed:
+- Fix escaped html characters, such as `&amp;`, in texts (i.e. titles, descriptions, etc.)
