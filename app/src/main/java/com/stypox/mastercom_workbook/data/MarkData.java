@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import com.stypox.mastercom_workbook.util.JsonUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,8 +26,8 @@ public class MarkData implements Serializable {
         value = new MarkValue(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
         date = dateFormat.parse(json.getString("data"));
-        description = json.getString("note");
-        teacher = json.getString("docente");
+        description = JsonUtils.getUnescapedString(json, "note");
+        teacher = JsonUtils.getUnescapedString(json, "docente");
     }
 
     public String getSubject() {

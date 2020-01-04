@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.data;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.util.JsonUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ public class SubjectData implements Serializable {
 
     public SubjectData(JSONObject json) throws JSONException {
         this.id = json.getString("id");
-        this.name = json.getString("nome");
+        this.name = JsonUtils.getUnescapedString(json, "nome");
     }
 
     public void setMarks(List<MarkData> marks) {

@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import com.stypox.mastercom_workbook.util.JsonUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,12 +20,12 @@ public class DocumentData {
     private final String subject;
 
     public DocumentData(JSONObject json) throws JSONException, ParseException {
-        name = json.getString("name");
+        name = JsonUtils.getUnescapedString(json, "name");
         id = json.getString("id");
-        owner = json.getString("owner_name") + " " + json.getString("owner_surname");
+        owner = JsonUtils.getUnescapedString(json, "owner_name") + " " + JsonUtils.getUnescapedString(json, "owner_surname");
         date = dateFormat.parse(json.getString("received"));
 
-        String quotedSubject = json.getJSONArray("tags").getString(0);
+        String quotedSubject = JsonUtils.getUnescapedString(json.getJSONArray("tags"), 0);
         if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {
             subject = quotedSubject.substring(1, quotedSubject.length() - 1);
         } else {

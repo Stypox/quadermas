@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import com.stypox.mastercom_workbook.util.JsonUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,10 +21,10 @@ public class TopicData {
 
     public TopicData(JSONObject json) throws JSONException, ParseException {
         date = dateFormat.parse(json.getString("data"));
-        teacher = json.getString("docente");
-        title = json.getString("modulo");
-        description = json.getString("descrizione");
-        assignment = json.getString("assegnazioni");
+        teacher = JsonUtils.getUnescapedString(json, "docente");
+        title = JsonUtils.getUnescapedString(json, "modulo");
+        description = JsonUtils.getUnescapedString(json, "descrizione");
+        assignment = JsonUtils.getUnescapedString(json, "assegnazioni");
     }
 
     public Date getDate() {
