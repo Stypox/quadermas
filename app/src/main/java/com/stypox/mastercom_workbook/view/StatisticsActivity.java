@@ -258,11 +258,12 @@ public class StatisticsActivity extends AppCompatActivity {
             try {
                 sum += Math.round(subject.getAverage(term));
                 ++numberOfSubjects;
-            } catch (ArithmeticException ignored) {
-
-            }
+            } catch (ArithmeticException ignored) {}
         }
 
+        if (numberOfSubjects == 0) {
+            throw new ArithmeticException();
+        }
         return sum / numberOfSubjects;
     }
 
@@ -274,11 +275,12 @@ public class StatisticsActivity extends AppCompatActivity {
             try {
                 sum += subject.getAverage(term);
                 ++numberOfSubjects;
-            } catch (ArithmeticException ignored) {
-
-            }
+            } catch (ArithmeticException ignored) {}
         }
 
+        if (numberOfSubjects == 0) {
+            throw new ArithmeticException();
+        }
         return sum / numberOfSubjects;
     }
 
@@ -293,8 +295,9 @@ public class StatisticsActivity extends AppCompatActivity {
             }
         }
 
-        if (numberOfMarks == 0)
+        if (numberOfMarks == 0) {
             throw new ArithmeticException();
+        }
         return sum / numberOfMarks;
     }
 
