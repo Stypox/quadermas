@@ -1,0 +1,3 @@
+Bugs fixed:
+- Make subject activity layout scrollable, to fix problems arising when the keyboard is opened or on small/landscape screens.
+- In statistics activity fix "NaN" shown as average when no subject has a valid average in the current term.
