@@ -43,6 +43,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private static final int requestCodeLoginActivity = 0;
 
     private CompositeDisposable disposables;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private SwipeRefreshLayout refreshLayout;
     private ItemArrayAdapter<SubjectData> subjectsArrayAdapter;
 
+    private DrawerLayout drawer;
     private MenuItem marksMenuItem;
     private MenuItem statisticsMenuItem;
     private TextView fullNameView;
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         disposables = new CompositeDisposable();
 
         refreshLayout = findViewById(R.id.refreshLayout);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigationView);
         marksMenuItem = navigationView.getMenu().findItem(R.id.marksAction);
         statisticsMenuItem = navigationView.getMenu().findItem(R.id.statisticsAction);
@@ -272,7 +274,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -303,7 +304,6 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
