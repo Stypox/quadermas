@@ -53,4 +53,5 @@
     <string name="overall_average_mode_subjects_rounded_averages">le medie arrotondate delle materie</string>
     <string name="term_first">primo</string>
     <string name="term_second">secondo</string>
+    <string name="error_unknown">Errore sconosciuto</string>
 </resources>
