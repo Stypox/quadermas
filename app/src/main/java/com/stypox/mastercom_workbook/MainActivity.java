@@ -29,6 +29,7 @@ import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
 import com.stypox.mastercom_workbook.extractor.SubjectExtractor;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.login.LoginActivity;
+import com.stypox.mastercom_workbook.settings.SettingsActivity;
 import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
@@ -263,8 +264,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void openUrlInBrowser(String url) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    private void openSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -297,11 +298,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.documentsAction:
                 openDocumentsActivity();
                 break;
-            case R.id.sourceCodeAction:
-                openUrlInBrowser(getResources().getString(R.string.url_source_code));
-                break;
-            case R.id.reportBugAction:
-                openUrlInBrowser(getResources().getString(R.string.url_report_bug));
+            case R.id.settingsAction:
+                openSettingsActivity();
                 break;
         }
 

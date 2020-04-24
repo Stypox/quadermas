@@ -30,5 +30,6 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".view.DocumentsActivity" />
         <activity android:name=".view.TopicsActivity" />
+        <activity android:name=".settings.SettingsActivity" />
     </application>
 </manifest>

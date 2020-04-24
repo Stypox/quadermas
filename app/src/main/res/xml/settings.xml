@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/menu_settings">
+
+    <Preference android:title="@string/settings_source_code"
+        android:icon="@drawable/ic_menu_source_code"
+        android:key="@string/key_source_code"
+        android:summary="@string/settings_source_code_summary"/>
+
+    <Preference android:title="@string/settings_report_bug"
+        android:icon="@drawable/ic_menu_report_bug"
+        android:key="@string/key_report_bug"
+        android:summary="@string/settings_report_bug_summary"/>
+</PreferenceScreen>

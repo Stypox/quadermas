@@ -1,19 +1,24 @@
 <resources>
+    <string name="key_source_code" translatable="false">source_code</string>
+    <string name="key_report_bug" translatable="false">report_bug</string>
+
     <string name="app_name">Mastercom Workbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="url_source_code" translatable="false">https://github.com/Stypox/mastercom-workbook</string>
-    <string name="url_report_bug" translatable="false">https://github.com/Stypox/mastercom-workbook/issues</string>
-
-    <string name="menu_account_actions_title">Your account</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_marks">Marks</string>
     <string name="menu_statistics">Statistics</string>
-    <string name="menu_info_actions_title">App info</string>
-    <string name="menu_source_code">Source code</string>
-    <string name="menu_report_bug">Report bug</string>
     <string name="menu_documents">Documents</string>
+    <string name="menu_setup">Setup</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="settings_source_code">View source code</string>
+    <string name="settings_source_code_summary">This app is free and open source!</string>
+    <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/mastercom-workbook</string>
+    <string name="settings_report_bug">Report bug or request feature</string>
+    <string name="settings_report_bug_summary">Have you found something to improve?</string>
+    <string name="settings_report_bug_url" translatable="false">https://github.com/Stypox/mastercom-workbook/issues</string>
 
     <string name="activity_title_statistics">Mark statistics</string>
     <string name="activity_title_marks">Mark details</string>

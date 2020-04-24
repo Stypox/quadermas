@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group>
         <item
@@ -22,25 +20,16 @@
 
     </group>
 
-    <item android:title="@string/menu_account_actions_title">
+    <item android:title="@string/menu_setup">
         <menu>
             <item
                 android:id="@+id/loginAction"
                 android:icon="@drawable/ic_menu_login"
                 android:title="@string/menu_logout" />
-        </menu>
-    </item>
-
-    <item android:title="@string/menu_info_actions_title">
-        <menu>
             <item
-                android:id="@+id/sourceCodeAction"
-                android:icon="@drawable/ic_menu_source_code"
-                android:title="@string/menu_source_code" />
-            <item
-                android:id="@+id/reportBugAction"
-                android:icon="@drawable/ic_menu_report_bug"
-                android:title="@string/menu_report_bug" />
+                android:id="@+id/settingsAction"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/menu_settings" />
         </menu>
     </item>
 </menu>
