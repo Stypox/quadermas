@@ -1,7 +1,7 @@
 package com.stypox.mastercom_workbook.extractor;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
 
