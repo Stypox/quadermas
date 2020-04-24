@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MarkData implements Serializable {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ROOT);
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     private final MarkValue value;
     private final MarkType type;

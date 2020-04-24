@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class TopicData {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ROOT);
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     private final Date date;
     private final String teacher;

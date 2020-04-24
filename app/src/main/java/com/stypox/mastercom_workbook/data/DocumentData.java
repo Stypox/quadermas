@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DocumentData {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT);
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
 
     private final String name;
     private final String id;
