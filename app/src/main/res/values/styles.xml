@@ -20,6 +20,7 @@
         <item name="ic_settings">@drawable/ic_settings_white_24dp</item>
         <item name="ic_code">@drawable/ic_code_white_24dp</item>
         <item name="ic_bug_report">@drawable/ic_bug_report_white_24dp</item>
+        <item name="ic_palette">@drawable/ic_palette_white_24dp</item>
     </style>
 
     <style name="LightAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -43,5 +44,6 @@
         <item name="ic_settings">@drawable/ic_settings_black_24dp</item>
         <item name="ic_code">@drawable/ic_code_black_24dp</item>
         <item name="ic_bug_report">@drawable/ic_bug_report_black_24dp</item>
+        <item name="ic_palette">@drawable/ic_palette_black_24dp</item>
     </style>
 </resources>

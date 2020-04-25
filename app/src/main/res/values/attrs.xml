@@ -13,4 +13,5 @@
     <attr name="ic_settings" format="reference" />
     <attr name="ic_code" format="reference" />
     <attr name="ic_bug_report" format="reference" />
+    <attr name="ic_palette" format="reference" />
 </resources>
