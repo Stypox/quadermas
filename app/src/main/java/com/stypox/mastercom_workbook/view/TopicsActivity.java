@@ -1,6 +1,8 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -14,7 +16,7 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TopicData;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
-import com.stypox.mastercom_workbook.extractor.TopicsExtractor;
+import com.stypox.mastercom_workbook.extractor.TopicExtractor;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.TopicItemHolder;
@@ -56,6 +58,7 @@ public class TopicsActivity extends ThemedActivity {
 
 
         subjectData = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
+        assert subjectData != null;
         actionBar.setSubtitle(subjectData.getName());
 
 
@@ -95,7 +98,7 @@ public class TopicsActivity extends ThemedActivity {
     }
 
     private void fetchTopics() {
-        disposables.add(TopicsExtractor.fetchTopics(subjectData.getId())
+        disposables.add(TopicExtractor.fetchTopics(subjectData, () -> onTopicExtractionError(subjectData.getName()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onTopicsFetched, this::onError));
     }
@@ -111,8 +114,16 @@ public class TopicsActivity extends ThemedActivity {
         refreshLayout.setRefreshing(false);
     }
 
-    private void onTopicsFetched(List<TopicData> topicData) {
-        this.topics.addAll(topicData);
+    private void onTopicExtractionError(String subjectName) {
+        new Handler(getMainLooper()).post(() ->
+                Toast.makeText(this, getString(R.string.error_could_not_load_a_topic, subjectName), Toast.LENGTH_LONG)
+                        .show()
+        );
+    }
+
+    private void onTopicsFetched(SubjectData subjectData) {
+        assert subjectData.getTopics() != null;
+        this.topics.addAll(subjectData.getTopics());
         topicsArrayAdapter.notifyDataSetChanged();
         refreshLayout.setRefreshing(false);
     }

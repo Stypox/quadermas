@@ -43,6 +43,7 @@
     <string name="error_unsuitable_json">Unsuitable response JSON</string>
     <string name="error_invalid_credentials">Wrong user or password</string>
     <string name="error_could_not_load_a_mark">Could not load a mark for subject %1$s</string>
+    <string name="error_could_not_load_a_topic">Could not load a topic for subject %1$s</string>
     <string name="error_no_marks">No marks</string>
     <string name="error_unknown">Unknown error</string>
     <string name="retry">Retry</string>

@@ -71,7 +71,8 @@ public class SubjectExtractor {
                         subjectData.setMarks(marks);
                     } catch (Throwable e) {
                         e.printStackTrace();
-                        subjectData.setError(ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+                        subjectData.setMarkExtractionError(
+                                ExtractorError.asExtractorError(e, jsonAlreadyParsed));
                     }
 
                     return subjectData;
