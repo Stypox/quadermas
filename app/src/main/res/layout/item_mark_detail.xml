@@ -62,9 +62,9 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/size_mark_detail"
-            tools:text="7.5" />
+            tools:text="5+"
+            tools:textColor="?attr/color_mark_failing"/>
 
         <TextView
             android:id="@+id/type"

@@ -3,12 +3,6 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="highlightedText">#000000</color>
-
-    <color name="notClassifiedMark">#000000</color>
-    <color name="failingMark">#B20000</color>
-    <color name="halfwayMark">#B2B200</color>
-    <color name="excellentMark">#00B200</color>
 
     <color name="chartLine">#3366DD</color>
 </resources>

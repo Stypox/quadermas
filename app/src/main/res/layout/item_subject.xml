@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/highlightedText"
         android:textSize="@dimen/size_mark_subject"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:textColor="@android:color/white"
         tools:text="7.5" />
 
     <HorizontalScrollView

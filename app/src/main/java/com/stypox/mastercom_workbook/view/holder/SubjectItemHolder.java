@@ -15,6 +15,8 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
+import static com.stypox.mastercom_workbook.util.MarkFormatting.resolveColor;
+
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private TextView nameView;
     private TextView teacherTextView;
@@ -42,13 +44,13 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         if (data.getMarks() == null) {
             teacherTextView.setText(data.getError().getMessage(context));
             averageTextView.setText("X");
-            averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
+            averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
             itemView.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
-            averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
+            averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
             itemView.setOnClickListener(null);
 
         } else {
@@ -60,7 +62,7 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
                 averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
             } catch (ArithmeticException e) {
                 averageTextView.setText("-");
-                averageTextView.setTextColor(context.getResources().getColor(R.color.notClassifiedMark));
+                averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
             }
 
             if (adapter != null) {

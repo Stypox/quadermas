@@ -1,6 +1,11 @@
 package com.stypox.mastercom_workbook.util;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
+
+import androidx.annotation.AttrRes;
+import androidx.core.content.ContextCompat;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkType;
@@ -30,13 +35,25 @@ public class MarkFormatting {
     }
 
 
+    // taken from NewPipe, file util/ThemeHelper.java, created by @mauriciocolli
+    public static int resolveColor(Context context, @AttrRes int attrColor) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(attrColor, value, true);
+
+        if (value.resourceId != 0) {
+            return ContextCompat.getColor(context, value.resourceId);
+        }
+
+        return value.data;
+    }
+
     public static int colorOf(Context context, float value) {
         if (value < 6) {
-            return context.getResources().getColor(R.color.failingMark);
+            return resolveColor(context, R.attr.color_mark_failing);
         } else if (value < 8) {
-            return context.getResources().getColor(R.color.halfwayMark);
+            return resolveColor(context, R.attr.color_mark_halfway);
         } else {
-            return context.getResources().getColor(R.color.excellentMark);
+            return resolveColor(context, R.attr.color_mark_excellent);
         }
     }
 
@@ -44,7 +61,7 @@ public class MarkFormatting {
         if (markValue.isNumber()) {
             return colorOf(context, markValue.getNumber());
         } else {
-            return context.getResources().getColor(R.color.notClassifiedMark);
+            return resolveColor(context, R.attr.color_mark_not_classified);
         }
     }
 

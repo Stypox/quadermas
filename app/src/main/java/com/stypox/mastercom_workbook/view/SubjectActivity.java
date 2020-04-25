@@ -91,7 +91,6 @@ public class SubjectActivity extends ThemedActivity {
 
 
         RecyclerView marksLayout = findViewById(R.id.marksList);
-        marksLayout.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
 
         setupListeners();
