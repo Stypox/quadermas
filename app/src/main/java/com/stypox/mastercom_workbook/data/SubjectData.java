@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import androidx.annotation.Nullable;
+
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.JsonUtils;
@@ -14,8 +16,8 @@ public class SubjectData implements Serializable {
     private final String id;
     private final String name;
     private String teacher;
-    private List<MarkData> marks;
-    private ExtractorError extractorError;
+    @Nullable private List<MarkData> marks;
+    @Nullable private ExtractorError extractorError;
 
     public SubjectData(JSONObject json) throws JSONException {
         this.id = json.getString("id");
@@ -44,15 +46,21 @@ public class SubjectData implements Serializable {
     public String getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public String getTeacher() {
         return teacher;
     }
+
+    @Nullable
     public List<MarkData> getMarks() {
         return marks;
     }
+
+    @Nullable
     public ExtractorError getError() { return extractorError; }
 
     public float getAverage(int termToConsider) throws ArithmeticException {

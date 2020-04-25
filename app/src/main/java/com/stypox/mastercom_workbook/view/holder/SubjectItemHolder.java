@@ -42,9 +42,16 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     public void updateItemData(SubjectData data) {
         nameView.setText(data.getName());
         if (data.getMarks() == null) {
-            teacherTextView.setText(data.getError().getMessage(context));
-            averageTextView.setText("X");
-            averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
+            if (data.getError() == null) {
+                // marks not yet extracted
+                teacherTextView.setText("");
+                averageTextView.setText("");
+            } else {
+                // error while extracting marks
+                teacherTextView.setText(data.getError().getMessage(context));
+                averageTextView.setText("X");
+                averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
+            }
             itemView.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {

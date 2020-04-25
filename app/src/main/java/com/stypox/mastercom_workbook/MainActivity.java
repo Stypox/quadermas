@@ -58,6 +58,7 @@ public class MainActivity extends ThemedActivity
     private TextView fullNameView;
     private TextView fullAPIUrlView;
 
+    private int numSubjectsFullyExtracted;
     private ArrayList<SubjectData> subjects;
 
 
@@ -189,7 +190,8 @@ public class MainActivity extends ThemedActivity
 
 
     private void fetchSubjects() {
-        disposables.add(SubjectExtractor.fetchSubjects(this::onMarkExtractionError)
+        numSubjectsFullyExtracted = 0;
+        disposables.add(SubjectExtractor.fetchSubjects()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<SubjectData>() {
                     @Override
@@ -207,10 +209,7 @@ public class MainActivity extends ThemedActivity
                                 .show();
                     }
 
-                    @Override
-                    public void onComplete() {
-                        onReloadSubjectsCompleted();
-                    }
+                    @Override public void onComplete() {}
                 }));
     }
 
@@ -224,6 +223,18 @@ public class MainActivity extends ThemedActivity
     private void onSubjectFetched(SubjectData subjectData) {
         subjects.add(subjectData);
         subjectsArrayAdapter.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
+
+        disposables.add(SubjectExtractor
+                .fetchMarks(subjectData, this::onMarkExtractionError)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subjectData1 -> {
+                    subjectsArrayAdapter.notifyDataSetChanged();
+
+                    ++numSubjectsFullyExtracted;
+                    if (numSubjectsFullyExtracted == subjects.size()) {
+                        onReloadSubjectsCompleted();
+                    }
+                }));
     }
 
 
@@ -233,6 +244,7 @@ public class MainActivity extends ThemedActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case requestCodeLoginActivity:
                 reloadIfLoggedIn();

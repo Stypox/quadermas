@@ -10,9 +10,11 @@ import org.json.JSONObject;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class SubjectExtractor {
@@ -25,10 +27,7 @@ public class SubjectExtractor {
     }
 
 
-    /**
-     * @param onMarkError will be called on a thread different from the main one
-     */
-    public static Observable<SubjectData> fetchSubjects(OnMarkExtractionError onMarkError) {
+    public static Observable<SubjectData> fetchSubjects() {
         return Observable
                 .create((ObservableOnSubscribe<SubjectData>) emitter -> {
                     boolean jsonAlreadyParsed = false;
@@ -48,36 +47,42 @@ public class SubjectExtractor {
                         throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
                     }
                 })
-                .flatMap(subjectData1 -> Observable.defer(() -> Observable.just(subjectData1)
-                        .map(subjectData -> {
-                            boolean jsonAlreadyParsed = false;
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * @param onMarkError will be called on a thread different from the main one
+     */
+    public static Single<SubjectData> fetchMarks(SubjectData subjectData,
+                                                 OnMarkExtractionError onMarkError) {
+        return Single
+                .fromCallable(() -> {
+                    boolean jsonAlreadyParsed = false;
+                    try {
+                        URL url = new URL(marksUrl
+                                .replace("{api_url}", ExtractorData.getAPIUrl())
+                                .replace("{subject_id}", subjectData.getId()));
+
+                        JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
+                        jsonAlreadyParsed = true;
+
+                        JSONArray list = jsonResponse.getJSONArray("result");
+                        List<MarkData> marks = new ArrayList<>();
+                        for (int i = 0; i < list.length(); i++) {
                             try {
-                                URL url = new URL(marksUrl
-                                        .replace("{api_url}", ExtractorData.getAPIUrl())
-                                        .replace("{subject_id}", subjectData.getId()));
-
-                                JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
-                                jsonAlreadyParsed = true;
-
-                                JSONArray list = jsonResponse.getJSONArray("result");
-                                List<MarkData> marks = new ArrayList<>();
-                                for (int i = 0; i < list.length(); i++) {
-                                    try {
-                                        marks.add(new MarkData(list.getJSONObject(i)));
-                                    } catch (Throwable e) {
-                                        onMarkError.onMarkExtractionError(subjectData.getName());
-                                    }
-                                }
-                                subjectData.setMarks(marks);
+                                marks.add(new MarkData(list.getJSONObject(i)));
                             } catch (Throwable e) {
-                                e.printStackTrace();
-                                subjectData.setMarks(new ArrayList<>());
-                                subjectData.setError(ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+                                onMarkError.onMarkExtractionError(subjectData.getName());
                             }
+                        }
+                        subjectData.setMarks(marks);
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        subjectData.setError(ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+                    }
 
-                            return subjectData;
-                        })
-                        .subscribeOn(Schedulers.newThread())))
+                    return subjectData;
+                })
                 .subscribeOn(Schedulers.io());
     }
 }
