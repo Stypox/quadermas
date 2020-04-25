@@ -56,4 +56,8 @@
     <string name="settings_source_code_summary">Questa app è libera ed open source!</string>
     <string name="settings_report_bug_summary">Hai trovato qualcosa da migliorare?</string>
     <string name="menu_setup">Configurazione</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_summary">Scegli quali colori usare nell\'app</string>
+    <string name="settings_theme_light">Chiaro</string>
+    <string name="settings_theme_dark">Scuro</string>
 </resources>
