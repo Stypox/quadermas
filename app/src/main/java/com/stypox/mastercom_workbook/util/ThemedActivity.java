@@ -1,14 +1,22 @@
 package com.stypox.mastercom_workbook.util;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.TypedValue;
 
+import androidx.annotation.AttrRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import com.stypox.mastercom_workbook.R;
 
 abstract public class ThemedActivity extends AppCompatActivity {
+
+    ///////////////
+    // BEHAVIOUR //
+    ///////////////
 
     private int currentTheme;
 
@@ -45,5 +53,22 @@ abstract public class ThemedActivity extends AppCompatActivity {
         if (currentTheme != getThemeFromPreferences()) {
             recreate();
         }
+    }
+
+
+    ///////////////
+    // UTILITIES //
+    ///////////////
+
+    // taken from NewPipe, file util/ThemeHelper.java, created by @mauriciocolli
+    public static int resolveColor(Context context, @AttrRes int attrColor) {
+        final TypedValue value = new TypedValue();
+        context.getTheme().resolveAttribute(attrColor, value, true);
+
+        if (value.resourceId != 0) {
+            return ContextCompat.getColor(context, value.resourceId);
+        }
+
+        return value.data;
     }
 }

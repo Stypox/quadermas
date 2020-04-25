@@ -172,9 +172,11 @@ public class StatisticsActivity extends ThemedActivity {
     private void formatMarksChart() {
         marksChart.getDescription().setEnabled(false);
         marksChart.getLegend().setEnabled(false);
+        int labelColor = resolveColor(marksChart.getContext(), android.R.attr.textColorPrimary);
 
         XAxis xAxis = marksChart.getXAxis();
         xAxis.setLabelCount(4);
+        xAxis.setTextColor(labelColor);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
@@ -202,12 +204,14 @@ public class StatisticsActivity extends ThemedActivity {
         YAxis axisLeft = marksChart.getAxisLeft();
         axisLeft.setGranularity(0.5f);
         axisLeft.setLabelCount(15);
+        axisLeft.setTextColor(labelColor);
         axisLeft.setDrawGridLines(false);
         axisLeft.setValueFormatter(markFormatter);
 
         YAxis axisRight = marksChart.getAxisRight();
         axisRight.setGranularity(0.5f);
         axisRight.setLabelCount(15);
+        axisRight.setTextColor(labelColor);
         axisRight.setDrawGridLines(false);
         axisRight.setValueFormatter(markFormatter);
     }

@@ -15,7 +15,7 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
-import static com.stypox.mastercom_workbook.util.MarkFormatting.resolveColor;
+import static com.stypox.mastercom_workbook.util.ThemedActivity.resolveColor;
 
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private TextView nameView;
