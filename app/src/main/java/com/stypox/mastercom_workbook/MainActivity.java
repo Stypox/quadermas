@@ -225,7 +225,7 @@ public class MainActivity extends ThemedActivity
         subjectsArrayAdapter.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
 
         disposables.add(SubjectExtractor
-                .fetchMarks(subjectData, this::onMarkExtractionError)
+                .fetchMarks(subjectData, () -> onMarkExtractionError(subjectData.getName()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subjectData1 -> {
                     subjectsArrayAdapter.notifyDataSetChanged();

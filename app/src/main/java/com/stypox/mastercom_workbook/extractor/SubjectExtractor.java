@@ -4,7 +4,6 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -20,11 +19,6 @@ import io.reactivex.schedulers.Schedulers;
 public class SubjectExtractor {
     private static final String subjectsUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?action=get_subjects";
     private static final String marksUrl = "https://{api_url}.registroelettronico.com/mastercom/register_manager.php?action=get_grades_subject&id_materia={subject_id}";
-
-
-    public interface OnMarkExtractionError {
-        void onMarkExtractionError(String subjectName);
-    }
 
 
     public static Observable<SubjectData> fetchSubjects() {
@@ -53,8 +47,7 @@ public class SubjectExtractor {
     /**
      * @param onMarkError will be called on a thread different from the main one
      */
-    public static Single<SubjectData> fetchMarks(SubjectData subjectData,
-                                                 OnMarkExtractionError onMarkError) {
+    public static Single<SubjectData> fetchMarks(SubjectData subjectData, Runnable onMarkError) {
         return Single
                 .fromCallable(() -> {
                     boolean jsonAlreadyParsed = false;
@@ -72,7 +65,7 @@ public class SubjectExtractor {
                             try {
                                 marks.add(new MarkData(list.getJSONObject(i)));
                             } catch (Throwable e) {
-                                onMarkError.onMarkExtractionError(subjectData.getName());
+                                onMarkError.run();
                             }
                         }
                         subjectData.setMarks(marks);
