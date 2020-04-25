@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/selectYearAction"
-        android:icon="@drawable/ic_calendar"
+        android:icon="@drawable/ic_date_range_white_24dp"
         android:enabled="false"
         android:title="@string/action_select_year"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/selectSubjectAction"
-        android:icon="@drawable/ic_select_subject"
+        android:icon="@drawable/ic_class_white_24dp"
         android:enabled="false"
         android:title="@string/action_select_subject"
         app:showAsAction="ifRoom" />

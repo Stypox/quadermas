@@ -55,7 +55,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:clickable="false"
-                            android:drawableTop="@drawable/ic_menu_marks"
+                            android:drawableTop="?attr/ic_storage"
                             android:focusable="false"
                             android:gravity="center"
                             android:text="@string/action_details"
@@ -77,7 +77,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:clickable="false"
-                            android:drawableTop="@drawable/ic_menu_statistics"
+                            android:drawableTop="?attr/ic_timeline"
                             android:focusable="false"
                             android:gravity="center"
                             android:text="@string/action_statistics"
@@ -99,7 +99,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:clickable="false"
-                            android:drawableTop="@drawable/ic_menu_topics"
+                            android:drawableTop="?attr/ic_assignment"
                             android:focusable="false"
                             android:gravity="center"
                             android:text="@string/action_topics"
@@ -135,7 +135,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_marks_average"
-                            android:textColor="@android:color/black"
+                            android:textColor="?android:textColorPrimary"
                             android:textSize="@dimen/size_section_header"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +182,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="7.51" />
+                        tools:text="7.51"
+                        android:gravity="center_horizontal" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -227,7 +228,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_wanted_mark"
-                            android:textColor="@android:color/black"
+                            android:textColor="?android:textColorPrimary"
                             android:textSize="@dimen/size_section_header"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -308,7 +309,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="7.5" />
+                        tools:text="7.5"
+                        android:gravity="center_horizontal" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

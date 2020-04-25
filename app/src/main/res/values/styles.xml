@@ -1,22 +1,47 @@
 <resources>
+    <style name="DarkAppTheme" parent="@style/Theme.AppCompat">
+        <item name="isLightTheme">false</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_white_24dp</item>
+        <item name="ic_storage">@drawable/ic_storage_white_24dp</item>
+        <item name="ic_timeline">@drawable/ic_timeline_white_24dp</item>
+        <item name="ic_assignment">@drawable/ic_assignment_white_24dp</item>
+        <item name="ic_insert_file">@drawable/ic_insert_file_white_24dp</item>
+        <item name="ic_person">@drawable/ic_person_white_24dp</item>
+        <item name="ic_settings">@drawable/ic_settings_white_24dp</item>
+        <item name="ic_code">@drawable/ic_code_white_24dp</item>
+        <item name="ic_bug_report">@drawable/ic_bug_report_white_24dp</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="LightAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="isLightTheme">true</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_black_24dp</item>
+        <item name="ic_storage">@drawable/ic_storage_black_24dp</item>
+        <item name="ic_timeline">@drawable/ic_timeline_black_24dp</item>
+        <item name="ic_assignment">@drawable/ic_assignment_black_24dp</item>
+        <item name="ic_insert_file">@drawable/ic_insert_file_black_24dp</item>
+        <item name="ic_person">@drawable/ic_person_black_24dp</item>
+        <item name="ic_settings">@drawable/ic_settings_black_24dp</item>
+        <item name="ic_code">@drawable/ic_code_black_24dp</item>
+        <item name="ic_bug_report">@drawable/ic_bug_report_black_24dp</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

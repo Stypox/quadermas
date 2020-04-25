@@ -1,16 +1,17 @@
 package com.stypox.mastercom_workbook.login;
 
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.stypox.mastercom_workbook.R;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
-public class LoginActivity extends AppCompatActivity {
+import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.util.ThemedActivity;
+
+public class LoginActivity extends ThemedActivity {
 
     private EditText APIUrlEdit;
     private EditText userEdit;

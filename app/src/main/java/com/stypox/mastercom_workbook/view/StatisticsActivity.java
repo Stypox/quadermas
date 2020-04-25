@@ -1,17 +1,17 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -28,13 +28,14 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
+import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends ThemedActivity {
     public static final String subjectsIntentKey = "subjects";
     public static final int resultErrorNoMarks = 1;
 

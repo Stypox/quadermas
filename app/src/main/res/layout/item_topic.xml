@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textColor="@color/highlightedText"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_item_title"
         tools:text="Hello world module" />
 

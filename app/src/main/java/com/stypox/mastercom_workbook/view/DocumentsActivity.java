@@ -4,20 +4,20 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.DocumentData;
@@ -27,6 +27,7 @@ import com.stypox.mastercom_workbook.extractor.DocumentsExtractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.StudentExtractor;
 import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.DocumentItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
@@ -39,7 +40,7 @@ import java.util.TreeSet;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class DocumentsActivity extends AppCompatActivity
+public class DocumentsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
     private final int requestCodePermissionDialog = 0;
 

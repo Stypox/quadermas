@@ -5,15 +5,15 @@ import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.util.ThemedActivity;
 
-public class SettingsActivity extends AppCompatActivity
+public class SettingsActivity extends ThemedActivity
         implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     private final String toolbarTitleKey = "toolbarTitle";
 

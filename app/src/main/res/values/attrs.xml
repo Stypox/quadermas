@@ -3,4 +3,14 @@
     <declare-styleable name="APIUrlEdit">
         <attr name="entries" format="reference" />
     </declare-styleable>
+
+    <attr name="ic_arrow_drop_down" format="reference" />
+    <attr name="ic_storage" format="reference" />
+    <attr name="ic_timeline" format="reference" />
+    <attr name="ic_assignment" format="reference" />
+    <attr name="ic_insert_file" format="reference" />
+    <attr name="ic_person" format="reference" />
+    <attr name="ic_settings" format="reference" />
+    <attr name="ic_code" format="reference" />
+    <attr name="ic_bug_report" format="reference" />
 </resources>

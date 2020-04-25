@@ -1,6 +1,9 @@
 <resources>
     <string name="key_source_code" translatable="false">source_code</string>
     <string name="key_report_bug" translatable="false">report_bug</string>
+    <string name="key_theme" translatable="false">theme</string>
+    <string name="value_theme_dark" translatable="false">dark</string>
+    <string name="value_theme_light" translatable="false">light</string>
 
     <string name="app_name">Mastercom Workbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

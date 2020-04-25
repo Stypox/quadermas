@@ -4,18 +4,18 @@
     <group>
         <item
             android:id="@+id/marksAction"
-            android:icon="@drawable/ic_menu_marks"
+            android:icon="?attr/ic_storage"
             android:title="@string/menu_marks"
             android:enabled="false" />
         <item
             android:id="@+id/statisticsAction"
-            android:icon="@drawable/ic_menu_statistics"
+            android:icon="?attr/ic_timeline"
             android:title="@string/menu_statistics"
             android:enabled="false" />
 
         <item
             android:id="@+id/documentsAction"
-            android:icon="@drawable/ic_menu_documents"
+            android:icon="?attr/ic_insert_file"
             android:title="@string/menu_documents" />
 
     </group>
@@ -24,11 +24,11 @@
         <menu>
             <item
                 android:id="@+id/loginAction"
-                android:icon="@drawable/ic_menu_login"
+                android:icon="?attr/ic_person"
                 android:title="@string/menu_logout" />
             <item
                 android:id="@+id/settingsAction"
-                android:icon="@drawable/ic_settings_black_24dp"
+                android:icon="?attr/ic_settings"
                 android:title="@string/menu_settings" />
         </menu>
     </item>

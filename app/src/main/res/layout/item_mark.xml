@@ -11,13 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_mark_detail"
         app:layout_constraintBottom_toTopOf="@id/type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="7.5" />
+        tools:text="7.5"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/type"
@@ -25,11 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:textAlignment="center"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_item_title"
         app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Pratical" />
+        tools:text="Pratical"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/date"
@@ -40,5 +43,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="06/11/2019" />
+        tools:text="06/11/2019"
+        android:gravity="center_horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/highlightedText"
+            android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/size_item_title"
             tools:text="Lingua e Cultura Straniera (inglese)" />
 
@@ -72,7 +72,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="@dimen/size_item_title"
-            tools:text="Pratical" />
+            tools:text="Pratical"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
