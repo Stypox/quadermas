@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/sortByValueAction"
-        android:icon="@drawable/ic_format_list_numbered_white_24dp"
+        android:icon="@drawable/ic_trending_up_white_24dp"
         android:title="@string/action_sort_by_value"
         app:showAsAction="ifRoom" />
 
