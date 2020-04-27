@@ -80,6 +80,9 @@
 
     <string name="label_marks_chart">Marks</string>
 
+    <string name="label_topic_description">Description</string>
+    <string name="label_topic_assignment">Assignment</string>
+
     <string name="all_years">All school years</string>
     <string name="all_subjects">All subjects</string>
 

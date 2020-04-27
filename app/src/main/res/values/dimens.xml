@@ -16,4 +16,5 @@
     <dimen name="size_section_header">25sp</dimen>
 
     <dimen name="radius_chart_circle">1.3dp</dimen>
+    <dimen name="topic_table_spacing">8dp</dimen>
 </resources>

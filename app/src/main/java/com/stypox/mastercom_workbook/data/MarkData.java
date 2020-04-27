@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import androidx.annotation.Nullable;
+
 import com.stypox.mastercom_workbook.util.JsonUtils;
 
 import org.json.JSONException;
@@ -19,7 +21,7 @@ public class MarkData implements Serializable {
     private final Date date;
     private final String description;
     private final String teacher;
-    private String subject;
+    @Nullable private String subject;
 
     public MarkData(JSONObject json) throws JSONException, ParseException {
         subject = null;
@@ -30,13 +32,11 @@ public class MarkData implements Serializable {
         teacher = JsonUtils.getUnescapedString(json, "docente");
     }
 
-    public String getSubject() {
-        return subject == null ? "" : subject;
-    }
 
-    public void setSubject(String subject) {
+    void setSubject(@Nullable String subject) {
         this.subject = subject;
     }
+
 
     public MarkValue getValue() {
         return value;
@@ -56,5 +56,9 @@ public class MarkData implements Serializable {
 
     public String getTeacher() {
         return teacher;
+    }
+
+    public String getSubject() {
+        return subject == null ? "" : subject;
     }
 }

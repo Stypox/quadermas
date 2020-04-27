@@ -49,7 +49,11 @@ public class SubjectData implements Serializable {
         marks = null;
     }
 
-    public void setTopics(@Nullable List<TopicData> topics) {
+    public void setTopics(List<TopicData> topics) {
+        for (TopicData topic : topics) {
+            topic.setSubject(name);
+        }
+
         this.topics = topics;
     }
 

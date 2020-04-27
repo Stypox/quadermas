@@ -61,4 +61,6 @@
     <string name="settings_theme_light">Chiaro</string>
     <string name="settings_theme_dark">Scuro</string>
     <string name="error_could_not_load_a_topic">Un argomento della materia %1$s non può essere caricato</string>
+    <string name="label_topic_description">Descrizione</string>
+    <string name="label_topic_assignment">Compiti</string>
 </resources>

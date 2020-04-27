@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.stypox.mastercom_workbook.R;
@@ -12,9 +13,11 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 
 public class TopicItemHolder extends ItemHolder<TopicData> {
     private TextView titleView;
-    private TextView descriptionView;
-    private TextView assignmentView;
     private TextView teacherDateView;
+    private TableRow descriptionTableRow;
+    private TextView descriptionView;
+    private TableRow assignmentTableRow;
+    private TextView assignmentView;
 
     private Context context;
 
@@ -23,39 +26,42 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
         context = itemView.getContext();
 
         titleView = itemView.findViewById(R.id.title);
-        descriptionView = itemView.findViewById(R.id.description);
-        assignmentView = itemView.findViewById(R.id.assignment);
         teacherDateView = itemView.findViewById(R.id.teacherDate);
+        descriptionTableRow = itemView.findViewById(R.id.description_table_row);
+        descriptionView = itemView.findViewById(R.id.description);
+        assignmentTableRow = itemView.findViewById(R.id.assignment_table_row);
+        assignmentView = itemView.findViewById(R.id.assignment);
     }
 
     @Override
     public void updateItemData(TopicData data) {
         if (data.getTitle().isEmpty()) {
-            titleView.setText(data.getDescription());
-            descriptionView.setVisibility(View.GONE);
-            descriptionView.setText("");
+            if (data.getDescription().isEmpty()) {
+                titleView.setText(data.getSubject());
+            } else {
+                titleView.setText(data.getDescription());
+            }
+            descriptionTableRow.setVisibility(View.GONE);
         } else {
             titleView.setText(data.getTitle());
 
             if (data.getDescription().isEmpty()) {
-                descriptionView.setVisibility(View.GONE);
-                descriptionView.setText("");
+                descriptionTableRow.setVisibility(View.GONE);
             } else {
-                descriptionView.setVisibility(View.VISIBLE);
                 descriptionView.setText(data.getDescription());
+                descriptionTableRow.setVisibility(View.VISIBLE);
             }
-        }
-
-        if (data.getAssignment().isEmpty()) {
-            assignmentView.setVisibility(View.GONE);
-            assignmentView.setText("");
-        } else {
-            assignmentView.setVisibility(View.VISIBLE);
-            assignmentView.setText(data.getAssignment());
         }
 
         teacherDateView.setText(context.getResources().getString(R.string.two_strings,
                 data.getTeacher(), DateUtils.formatDate(data.getDate())));
+
+        if (data.getAssignment().isEmpty()) {
+            assignmentTableRow.setVisibility(View.GONE);
+        } else {
+            assignmentView.setText(data.getAssignment());
+            assignmentTableRow.setVisibility(View.VISIBLE);
+        }
     }
 
     public static class Factory implements ItemHolderFactory<TopicData> {

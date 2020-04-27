@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.data;
 
+import androidx.annotation.Nullable;
+
 import com.stypox.mastercom_workbook.util.JsonUtils;
 
 import org.json.JSONException;
@@ -18,6 +20,7 @@ public class TopicData {
     private final String title;
     private final String description;
     private final String assignment;
+    @Nullable private String subject;
 
     public TopicData(JSONObject json) throws JSONException, ParseException {
         date = dateFormat.parse(json.getString("data"));
@@ -26,6 +29,12 @@ public class TopicData {
         description = JsonUtils.getUnescapedString(json, "descrizione");
         assignment = JsonUtils.getUnescapedString(json, "assegnazioni");
     }
+
+
+    void setSubject(@Nullable String subject) {
+        this.subject = subject;
+    }
+
 
     public Date getDate() {
         return date;
@@ -45,5 +54,9 @@ public class TopicData {
 
     public String getAssignment() {
         return assignment;
+    }
+
+    public String getSubject() {
+        return subject == null ? "" : subject;
     }
 }

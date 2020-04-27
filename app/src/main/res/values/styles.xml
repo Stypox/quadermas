@@ -20,12 +20,14 @@
         <item name="ic_storage">@drawable/ic_storage_white_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_white_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_white_24dp</item>
-        <item name="ic_insert_file">@drawable/ic_insert_file_white_24dp</item>
+        <item name="ic_description">@drawable/ic_description_white_24dp</item>
         <item name="ic_person">@drawable/ic_person_white_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_white_24dp</item>
         <item name="ic_code">@drawable/ic_code_white_24dp</item>
         <item name="ic_bug_report">@drawable/ic_bug_report_white_24dp</item>
         <item name="ic_palette">@drawable/ic_palette_white_24dp</item>
+        <item name="ic_home">@drawable/ic_home_white_24dp</item>
+        <item name="ic_info_outline">@drawable/ic_info_outline_white_24dp</item>
     </style>
 
     <style name="LightAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -49,11 +51,13 @@
         <item name="ic_storage">@drawable/ic_storage_black_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_black_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_black_24dp</item>
-        <item name="ic_insert_file">@drawable/ic_insert_file_black_24dp</item>
+        <item name="ic_description">@drawable/ic_description_black_24dp</item>
         <item name="ic_person">@drawable/ic_person_black_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_black_24dp</item>
         <item name="ic_code">@drawable/ic_code_black_24dp</item>
         <item name="ic_bug_report">@drawable/ic_bug_report_black_24dp</item>
         <item name="ic_palette">@drawable/ic_palette_black_24dp</item>
+        <item name="ic_home">@drawable/ic_home_black_24dp</item>
+        <item name="ic_info_outline">@drawable/ic_info_outline_black_24dp</item>
     </style>
 </resources>

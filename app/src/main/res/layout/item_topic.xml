@@ -16,21 +16,6 @@
         tools:text="Hello world module" />
 
     <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
-
-    <TextView
-        android:id="@+id/assignment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:textStyle="italic"
-        tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
-
-    <TextView
         android:id="@+id/teacherDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,4 +23,48 @@
         android:textSize="@dimen/size_item_info"
         tools:text="John Smith  -  06/11/2019" />
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:id="@+id/description_table_row"
+            android:layout_marginTop="@dimen/topic_table_spacing">
+
+            <ImageView
+                android:contentDescription="@string/label_topic_description"
+                android:layout_gravity="top"
+                android:src="?attr/ic_info_outline" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/topic_table_spacing"
+                android:layout_marginStart="@dimen/topic_table_spacing"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/assignment_table_row"
+            android:layout_marginTop="@dimen/topic_table_spacing">
+
+            <ImageView
+                android:contentDescription="@string/label_topic_assignment"
+                android:layout_gravity="top"
+                android:src="?attr/ic_home" />
+
+            <TextView
+                android:id="@+id/assignment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/topic_table_spacing"
+                android:layout_marginStart="@dimen/topic_table_spacing"
+                android:textStyle="italic"
+                tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

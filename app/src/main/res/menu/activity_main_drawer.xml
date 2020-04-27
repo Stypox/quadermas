@@ -15,7 +15,7 @@
 
         <item
             android:id="@+id/documentsAction"
-            android:icon="?attr/ic_insert_file"
+            android:icon="?attr/ic_description"
             android:title="@string/menu_documents" />
 
     </group>
