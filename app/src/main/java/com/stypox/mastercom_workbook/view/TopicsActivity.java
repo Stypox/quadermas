@@ -131,7 +131,7 @@ public class TopicsActivity extends ThemedActivity {
         Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.retry), v -> reloadTopics(false))
                 .show();
-        refreshLayout.setRefreshing(false);
+        increaseNumSubjectsExtracted();
     }
 
     private void onTopicExtractionError(String subjectName) {
@@ -145,7 +145,10 @@ public class TopicsActivity extends ThemedActivity {
         assert subjectData.getTopics() != null;
         this.topics.addAll(subjectData.getTopics());
         topicsArrayAdapter.notifyDataSetChanged();
+        increaseNumSubjectsExtracted();
+    }
 
+    private void increaseNumSubjectsExtracted() {
         numSubjectsExtracted++;
         if (numSubjectsExtracted == subjects.size()) {
             refreshLayout.setRefreshing(false);
