@@ -215,6 +215,7 @@ public class DocumentsActivity extends ThemedActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case requestCodePermissionDialog:
                 if (lastDownloadDocument != null) {
