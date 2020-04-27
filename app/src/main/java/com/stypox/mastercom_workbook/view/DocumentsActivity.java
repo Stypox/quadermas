@@ -77,7 +77,7 @@ public class DocumentsActivity extends ThemedActivity
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.activity_title_documents));
+        actionBar.setTitle(getString(R.string.menu_documents));
 
 
         disposables = new CompositeDisposable();

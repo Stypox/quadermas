@@ -58,7 +58,7 @@ public class TopicsActivity extends ThemedActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.activity_title_topics));
+        actionBar.setTitle(getString(R.string.menu_topics));
 
 
         subjects = (List<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);

@@ -12,6 +12,7 @@
     <string name="menu_logout">Logout</string>
     <string name="menu_marks">Marks</string>
     <string name="menu_statistics">Statistics</string>
+    <string name="menu_topics">Topics</string>
     <string name="menu_documents">Documents</string>
     <string name="menu_setup">Setup</string>
     <string name="menu_settings">Settings</string>
@@ -29,8 +30,6 @@
 
     <string name="activity_title_statistics">Mark statistics</string>
     <string name="activity_title_marks">Mark details</string>
-    <string name="activity_title_documents">Documents</string>
-    <string name="activity_title_topics">Topics</string>
     <string name="activity_title_login">Log in to Mastercom Workbook</string>
 
     <string name="type_written">Written</string>

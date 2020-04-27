@@ -8,11 +8,9 @@
     <string name="action_sort_by_value">Ordina per valore</string>
     <string name="action_statistics">Statistiche</string>
     <string name="action_topics">Argomenti</string>
-    <string name="activity_title_documents">Documenti</string>
     <string name="activity_title_login">Accedi al Quaderno Elettronico Mastercom</string>
     <string name="activity_title_marks">Dettagli dei voti</string>
     <string name="activity_title_statistics">Statistiche dei voti</string>
-    <string name="activity_title_topics">Argomenti</string>
     <string name="all_subjects">Tutte le materie</string>
     <string name="all_years">Tutti gli anni scolastici</string>
     <string name="error_could_not_load_a_mark">Un voto della materia %1$s non può essere caricato</string>
@@ -63,4 +61,5 @@
     <string name="error_could_not_load_a_topic">Un argomento della materia %1$s non può essere caricato</string>
     <string name="label_topic_description">Descrizione</string>
     <string name="label_topic_assignment">Compiti</string>
+    <string name="menu_topics">Argomenti</string>
 </resources>

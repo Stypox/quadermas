@@ -33,6 +33,7 @@ import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
 import com.stypox.mastercom_workbook.view.SubjectActivity;
+import com.stypox.mastercom_workbook.view.TopicsActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 
@@ -54,6 +55,7 @@ public class MainActivity extends ThemedActivity
 
     private DrawerLayout drawer;
     private MenuItem marksMenuItem;
+    private MenuItem topicsMenuItem;
     private MenuItem statisticsMenuItem;
     private TextView fullNameView;
     private TextView fullAPIUrlView;
@@ -80,6 +82,7 @@ public class MainActivity extends ThemedActivity
         NavigationView navigationView = findViewById(R.id.navigationView);
         marksMenuItem = navigationView.getMenu().findItem(R.id.marksAction);
         statisticsMenuItem = navigationView.getMenu().findItem(R.id.statisticsAction);
+        topicsMenuItem = navigationView.getMenu().findItem(R.id.topicsAction);
 
         View headerLayout = navigationView.getHeaderView(0);
         fullNameView = headerLayout.findViewById(R.id.navigationFullName);
@@ -131,6 +134,7 @@ public class MainActivity extends ThemedActivity
 
     private void reloadSubjects() {
         marksMenuItem.setEnabled(false);
+        topicsMenuItem.setEnabled(false);
         statisticsMenuItem.setEnabled(false);
         refreshLayout.setRefreshing(true);
 
@@ -209,7 +213,9 @@ public class MainActivity extends ThemedActivity
                                 .show();
                     }
 
-                    @Override public void onComplete() {}
+                    @Override public void onComplete() {
+                        topicsMenuItem.setEnabled(true);
+                    }
                 }));
     }
 
@@ -270,6 +276,12 @@ public class MainActivity extends ThemedActivity
         startActivity(intent);
     }
 
+    private void openTopicsActivity() {
+        Intent intent = new Intent(this, TopicsActivity.class);
+        intent.putExtra(TopicsActivity.subjectsIntentKey, subjects);
+        startActivity(intent);
+    }
+
     private void openDocumentsActivity() {
         Intent intent = new Intent(this, DocumentsActivity.class);
         startActivity(intent);
@@ -302,6 +314,9 @@ public class MainActivity extends ThemedActivity
                 break;
             case R.id.marksAction:
                 openMarksActivity();
+                break;
+            case R.id.topicsAction:
+                openTopicsActivity();
                 break;
             case R.id.statisticsAction:
                 openStatisticsActivity();
