@@ -13,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
-import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TopicData;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
@@ -24,6 +23,8 @@ import com.stypox.mastercom_workbook.view.holder.SubjectTopicItemHolder;
 import com.stypox.mastercom_workbook.view.holder.TopicItemHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -106,6 +107,27 @@ public class TopicsActivity extends ThemedActivity {
         fetchTopics(reload);
     }
 
+    private void onTopicsFetched(SubjectData subjectData) {
+        assert subjectData.getTopics() != null;
+        this.topics.addAll(subjectData.getTopics());
+        Collections.sort(this.topics, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+
+        topicsArrayAdapter.notifyDataSetChanged();
+        increaseNumSubjectsExtracted();
+    }
+
+    private void increaseNumSubjectsExtracted() {
+        numSubjectsExtracted++;
+        if (numSubjectsExtracted == subjects.size()) {
+            refreshLayout.setRefreshing(false);
+        }
+    }
+
+
+    //////////////
+    // FETCHING //
+    //////////////
+
     private void fetchTopics(boolean reload) {
         for (SubjectData subject : subjects) {
             fetchTopicsForSubject(subject, reload);
@@ -139,19 +161,5 @@ public class TopicsActivity extends ThemedActivity {
                 Toast.makeText(this, getString(R.string.error_could_not_load_a_topic, subjectName), Toast.LENGTH_LONG)
                         .show()
         );
-    }
-
-    private void onTopicsFetched(SubjectData subjectData) {
-        assert subjectData.getTopics() != null;
-        this.topics.addAll(subjectData.getTopics());
-        topicsArrayAdapter.notifyDataSetChanged();
-        increaseNumSubjectsExtracted();
-    }
-
-    private void increaseNumSubjectsExtracted() {
-        numSubjectsExtracted++;
-        if (numSubjectsExtracted == subjects.size()) {
-            refreshLayout.setRefreshing(false);
-        }
     }
 }
