@@ -54,7 +54,8 @@ public class SubjectActivity extends ThemedActivity {
 
 
         data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
-        if (data.getMarks().isEmpty()) {
+        assert data != null;
+        if (data.getMarks() == null || data.getMarks().isEmpty()) {
             throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
         }
 
