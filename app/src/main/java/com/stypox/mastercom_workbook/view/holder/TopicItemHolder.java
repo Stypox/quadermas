@@ -42,12 +42,19 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
                 titleView.setText(data.getDescription());
             }
             descriptionTableRow.setVisibility(View.GONE);
-        } else {
-            titleView.setText(data.getTitle());
 
+        } else {
             if (data.getDescription().isEmpty()) {
-                descriptionTableRow.setVisibility(View.GONE);
+                if (data.getTitle().length() > 50) {
+                    titleView.setText(data.getSubject());
+                    descriptionView.setText(data.getTitle());
+                    descriptionTableRow.setVisibility(View.VISIBLE);
+                } else {
+                    titleView.setText(data.getTitle());
+                    descriptionTableRow.setVisibility(View.GONE);
+                }
             } else {
+                titleView.setText(data.getTitle());
                 descriptionView.setText(data.getDescription());
                 descriptionTableRow.setVisibility(View.VISIBLE);
             }
