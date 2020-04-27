@@ -22,7 +22,9 @@ public class TopicExtractor {
     public static Single<SubjectData> fetchTopics(SubjectData subjectData, Runnable onTopicError) {
         return Single
                 .fromCallable(() -> {
+                    subjectData.setTopics(null); // remove old topics
                     boolean jsonAlreadyParsed = false;
+
                     try {
                         URL url = new URL(topicsUrl
                                 .replace("{api_url}", ExtractorData.getAPIUrl())
@@ -43,7 +45,6 @@ public class TopicExtractor {
                         subjectData.setTopics(topics);
                     } catch (Throwable e) {
                         e.printStackTrace();
-                        subjectData.setTopics(null);
                         throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
                     }
 

@@ -50,7 +50,9 @@ public class SubjectExtractor {
     public static Single<SubjectData> fetchMarks(SubjectData subjectData, Runnable onMarkError) {
         return Single
                 .fromCallable(() -> {
+                    subjectData.setMarks(null); // remove old marks
                     boolean jsonAlreadyParsed = false;
+
                     try {
                         URL url = new URL(marksUrl
                                 .replace("{api_url}", ExtractorData.getAPIUrl())
@@ -71,7 +73,6 @@ public class SubjectExtractor {
                         subjectData.setMarks(marks);
                     } catch (Throwable e) {
                         e.printStackTrace();
-                        subjectData.setMarks(null);
                         subjectData.setMarkExtractionError(
                                 ExtractorError.asExtractorError(e, jsonAlreadyParsed));
                     }
