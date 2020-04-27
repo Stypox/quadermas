@@ -165,9 +165,9 @@ public class MainActivity extends ThemedActivity
                 .subscribe(
                         this::onAuthenticationCompleted,
                         throwable -> {
+                            throwable.printStackTrace();
                             if (!(throwable instanceof ExtractorError)) return;
                             ExtractorError error = (ExtractorError) throwable;
-                            error.printStackTrace();
 
                             if (error.isType(Type.invalid_credentials) || error.isType(Type.malformed_url)) {
                                 Toast.makeText(this, error.getMessage(this), Toast.LENGTH_LONG)
@@ -201,11 +201,11 @@ public class MainActivity extends ThemedActivity
 
                     @Override
                     public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
                         if (!(throwable instanceof ExtractorError)) return;
                         ExtractorError error = (ExtractorError) throwable;
-                        error.printStackTrace();
 
-                        Snackbar.make(findViewById(android.R.id.content), error.getMessage(MainActivity.this), Snackbar.LENGTH_LONG)
+                        Toast.makeText(getApplicationContext(), error.getMessage(MainActivity.this), Toast.LENGTH_LONG)
                                 .show();
                     }
 

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -192,9 +193,9 @@ public class DocumentsActivity extends ThemedActivity
     }
 
     private void onError(Throwable throwable, boolean fatal) {
+        throwable.printStackTrace();
         if (!(throwable instanceof ExtractorError)) return;
         ExtractorError error = (ExtractorError) throwable;
-        error.printStackTrace();
 
         if (fatal) {
             Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
@@ -202,7 +203,7 @@ public class DocumentsActivity extends ThemedActivity
                     .show();
             refreshLayout.setRefreshing(false);
         } else {
-            Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
+            Toast.makeText(getApplicationContext(), error.getMessage(this), Toast.LENGTH_LONG)
                     .show();
         }
     }

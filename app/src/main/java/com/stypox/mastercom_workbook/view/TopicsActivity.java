@@ -124,9 +124,9 @@ public class TopicsActivity extends ThemedActivity {
     }
 
     private void onError(Throwable throwable) {
+        throwable.printStackTrace();
         if (!(throwable instanceof ExtractorError)) return;
         ExtractorError error = (ExtractorError) throwable;
-        error.printStackTrace();
 
         Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.retry), v -> reloadTopics(false))
