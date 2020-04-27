@@ -62,4 +62,6 @@
     <string name="label_topic_description">Descrizione</string>
     <string name="label_topic_assignment">Compiti</string>
     <string name="menu_topics">Argomenti</string>
+    <string name="action_show_only_assignments">Mostra solo i compiti</string>
+    <string name="action_clear_filter">Togli il filtro</string>
 </resources>

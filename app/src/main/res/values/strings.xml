@@ -70,6 +70,8 @@
     <string name="action_sort_by_value">Sort by value</string>
     <string name="action_select_subject">Select subject</string>
     <string name="action_select_year">Select year</string>
+    <string name="action_show_only_assignments">Show only assignments</string>
+    <string name="action_clear_filter">Clear filter</string>
 
     <string name="label_overall_average">Overall average</string>
     <string name="label_overall_average_mode">Display average of:</string>

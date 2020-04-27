@@ -2,11 +2,14 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,24 +27,26 @@ import com.stypox.mastercom_workbook.view.holder.TopicItemHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class TopicsActivity extends ThemedActivity {
+public class TopicsActivity extends ThemedActivity
+        implements Toolbar.OnMenuItemClickListener {
     public static final String subjectsIntentKey = "subjects";
+
+    private CompositeDisposable disposables;
 
     private int numSubjectsExtracted;
     private List<SubjectData> subjects;
-    private List<TopicData> topics;
-
-    private CompositeDisposable disposables;
+    private List<TopicData> filteredTopics;
 
     private SwipeRefreshLayout refreshLayout;
     private ItemArrayAdapter<TopicData> topicsArrayAdapter;
 
+    private MenuItem showOnlyAssignmentsMenuItem;
+    private boolean showOnlyAssignments = false;
 
 
     ////////////////////////
@@ -55,6 +60,7 @@ public class TopicsActivity extends ThemedActivity {
         setContentView(R.layout.activity_topics);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -70,13 +76,13 @@ public class TopicsActivity extends ThemedActivity {
 
 
         disposables = new CompositeDisposable();
-        topics = new ArrayList<>();
+        filteredTopics = new ArrayList<>();
 
         refreshLayout = findViewById(R.id.refreshLayout);
         RecyclerView topicsList = findViewById(R.id.topicsList);
 
         topicsList.setLayoutManager(new LinearLayoutManager(this));
-        topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, topics,
+        topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, filteredTopics,
                 subjects.size() == 1 ? new TopicItemHolder.Factory() : new SubjectTopicItemHolder.Factory());
         topicsList.setAdapter(topicsArrayAdapter);
 
@@ -86,9 +92,27 @@ public class TopicsActivity extends ThemedActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.topics, menu);
+        showOnlyAssignmentsMenuItem = menu.findItem(R.id.showOnlyAssignmentsAction);
+        return true;
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.showOnlyAssignmentsAction:
+                switchShowOnlyAssignments();
+                return true;
+            default:
+                return false;
+        }
     }
 
 
@@ -100,7 +124,7 @@ public class TopicsActivity extends ThemedActivity {
         refreshLayout.setRefreshing(true);
 
         disposables.clear();
-        topics.clear();
+        filteredTopics.clear();
         topicsArrayAdapter.notifyDataSetChanged();
 
         numSubjectsExtracted = 0;
@@ -108,11 +132,8 @@ public class TopicsActivity extends ThemedActivity {
     }
 
     private void onTopicsFetched(SubjectData subjectData) {
-        assert subjectData.getTopics() != null;
-        this.topics.addAll(subjectData.getTopics());
-        Collections.sort(this.topics, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-
-        topicsArrayAdapter.notifyDataSetChanged();
+        addFilteredTopics(subjectData);
+        sortFilteredTopicsByDateAndShow();
         increaseNumSubjectsExtracted();
     }
 
@@ -161,5 +182,52 @@ public class TopicsActivity extends ThemedActivity {
                 Toast.makeText(this, getString(R.string.error_could_not_load_a_topic, subjectName), Toast.LENGTH_LONG)
                         .show()
         );
+    }
+
+
+    ///////////////
+    // FILTERING //
+    ///////////////
+
+    private void addFilteredTopics(SubjectData subject) {
+        assert subject.getTopics() != null;
+        if (showOnlyAssignments) {
+            for (TopicData topic : subject.getTopics()) {
+                if (!topic.getAssignment().isEmpty()) {
+                    filteredTopics.add(topic);
+                }
+            }
+        } else {
+            filteredTopics.addAll(subject.getTopics());
+        }
+    }
+
+    private void sortFilteredTopicsByDateAndShow() {
+        Collections.sort(filteredTopics, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        topicsArrayAdapter.notifyDataSetChanged();
+    }
+
+    private void onFilterChanged() {
+        filteredTopics.clear();
+        for (SubjectData subject : subjects) {
+            if (subject.getTopics() == null) {
+                continue;
+            }
+
+            addFilteredTopics(subject);
+        }
+
+        sortFilteredTopicsByDateAndShow();
+    }
+
+    private void switchShowOnlyAssignments() {
+        showOnlyAssignments = !showOnlyAssignments;
+
+        showOnlyAssignmentsMenuItem.setIcon(ContextCompat.getDrawable(getApplicationContext(),
+                showOnlyAssignments ? R.drawable.ic_clear_white_24dp : R.drawable.ic_home_white_24dp));
+        showOnlyAssignmentsMenuItem.setTitle(
+                showOnlyAssignments ? R.string.action_clear_filter : R.string.action_show_only_assignments);
+
+        onFilterChanged();
     }
 }
