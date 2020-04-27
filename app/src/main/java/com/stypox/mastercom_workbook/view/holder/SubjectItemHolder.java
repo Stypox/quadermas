@@ -40,7 +40,11 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
 
     @Override
     public void updateItemData(SubjectData data) {
+        if (adapter != null) {
+            itemView.setOnClickListener(v -> adapter.onItemClick(data));
+        }
         nameView.setText(data.getName());
+
         if (data.getMarks() == null) {
             if (data.getMarkExtractionError() == null) {
                 // marks not yet extracted
@@ -52,13 +56,11 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
                 averageTextView.setText("X");
                 averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
             }
-            itemView.setOnClickListener(null);
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
             averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
-            itemView.setOnClickListener(null);
 
         } else {
             teacherTextView.setText(data.getTeacher());
@@ -70,10 +72,6 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
             } catch (ArithmeticException e) {
                 averageTextView.setText("-");
                 averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
-            }
-
-            if (adapter != null) {
-                itemView.setOnClickListener(v -> adapter.onItemClick(data));
             }
         }
     }

@@ -44,7 +44,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends ThemedActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ItemArrayAdapter.OnItemClickListener<SubjectData> {
 
     private static final int requestCodeLoginActivity = 0;
 
@@ -92,7 +93,7 @@ public class MainActivity extends ThemedActivity
         RecyclerView subjectList = findViewById(R.id.subjectList);
         subjectList.setLayoutManager(new LinearLayoutManager(this));
         subjectsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_subject, subjects, new SubjectItemHolder.Factory());
-        subjectsArrayAdapter.setOnItemClickListener(this::openSubjectActivity);
+        subjectsArrayAdapter.setOnItemClickListener(this);
         subjectList.setAdapter(subjectsArrayAdapter);
 
 
@@ -264,6 +265,12 @@ public class MainActivity extends ThemedActivity
         startActivity(intent);
     }
 
+    private void openTopicsActivity(SubjectData subjectData) {
+        Intent intent = new Intent(this, TopicsActivity.class);
+        intent.putExtra(TopicsActivity.subjectsIntentKey, new ArrayList<SubjectData>() {{ add(subjectData); }});
+        startActivity(intent);
+    }
+
     private void openMarksActivity() {
         Intent intent = new Intent(this, MarksActivity.class);
         intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
@@ -331,5 +338,14 @@ public class MainActivity extends ThemedActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(SubjectData subject) {
+        if (subject.getMarks() == null || subject.getMarks().isEmpty()) {
+            openTopicsActivity(subject);
+        } else {
+            openSubjectActivity(subject);
+        }
     }
 }
