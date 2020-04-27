@@ -29,7 +29,7 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
         typeView = itemView.findViewById(R.id.type);
         subjectView = itemView.findViewById(R.id.subject);
         descriptionView = itemView.findViewById(R.id.description);
-        teacherDateView = itemView.findViewById(R.id.teacherDate);
+        teacherDateView = itemView.findViewById(R.id.subtitle);
     }
 
     @Override

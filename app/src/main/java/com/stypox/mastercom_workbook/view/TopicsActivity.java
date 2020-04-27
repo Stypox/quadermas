@@ -13,12 +13,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TopicData;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.TopicExtractor;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
+import com.stypox.mastercom_workbook.view.holder.SubjectTopicItemHolder;
 import com.stypox.mastercom_workbook.view.holder.TopicItemHolder;
 
 import java.util.ArrayList;
@@ -28,9 +30,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TopicsActivity extends ThemedActivity {
-    public static final String subjectDataIntentKey = "subject_data";
+    public static final String subjectsIntentKey = "subjects";
 
-    private SubjectData subjectData;
+    private int numSubjectsExtracted;
+    private List<SubjectData> subjects;
     private List<TopicData> topics;
 
     private CompositeDisposable disposables;
@@ -45,6 +48,7 @@ public class TopicsActivity extends ThemedActivity {
     ////////////////////////
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
@@ -57,9 +61,11 @@ public class TopicsActivity extends ThemedActivity {
         actionBar.setTitle(getString(R.string.activity_title_topics));
 
 
-        subjectData = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
-        assert subjectData != null;
-        actionBar.setSubtitle(subjectData.getName());
+        subjects = (List<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
+        assert subjects != null;
+        if (subjects.size() == 1) {
+            actionBar.setSubtitle(subjects.get(0).getName());
+        }
 
 
         disposables = new CompositeDisposable();
@@ -69,12 +75,13 @@ public class TopicsActivity extends ThemedActivity {
         RecyclerView topicsList = findViewById(R.id.topicsList);
 
         topicsList.setLayoutManager(new LinearLayoutManager(this));
-        topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, topics, new TopicItemHolder.Factory());
+        topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, topics,
+                subjects.size() == 1 ? new TopicItemHolder.Factory() : new SubjectTopicItemHolder.Factory());
         topicsList.setAdapter(topicsArrayAdapter);
 
 
-        refreshLayout.setOnRefreshListener(this::reloadTopics);
-        reloadTopics();
+        refreshLayout.setOnRefreshListener(() -> reloadTopics(true));
+        reloadTopics(false);
     }
 
     @Override
@@ -88,19 +95,32 @@ public class TopicsActivity extends ThemedActivity {
     // LOADING //
     /////////////
 
-    private void reloadTopics() {
+    private void reloadTopics(boolean reload) {
         refreshLayout.setRefreshing(true);
 
         disposables.clear();
         topics.clear();
         topicsArrayAdapter.notifyDataSetChanged();
-        fetchTopics();
+
+        numSubjectsExtracted = 0;
+        fetchTopics(reload);
     }
 
-    private void fetchTopics() {
-        disposables.add(TopicExtractor.fetchTopics(subjectData, () -> onTopicExtractionError(subjectData.getName()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onTopicsFetched, this::onError));
+    private void fetchTopics(boolean reload) {
+        for (SubjectData subject : subjects) {
+            fetchTopicsForSubject(subject, reload);
+        }
+    }
+
+    private void fetchTopicsForSubject(SubjectData subjectData, boolean reload) {
+        if (reload || subjectData.getTopics() == null) {
+            disposables.add(TopicExtractor.fetchTopics(subjectData,
+                    () -> onTopicExtractionError(subjectData.getName()))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onTopicsFetched, this::onError));
+        } else {
+            onTopicsFetched(subjectData);
+        }
     }
 
     private void onError(Throwable throwable) {
@@ -109,7 +129,7 @@ public class TopicsActivity extends ThemedActivity {
         error.printStackTrace();
 
         Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.retry), v -> reloadTopics())
+                .setAction(getString(R.string.retry), v -> reloadTopics(false))
                 .show();
         refreshLayout.setRefreshing(false);
     }
@@ -125,6 +145,10 @@ public class TopicsActivity extends ThemedActivity {
         assert subjectData.getTopics() != null;
         this.topics.addAll(subjectData.getTopics());
         topicsArrayAdapter.notifyDataSetChanged();
-        refreshLayout.setRefreshing(false);
+
+        numSubjectsExtracted++;
+        if (numSubjectsExtracted == subjects.size()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
 }

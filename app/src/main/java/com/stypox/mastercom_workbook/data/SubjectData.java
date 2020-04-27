@@ -22,7 +22,6 @@ public class SubjectData implements Serializable {
     @Nullable private ExtractorError markExtractionError;
 
     @Nullable private List<TopicData> topics;
-    @Nullable private ExtractorError topicExtractionError;
 
     public SubjectData(JSONObject json) throws JSONException {
         this.id = json.getString("id");
@@ -30,17 +29,20 @@ public class SubjectData implements Serializable {
     }
 
 
-    public void setMarks(List<MarkData> marks) {
-        for (MarkData mark : marks) {
-            mark.setSubject(name);
+    public void setMarks(@Nullable List<MarkData> marks) {
+        if (marks != null) {
+            for (MarkData mark : marks) {
+                mark.setSubject(name);
+            }
+
+            if (marks.isEmpty()) {
+                teacher = null;
+            } else {
+                teacher = marks.get(0).getTeacher();
+            }
         }
 
         this.marks = marks;
-        if (this.marks.isEmpty()) {
-            teacher = null;
-        } else {
-            teacher = this.marks.get(0).getTeacher();
-        }
     }
 
     public void setMarkExtractionError(ExtractorError extractorError) {
@@ -49,17 +51,14 @@ public class SubjectData implements Serializable {
         marks = null;
     }
 
-    public void setTopics(List<TopicData> topics) {
-        for (TopicData topic : topics) {
-            topic.setSubject(name);
+    public void setTopics(@Nullable List<TopicData> topics) {
+        if (topics != null) {
+            for (TopicData topic : topics) {
+                topic.setSubject(name);
+            }
         }
 
         this.topics = topics;
-    }
-
-    public void setTopicExtractionError(@Nullable ExtractorError topicExtractionError) {
-        this.topicExtractionError = topicExtractionError;
-        topics = null;
     }
 
 
@@ -88,11 +87,6 @@ public class SubjectData implements Serializable {
     @Nullable
     public List<TopicData> getTopics() {
         return topics;
-    }
-
-    @Nullable
-    public ExtractorError getTopicExtractionError() {
-        return topicExtractionError;
     }
 
 

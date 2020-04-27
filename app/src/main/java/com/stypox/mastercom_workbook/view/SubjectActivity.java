@@ -171,8 +171,8 @@ public class SubjectActivity extends ThemedActivity {
 
     private void openTopicsActivity() {
         Intent intent = new Intent(this, TopicsActivity.class);
-        intent.putExtra(TopicsActivity.subjectDataIntentKey, data);
-        startActivityForResult(intent, 0);
+        intent.putExtra(TopicsActivity.subjectsIntentKey, getSubjectAsList());
+        startActivity(intent);
     }
 
 

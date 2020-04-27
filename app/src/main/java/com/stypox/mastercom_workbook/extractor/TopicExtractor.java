@@ -43,8 +43,8 @@ public class TopicExtractor {
                         subjectData.setTopics(topics);
                     } catch (Throwable e) {
                         e.printStackTrace();
-                        subjectData.setTopicExtractionError(
-                                ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+                        subjectData.setTopics(null);
+                        throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
                     }
 
                     return subjectData;

@@ -47,8 +47,10 @@ public class MarksActivity extends ThemedActivity
 
 
         List<SubjectData> subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
+        assert subjects != null;
         ArrayList<MarkData> marks = new ArrayList<>();
         for (SubjectData subject : subjects) {
+            assert subject.getMarks() != null;
             marks.addAll(subject.getMarks());
         }
         if (subjects.size() == 1) {
