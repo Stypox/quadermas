@@ -151,20 +151,22 @@ public class SubjectActivity extends ThemedActivity {
         });
     }
 
-    private void openMarksActivity() {
-        Intent intent = new Intent(this, MarksActivity.class);
+    private ArrayList<SubjectData> getSubjectAsList() {
         ArrayList<SubjectData> subjects = new ArrayList<>();
         subjects.add(this.data);
-        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
+        return subjects;
+    }
+
+    private void openMarksActivity() {
+        Intent intent = new Intent(this, MarksActivity.class);
+        intent.putExtra(MarksActivity.subjectsIntentKey, getSubjectAsList());
         startActivity(intent);
     }
 
     private void openStatisticsActivity() {
         Intent intent = new Intent(this, StatisticsActivity.class);
-        ArrayList<SubjectData> subjects = new ArrayList<>();
-        subjects.add(this.data);
-        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-        startActivityForResult(intent, 0);
+        intent.putExtra(StatisticsActivity.subjectsIntentKey, getSubjectAsList());
+        startActivity(intent);
     }
 
     private void openTopicsActivity() {
