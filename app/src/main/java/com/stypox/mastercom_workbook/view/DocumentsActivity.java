@@ -24,9 +24,9 @@ import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.data.StudentData;
 import com.stypox.mastercom_workbook.extractor.AuthenticationExtractor;
-import com.stypox.mastercom_workbook.extractor.DocumentsExtractor;
+import com.stypox.mastercom_workbook.extractor.DocumentExtractor;
+import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
-import com.stypox.mastercom_workbook.extractor.StudentExtractor;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.DocumentItemHolder;
@@ -53,8 +53,8 @@ public class DocumentsActivity extends ThemedActivity
     private SwipeRefreshLayout refreshLayout;
     private ItemArrayAdapter<DocumentData> documentsArrayAdapter;
 
-    private int nrClasses;
-    private int nrClassesFetched;
+    private int numClasses;
+    private int numClassesExtracted;
     private List<DocumentData> documents;
     private List<DocumentData> filteredDocuments;
 
@@ -93,8 +93,8 @@ public class DocumentsActivity extends ThemedActivity
         documentList.setAdapter(documentsArrayAdapter);
 
 
-        refreshLayout.setOnRefreshListener(this::reloadDocuments);
-        reloadDocuments();
+        refreshLayout.setOnRefreshListener(() -> reloadDocuments(false));
+        reloadDocuments(true);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class DocumentsActivity extends ThemedActivity
     // LOADING //
     /////////////
 
-    private void reloadDocuments() {
+    private void reloadDocuments(boolean firstTime) {
         refreshLayout.setRefreshing(true);
         if (selectYearMenuItem != null) selectYearMenuItem.setEnabled(false);
         if (selectSubjectMenuItem != null) selectSubjectMenuItem.setEnabled(false);
@@ -140,72 +140,89 @@ public class DocumentsActivity extends ThemedActivity
         disposables.clear();
         documents.clear();
         filterAndShowDocuments();
-        fetchDocuments();
-    }
 
-    private void fetchDocuments() {
-        disposables.add(AuthenticationExtractor.authenticateMessenger()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onMessengerAuthenticated,
-                        throwable -> onError(throwable, true)));
-    }
-
-    private void onMessengerAuthenticated() {
-        disposables.add(StudentExtractor.fetchStudent()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        this::onStudentFetched,
-                        throwable -> onError(throwable, true)));
-    }
-
-    private void onStudentFetched(StudentData studentData) {
-        nrClasses = studentData.getClasses().size();
-        nrClassesFetched = 0;
-
-        for (ClassData classData : studentData.getClasses()) {
-            disposables.add(DocumentsExtractor.fetchDocuments(classData.getId())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            (documentData) -> {
-                                onDocumentsFetched(documentData);
-                                increaseFetchedClasses();
-                            },
-                            throwable -> {
-                                onError(throwable, false);
-                                increaseFetchedClasses();
-                            }));
+        if (firstTime) {
+            authenticateMessengerAndFetchDocuments();
+        } else {
+            fetchStudentThenDocuments(true);
         }
     }
 
-    private void increaseFetchedClasses() {
-        ++nrClassesFetched;
-        if (nrClassesFetched == nrClasses) {
+    private void authenticateMessengerAndFetchDocuments() {
+        disposables.add(AuthenticationExtractor.authenticateMessenger()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> fetchStudentThenDocuments(false),
+                        throwable -> onFatalError((ExtractorError) throwable)));
+    }
+
+    private void fetchStudentThenDocuments(boolean reload) {
+        Extractor.extractStudent(reload, disposables, new Extractor.DataHandler<StudentData>() {
+            @Override
+            public void onExtractedData(StudentData data) {
+                onStudentFetched(data, reload);
+            }
+
+            @Override
+            public void onItemError(ExtractorError error) {
+                Toast.makeText(DocumentsActivity.this,
+                        getString(R.string.error_could_not_load_class), Toast.LENGTH_LONG)
+                        .show();
+            }
+
+            @Override
+            public void onError(ExtractorError error) {
+                onFatalError(error);
+            }
+        });
+    }
+
+    private void increaseNumClassesExtracted() {
+        ++numClassesExtracted;
+        if (numClassesExtracted == numClasses) {
             refreshLayout.setRefreshing(false);
             if (selectYearMenuItem != null) selectYearMenuItem.setEnabled(true);
             if (selectSubjectMenuItem != null) selectSubjectMenuItem.setEnabled(true);
         }
     }
 
-    private void onDocumentsFetched(List<DocumentData> fetchedDocuments) {
-        documents.addAll(fetchedDocuments);
-        Collections.sort(documents, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
-        filterAndShowDocuments();
+    private void onStudentFetched(StudentData studentData, boolean reload) {
+        numClasses = studentData.getClasses().size();
+        numClassesExtracted = 0;
+
+        for (ClassData classData : studentData.getClasses()) {
+            Extractor.extractDocuments(classData, reload, disposables, new Extractor.DataHandler<ClassData>() {
+                @Override
+                public void onExtractedData(ClassData data) {
+                    assert data.getDocuments() != null;
+                    increaseNumClassesExtracted();
+                    documents.addAll(data.getDocuments());
+                    Collections.sort(documents, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+                    filterAndShowDocuments();
+                }
+
+                @Override
+                public void onItemError(ExtractorError error) {
+                    Toast.makeText(DocumentsActivity.this,
+                            getString(R.string.error_could_not_load_a_document, classData.getId()), Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                @Override
+                public void onError(ExtractorError error) {
+                    Toast.makeText(DocumentsActivity.this,
+                            getString(R.string.error_could_not_load_documents, classData.getId()), Toast.LENGTH_LONG)
+                            .show();
+                    increaseNumClassesExtracted();
+                }
+            });
+        }
     }
 
-    private void onError(Throwable throwable, boolean fatal) {
-        throwable.printStackTrace();
-        if (!(throwable instanceof ExtractorError)) return;
-        ExtractorError error = (ExtractorError) throwable;
-
-        if (fatal) {
-            Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.retry), v -> reloadDocuments())
-                    .show();
-            refreshLayout.setRefreshing(false);
-        } else {
-            Toast.makeText(getApplicationContext(), error.getMessage(this), Toast.LENGTH_LONG)
-                    .show();
-        }
+    private void onFatalError(ExtractorError error) {
+        Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.retry), v -> reloadDocuments(true))
+                .show();
+        refreshLayout.setRefreshing(false);
     }
 
 
@@ -241,7 +258,7 @@ public class DocumentsActivity extends ThemedActivity
                     requestCodePermissionDialog);
 
         } else {
-            DocumentsExtractor.downloadDocument(documentData, this);
+            DocumentExtractor.downloadDocument(documentData, this);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.extractor;
 
 import com.stypox.mastercom_workbook.data.StudentData;
+import com.stypox.mastercom_workbook.extractor.Extractor.ItemErrorHandler;
 import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 
 import org.json.JSONException;
@@ -25,19 +26,19 @@ public class StudentExtractor {
         return new JSONObject(response.substring(1, response.length() - 2));
     }
 
-    public static Single<StudentData> fetchStudent() {
+    public static Single<StudentData> fetchStudent(ItemErrorHandler itemErrorHandler) {
         return Single.fromCallable(() -> {
             boolean jsonAlreadyParsed = false;
             try {
                 URL url = new URL(studentDataUrl
-                        .replace("{api_url}", ExtractorData.getAPIUrl())
-                        .replace("{user}", ExtractorData.getUser())
-                        .replace("{password}", ExtractorData.getPassword()));
+                        .replace("{api_url}", Extractor.getAPIUrl())
+                        .replace("{user}", Extractor.getUser())
+                        .replace("{password}", Extractor.getPassword()));
 
                 JSONObject jsonResponse = fetchJsonP(url);
                 jsonAlreadyParsed = true;
 
-                return new StudentData(jsonResponse);
+                return new StudentData(jsonResponse, itemErrorHandler);
             } catch (Throwable e) {
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
             }

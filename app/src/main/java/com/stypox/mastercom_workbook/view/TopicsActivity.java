@@ -1,7 +1,6 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,8 +17,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TopicData;
+import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
-import com.stypox.mastercom_workbook.extractor.TopicExtractor;
+import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.SubjectTopicItemHolder;
@@ -29,12 +29,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TopicsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
-    public static final String subjectsIntentKey = "subjects";
 
     private CompositeDisposable disposables;
 
@@ -67,9 +65,7 @@ public class TopicsActivity extends ThemedActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_topics));
 
-
-        subjects = (List<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
-        assert subjects != null;
+        subjects = NavigationHelper.getSelectedSubjects(getIntent());
         if (subjects.size() == 1) {
             actionBar.setSubtitle(subjects.get(0).getName());
         }
@@ -131,12 +127,6 @@ public class TopicsActivity extends ThemedActivity
         fetchTopics(reload);
     }
 
-    private void onTopicsFetched(SubjectData subjectData) {
-        addFilteredTopics(subjectData);
-        sortFilteredTopicsByDateAndShow();
-        increaseNumSubjectsExtracted();
-    }
-
     private void increaseNumSubjectsExtracted() {
         numSubjectsExtracted++;
         if (numSubjectsExtracted == subjects.size()) {
@@ -144,44 +134,33 @@ public class TopicsActivity extends ThemedActivity
         }
     }
 
-
-    //////////////
-    // FETCHING //
-    //////////////
-
     private void fetchTopics(boolean reload) {
         for (SubjectData subject : subjects) {
-            fetchTopicsForSubject(subject, reload);
+            Extractor.extractTopics(subject, reload, disposables, new Extractor.DataHandler<SubjectData>() {
+                @Override
+                public void onExtractedData(SubjectData data) {
+                    increaseNumSubjectsExtracted();
+                    addFilteredTopics(data);
+                    sortFilteredTopicsByDateAndShow();
+                }
+
+                @Override
+                public void onItemError(ExtractorError error) {
+                    Toast.makeText(TopicsActivity.this,
+                            getString(R.string.error_could_not_load_a_topic, subject.getName()), Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                @Override
+                public void onError(ExtractorError error) {
+                    increaseNumSubjectsExtracted();
+                    Snackbar.make(findViewById(android.R.id.content),
+                            error.getMessage(TopicsActivity.this), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.retry), v -> reloadTopics(false))
+                            .show();
+                }
+            });
         }
-    }
-
-    private void fetchTopicsForSubject(SubjectData subjectData, boolean reload) {
-        if (reload || subjectData.getTopics() == null) {
-            disposables.add(TopicExtractor.fetchTopics(subjectData,
-                    () -> onTopicExtractionError(subjectData.getName()))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::onTopicsFetched, this::onError));
-        } else {
-            onTopicsFetched(subjectData);
-        }
-    }
-
-    private void onError(Throwable throwable) {
-        throwable.printStackTrace();
-        if (!(throwable instanceof ExtractorError)) return;
-        ExtractorError error = (ExtractorError) throwable;
-
-        Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.retry), v -> reloadTopics(false))
-                .show();
-        increaseNumSubjectsExtracted();
-    }
-
-    private void onTopicExtractionError(String subjectName) {
-        new Handler(getMainLooper()).post(() ->
-                Toast.makeText(this, getString(R.string.error_could_not_load_a_topic, subjectName), Toast.LENGTH_LONG)
-                        .show()
-        );
     }
 
 

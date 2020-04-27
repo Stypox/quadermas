@@ -2,7 +2,6 @@ package com.stypox.mastercom_workbook;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -21,10 +20,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.AuthenticationExtractor;
-import com.stypox.mastercom_workbook.extractor.ExtractorData;
+import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.extractor.ExtractorError.Type;
-import com.stypox.mastercom_workbook.extractor.SubjectExtractor;
 import com.stypox.mastercom_workbook.login.LoginActivity;
 import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.settings.SettingsActivity;
@@ -38,10 +36,14 @@ import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
+
+import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivity;
+import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWithAllSubjects;
+import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWithSubject;
 
 public class MainActivity extends ThemedActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -61,8 +63,8 @@ public class MainActivity extends ThemedActivity
     private TextView fullNameView;
     private TextView fullAPIUrlView;
 
-    private int numSubjectsFullyExtracted;
-    private ArrayList<SubjectData> subjects;
+    private int numSubjectsExtracted;
+    private List<SubjectData> subjects;
 
 
     ////////////////////////
@@ -97,7 +99,7 @@ public class MainActivity extends ThemedActivity
         subjectList.setAdapter(subjectsArrayAdapter);
 
 
-        refreshLayout.setOnRefreshListener(this::reloadSubjects);
+        refreshLayout.setOnRefreshListener(() -> reloadSubjects(true));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -105,7 +107,7 @@ public class MainActivity extends ThemedActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        reloadIfLoggedIn();
+        reloadIfLoggedIn(false);
     }
 
     @Override
@@ -119,9 +121,9 @@ public class MainActivity extends ThemedActivity
     // LOGIN AND LOAD //
     ////////////////////
 
-    private void reloadIfLoggedIn() {
+    private void reloadIfLoggedIn(boolean credentialsChanged) {
         if (LoginData.isLoggedIn(this)) {
-            reloadSubjects();
+            reloadSubjects(credentialsChanged);
         } else {
             openLoginActivityThenReload();
         }
@@ -133,7 +135,7 @@ public class MainActivity extends ThemedActivity
         startActivityForResult(intent, requestCodeLoginActivity); // see onActivityResult
     }
 
-    private void reloadSubjects() {
+    private void reloadSubjects(boolean reload) {
         marksMenuItem.setEnabled(false);
         topicsMenuItem.setEnabled(false);
         statisticsMenuItem.setEnabled(false);
@@ -142,12 +144,19 @@ public class MainActivity extends ThemedActivity
         disposables.clear();
         subjects.clear();
         subjectsArrayAdapter.notifyDataSetChanged();
-        authenticate();
+        authenticate(reload);
     }
 
     private void onReloadSubjectsCompleted() {
         marksMenuItem.setEnabled(true);
-        statisticsMenuItem.setEnabled(true);
+
+        // do not allow opening statistics if there is no mark
+        for (SubjectData subject : subjects) {
+            if (subject.getMarks() != null && subject.getMarks().size() != 0) {
+                statisticsMenuItem.setEnabled(true);
+            }
+        }
+
         refreshLayout.setRefreshing(false);
     }
 
@@ -156,19 +165,19 @@ public class MainActivity extends ThemedActivity
     // NETWORK //
     /////////////
 
-    private void authenticate() {
+    private void authenticate(boolean reload) {
         // show data in drawer header
-        ExtractorData.setAPIUrl(LoginData.getAPIUrl(this));
-        ExtractorData.setUser(LoginData.getUser(this));
-        ExtractorData.setPassword(LoginData.getPassword(this));
+        Extractor.setAPIUrl(LoginData.getAPIUrl(this));
+        Extractor.setUser(LoginData.getUser(this));
+        Extractor.setPassword(LoginData.getPassword(this));
 
         fullNameView.setText("");
-        fullAPIUrlView.setText(ExtractorData.getFullAPIUrlToShow());
+        fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
         disposables.add(AuthenticationExtractor.authenticateMain()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::onAuthenticationCompleted,
+                        (fullName) -> onAuthenticationCompleted(fullName, reload),
                         throwable -> {
                             throwable.printStackTrace();
                             if (!(throwable instanceof ExtractorError)) return;
@@ -180,68 +189,81 @@ public class MainActivity extends ThemedActivity
                                 openLoginActivityThenReload();
                             } else {
                                 Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                                        .setAction(getString(R.string.retry), v -> reloadSubjects())
+                                        .setAction(getString(R.string.retry), v -> reloadSubjects(false))
                                         .show();
                             }
                             refreshLayout.setRefreshing(false);
                         }));
     }
 
-    private void onAuthenticationCompleted(String fullName) {
+    private void onAuthenticationCompleted(String fullName, boolean reload) {
         fullNameView.setText(fullName);
 
-        fetchSubjects();
+        fetchSubjects(reload);
     }
 
 
-    private void fetchSubjects() {
-        numSubjectsFullyExtracted = 0;
-        disposables.add(SubjectExtractor.fetchSubjects()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<SubjectData>() {
-                    @Override
-                    public void onNext(SubjectData subjectData) {
-                        onSubjectFetched(subjectData);
-                    }
+    private void fetchSubjects(boolean reload) {
+        numSubjectsExtracted = 0;
+        Extractor.extractSubjects(reload, disposables, new Extractor.DataHandler<List<SubjectData>>() {
+            @Override
+            public void onExtractedData(List<SubjectData> data) {
+                onSubjectsFetched(data, reload);
+            }
 
-                    @Override
-                    public void onError(Throwable throwable) {
-                        throwable.printStackTrace();
-                        if (!(throwable instanceof ExtractorError)) return;
-                        ExtractorError error = (ExtractorError) throwable;
+            @Override
+            public void onItemError(ExtractorError error) {
+                Toast.makeText(MainActivity.this,
+                        getString(R.string.error_could_not_load_a_subject), Toast.LENGTH_LONG)
+                        .show();
+            }
 
-                        Toast.makeText(getApplicationContext(), error.getMessage(MainActivity.this), Toast.LENGTH_LONG)
-                                .show();
-                    }
-
-                    @Override public void onComplete() {
-                        topicsMenuItem.setEnabled(true);
-                    }
-                }));
+            @Override
+            public void onError(ExtractorError error) {
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(MainActivity.this), Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
     }
 
-    private void onMarkExtractionError(String subjectName) {
-        new Handler(getMainLooper()).post(() ->
-                Toast.makeText(this, getString(R.string.error_could_not_load_a_mark, subjectName), Toast.LENGTH_LONG)
-                        .show()
-        );
+
+    private void increaseNumSubjectsExtracted() {
+        ++numSubjectsExtracted;
+        if (numSubjectsExtracted == subjects.size()) {
+            onReloadSubjectsCompleted();
+        }
     }
 
-    private void onSubjectFetched(SubjectData subjectData) {
-        subjects.add(subjectData);
+    private void onSubjectsFetched(List<SubjectData> data, boolean reload) {
+        subjects.addAll(data);
+        topicsMenuItem.setEnabled(true);
         subjectsArrayAdapter.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
 
-        disposables.add(SubjectExtractor
-                .fetchMarks(subjectData, () -> onMarkExtractionError(subjectData.getName()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subjectData1 -> {
+        for (SubjectData subject : subjects) {
+            Extractor.extractMarks(subject, reload, disposables, new Extractor.DataHandler<SubjectData>() {
+                @Override
+                public void onExtractedData(SubjectData data) {
+                    increaseNumSubjectsExtracted();
                     subjectsArrayAdapter.notifyDataSetChanged();
+                }
 
-                    ++numSubjectsFullyExtracted;
-                    if (numSubjectsFullyExtracted == subjects.size()) {
-                        onReloadSubjectsCompleted();
-                    }
-                }));
+                @Override
+                public void onItemError(ExtractorError error) {
+                    Toast.makeText(MainActivity.this,
+                            getString(R.string.error_could_not_load_a_mark, subject.getName()), Toast.LENGTH_LONG)
+                            .show();
+                }
+
+                @Override
+                public void onError(ExtractorError error) {
+                    increaseNumSubjectsExtracted();
+                    Toast.makeText(MainActivity.this,
+                            getString(R.string.error_could_not_load_marks, subject.getName()), Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+        }
     }
 
 
@@ -254,49 +276,9 @@ public class MainActivity extends ThemedActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case requestCodeLoginActivity:
-                reloadIfLoggedIn();
+                reloadIfLoggedIn(true);
                 break;
         }
-    }
-
-    private void openSubjectActivity(SubjectData subjectData) {
-        Intent intent = new Intent(this, SubjectActivity.class);
-        intent.putExtra(SubjectActivity.subjectDataIntentKey, subjectData);
-        startActivity(intent);
-    }
-
-    private void openTopicsActivity(SubjectData subjectData) {
-        Intent intent = new Intent(this, TopicsActivity.class);
-        intent.putExtra(TopicsActivity.subjectsIntentKey, new ArrayList<SubjectData>() {{ add(subjectData); }});
-        startActivity(intent);
-    }
-
-    private void openMarksActivity() {
-        Intent intent = new Intent(this, MarksActivity.class);
-        intent.putExtra(MarksActivity.subjectsIntentKey, subjects);
-        startActivity(intent);
-    }
-
-    private void openStatisticsActivity() {
-        Intent intent = new Intent(this, StatisticsActivity.class);
-        intent.putExtra(StatisticsActivity.subjectsIntentKey, subjects);
-        startActivity(intent);
-    }
-
-    private void openTopicsActivity() {
-        Intent intent = new Intent(this, TopicsActivity.class);
-        intent.putExtra(TopicsActivity.subjectsIntentKey, subjects);
-        startActivity(intent);
-    }
-
-    private void openDocumentsActivity() {
-        Intent intent = new Intent(this, DocumentsActivity.class);
-        startActivity(intent);
-    }
-
-    private void openSettingsActivity() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
 
@@ -320,19 +302,19 @@ public class MainActivity extends ThemedActivity
                 openLoginActivityThenReload();
                 break;
             case R.id.marksAction:
-                openMarksActivity();
+                openActivityWithAllSubjects(this, MarksActivity.class);
                 break;
             case R.id.topicsAction:
-                openTopicsActivity();
+                openActivityWithAllSubjects(this, TopicsActivity.class);
                 break;
             case R.id.statisticsAction:
-                openStatisticsActivity();
+                openActivityWithAllSubjects(this, StatisticsActivity.class);
                 break;
             case R.id.documentsAction:
-                openDocumentsActivity();
+                openActivity(this, DocumentsActivity.class);
                 break;
             case R.id.settingsAction:
-                openSettingsActivity();
+                openActivity(this, SettingsActivity.class);
                 break;
         }
 
@@ -343,9 +325,9 @@ public class MainActivity extends ThemedActivity
     @Override
     public void onClick(SubjectData subject) {
         if (subject.getMarks() == null || subject.getMarks().isEmpty()) {
-            openTopicsActivity(subject);
+            openActivityWithSubject(this, TopicsActivity.class, subject);
         } else {
-            openSubjectActivity(subject);
+            openActivityWithSubject(this, SubjectActivity.class, subject);
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
@@ -22,7 +23,6 @@ import java.util.List;
 
 public class MarksActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
-    public static final String subjectsIntentKey = "subjects";
 
     private ItemArrayAdapter<MarkData> marksArrayAdapter;
 
@@ -32,7 +32,6 @@ public class MarksActivity extends ThemedActivity
     ////////////////////////
 
     @Override
-    @SuppressWarnings("unchecked")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marks);
@@ -46,8 +45,7 @@ public class MarksActivity extends ThemedActivity
         actionBar.setTitle(getString(R.string.activity_title_marks));
 
 
-        List<SubjectData> subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
-        assert subjects != null;
+        List<SubjectData> subjects = NavigationHelper.getSelectedSubjects(getIntent());
         ArrayList<MarkData> marks = new ArrayList<>();
         for (SubjectData subject : subjects) {
             assert subject.getMarks() != null;

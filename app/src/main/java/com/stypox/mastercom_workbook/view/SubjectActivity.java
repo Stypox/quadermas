@@ -19,16 +19,18 @@ import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
+import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
 
 import java.util.ArrayList;
 
-public class SubjectActivity extends ThemedActivity {
-    public static final String subjectDataIntentKey = "subject_data";
+import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWithSubject;
 
-    private SubjectData data;
+public class SubjectActivity extends ThemedActivity {
+
+    private SubjectData subject;
 
     private Spinner termSpinner;
     private TextView averageView;
@@ -53,15 +55,12 @@ public class SubjectActivity extends ThemedActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-        data = (SubjectData) getIntent().getSerializableExtra(subjectDataIntentKey);
-        assert data != null;
-        if (data.getMarks() == null || data.getMarks().isEmpty()) {
+        subject = NavigationHelper.getSelectedSubjects(getIntent()).get(0);
+        if (subject.getMarks() == null || subject.getMarks().isEmpty()) {
             throw new IllegalArgumentException("Cannot create a SubjectActivity with 0 marks");
         }
-
-
-        actionBar.setTitle(data.getName());
-        actionBar.setSubtitle(data.getTeacher());
+        actionBar.setTitle(subject.getName());
+        actionBar.setSubtitle(subject.getTeacher());
 
 
         termSpinner = findViewById(R.id.termSpinner);
@@ -73,15 +72,15 @@ public class SubjectActivity extends ThemedActivity {
         View statisticsButton = findViewById(R.id.statisticsButton);
         View topicsButton = findViewById(R.id.topicsButton);
 
-        marksButton.setOnClickListener((v) -> openMarksActivity());
-        statisticsButton.setOnClickListener((v) -> openStatisticsActivity());
-        topicsButton.setOnClickListener((v) -> openTopicsActivity());
+        marksButton.setOnClickListener((v) -> openActivityWithSubject(this, MarksActivity.class, subject));
+        statisticsButton.setOnClickListener((v) -> openActivityWithSubject(this, StatisticsActivity.class, subject));
+        topicsButton.setOnClickListener((v) -> openActivityWithSubject(this, TopicsActivity.class, subject));
 
 
-        int selectedTerm = DateUtils.getTerm(data.getMarks().get(0).getDate());
+        int selectedTerm = DateUtils.getTerm(subject.getMarks().get(0).getDate());
         termSpinner.setSelection(selectedTerm, false);
         try {
-            aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(data.getAverage(selectedTerm)))));
+            aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(subject.getAverage(selectedTerm)))));
         } catch (ArithmeticException e) {
             aimMarkEdit.setText(String.valueOf(6));
         }
@@ -91,7 +90,7 @@ public class SubjectActivity extends ThemedActivity {
 
 
         RecyclerView marksLayout = findViewById(R.id.marksList);
-        marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
+        marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, subject.getMarks(), new MarkItemHolder.Factory()));
         setupListeners();
     }
 
@@ -151,30 +150,6 @@ public class SubjectActivity extends ThemedActivity {
         });
     }
 
-    private ArrayList<SubjectData> getSubjectAsList() {
-        ArrayList<SubjectData> subjects = new ArrayList<>();
-        subjects.add(this.data);
-        return subjects;
-    }
-
-    private void openMarksActivity() {
-        Intent intent = new Intent(this, MarksActivity.class);
-        intent.putExtra(MarksActivity.subjectsIntentKey, getSubjectAsList());
-        startActivity(intent);
-    }
-
-    private void openStatisticsActivity() {
-        Intent intent = new Intent(this, StatisticsActivity.class);
-        intent.putExtra(StatisticsActivity.subjectsIntentKey, getSubjectAsList());
-        startActivity(intent);
-    }
-
-    private void openTopicsActivity() {
-        Intent intent = new Intent(this, TopicsActivity.class);
-        intent.putExtra(TopicsActivity.subjectsIntentKey, getSubjectAsList());
-        startActivity(intent);
-    }
-
 
 
     /////////////
@@ -183,7 +158,7 @@ public class SubjectActivity extends ThemedActivity {
 
     private void updateAverage() throws ArithmeticException {
         try {
-            float average = data.getAverage(termSpinner.getSelectedItemPosition());
+            float average = subject.getAverage(termSpinner.getSelectedItemPosition());
             averageView.setText(MarkFormatting.floatToString(average, 3));
             averageView.setTextColor(MarkFormatting.colorOf(this, average));
         } catch (Throwable e) {
@@ -193,7 +168,7 @@ public class SubjectActivity extends ThemedActivity {
 
     private void updateNeededMark() {
         try {
-            float neededMark = data.getNeededMark(Float.parseFloat(aimMarkEdit.getText().toString()),
+            float neededMark = subject.getNeededMark(Float.parseFloat(aimMarkEdit.getText().toString()),
                     Integer.parseInt(remainingTestsEdit.getText().toString()));
             neededMarkView.setText(MarkFormatting.floatToString(neededMark, 3));
         } catch (Throwable e) {

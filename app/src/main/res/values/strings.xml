@@ -41,8 +41,13 @@
     <string name="error_not_json">Response was not JSON</string>
     <string name="error_unsuitable_json">Unsuitable response JSON</string>
     <string name="error_invalid_credentials">Wrong user or password</string>
+    <string name="error_could_not_load_a_subject">Could not load a subject</string>
+    <string name="error_could_not_load_marks">Could not load marks for subject %1$s</string>
     <string name="error_could_not_load_a_mark">Could not load a mark for subject %1$s</string>
     <string name="error_could_not_load_a_topic">Could not load a topic for subject %1$s</string>
+    <string name="error_could_not_load_class">Could not load a class</string>
+    <string name="error_could_not_load_a_document">Could not load a document for class %1$s</string>
+    <string name="error_could_not_load_documents">Could not load documents for class %1$s</string>
     <string name="error_no_marks">No marks</string>
     <string name="error_unknown">Unknown error</string>
     <string name="retry">Retry</string>

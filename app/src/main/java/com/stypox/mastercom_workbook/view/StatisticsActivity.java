@@ -28,19 +28,18 @@ import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
+import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.MarkDetailItemHolder;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class StatisticsActivity extends ThemedActivity {
-    public static final String subjectsIntentKey = "subjects";
-    public static final int resultErrorNoMarks = 1;
-
-    private ArrayList<SubjectData> subjects;
-    private ArrayList<MarkData> marks;
+    private List<SubjectData> subjects;
+    private List<MarkData> marks;
 
     private Spinner overallAverageTermSpinner;
     private Spinner overallAverageModeSpinner;
@@ -54,7 +53,6 @@ public class StatisticsActivity extends ThemedActivity {
     ////////////////////////
 
     @Override
-    @SuppressWarnings("unchecked")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
@@ -67,7 +65,7 @@ public class StatisticsActivity extends ThemedActivity {
         actionBar.setTitle(getString(R.string.activity_title_statistics));
 
 
-        subjects = (ArrayList<SubjectData>) getIntent().getSerializableExtra(subjectsIntentKey);
+        subjects = NavigationHelper.getSelectedSubjects(getIntent());
         buildMarksArray();
 
 
@@ -78,9 +76,7 @@ public class StatisticsActivity extends ThemedActivity {
         markLayout = findViewById(R.id.markLayout);
 
         if (marks.isEmpty()) {
-            setResult(resultErrorNoMarks);
-            finish();
-            return;
+            throw new IllegalArgumentException("Cannot create a StatisticsActivity with 0 marks");
         } else if (subjects.size() == 1) {
             ConstraintLayout overallAverageLayout = findViewById(R.id.overallAverageLayout);
             TextView overallAverageModeTextView = findViewById(R.id.overallAverageModeTextView);
@@ -162,6 +158,7 @@ public class StatisticsActivity extends ThemedActivity {
     private void buildMarksArray() {
         marks = new ArrayList<>();
         for (SubjectData subject : subjects) {
+            assert subject.getMarks() != null;
             marks.addAll(subject.getMarks());
         }
 

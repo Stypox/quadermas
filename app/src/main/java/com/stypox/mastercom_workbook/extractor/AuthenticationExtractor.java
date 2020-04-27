@@ -35,9 +35,9 @@ public class AuthenticationExtractor {
             boolean jsonAlreadyParsed = false;
             try {
                 URL url = new URL(phpsessidAuthenticationUrl
-                        .replace("{api_url}", ExtractorData.getAPIUrl())
-                        .replace("{user}", ExtractorData.getUser())
-                        .replace("{password}", ExtractorData.getPassword()));
+                        .replace("{api_url}", Extractor.getAPIUrl())
+                        .replace("{user}", Extractor.getUser())
+                        .replace("{password}", Extractor.getPassword()));
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 String response = UrlConnectionUtils.readAll(urlConnection);
 
@@ -68,13 +68,13 @@ public class AuthenticationExtractor {
 
             RequestBody body = RequestBody.create(messengerAuthenticationMediaType,
                     messengerAuthenticationBody
-                            .replace("{api_url}", ExtractorData.getAPIUrl())
-                            .replace("{user}", ExtractorData.getUser())
-                            .replace("{password}", ExtractorData.getPassword()));
+                            .replace("{api_url}", Extractor.getAPIUrl())
+                            .replace("{user}", Extractor.getUser())
+                            .replace("{password}", Extractor.getPassword()));
 
             Request request = new Request.Builder()
                     .url(messengerAuthenticationUrl
-                            .replace("{api_url}", ExtractorData.getAPIUrl()))
+                            .replace("{api_url}", Extractor.getAPIUrl()))
                     .addHeader("Cookie", messengerCookie)
                     .post(body)
                     .build();
