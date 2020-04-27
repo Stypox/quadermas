@@ -56,7 +56,7 @@ public class DocumentsActivity extends ThemedActivity
     private int nrClasses;
     private int nrClassesFetched;
     private List<DocumentData> documents;
-    List<DocumentData> filteredDocuments;
+    private List<DocumentData> filteredDocuments;
 
     private Integer selectedYear = null;
     private String selectedSubject = null;
@@ -98,18 +98,18 @@ public class DocumentsActivity extends ThemedActivity
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.documents, menu);
 
         selectYearMenuItem = menu.findItem(R.id.selectYearAction);
         selectSubjectMenuItem = menu.findItem(R.id.selectSubjectAction);
 
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
         return true;
     }
 
