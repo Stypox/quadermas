@@ -12,6 +12,8 @@ import com.stypox.mastercom_workbook.data.TopicData;
 import com.stypox.mastercom_workbook.util.DateUtils;
 
 public class TopicItemHolder extends ItemHolder<TopicData> {
+    private static final int MAX_TITLE_LENGTH = 40; // characters
+
     private TextView titleView;
     private TextView teacherDateView;
     private TableRow descriptionTableRow;
@@ -38,14 +40,19 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
         if (data.getTitle().isEmpty()) {
             if (data.getDescription().isEmpty()) {
                 titleView.setText(data.getSubject());
+                descriptionTableRow.setVisibility(View.GONE);
+            } else if (data.getDescription().length() > MAX_TITLE_LENGTH) {
+                titleView.setText(data.getSubject());
+                descriptionView.setText(data.getDescription());
+                descriptionTableRow.setVisibility(View.VISIBLE);
             } else {
                 titleView.setText(data.getDescription());
+                descriptionTableRow.setVisibility(View.GONE);
             }
-            descriptionTableRow.setVisibility(View.GONE);
 
         } else {
             if (data.getDescription().isEmpty()) {
-                if (data.getTitle().length() > 50) {
+                if (data.getTitle().length() > MAX_TITLE_LENGTH) {
                     titleView.setText(data.getSubject());
                     descriptionView.setText(data.getTitle());
                     descriptionTableRow.setVisibility(View.VISIBLE);

@@ -13,6 +13,8 @@
         android:gravity="center_horizontal"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_item_title"
+        android:lines="1"
+        android:ellipsize="end"
         tools:text="Hello world module" />
 
     <TextView
@@ -30,7 +32,7 @@
 
         <TableRow
             android:id="@+id/description_table_row"
-            android:layout_marginTop="@dimen/topic_table_spacing">
+            android:layout_marginTop="@dimen/topic_table_row_spacing">
 
             <ImageView
                 android:contentDescription="@string/label_topic_description"
@@ -42,14 +44,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/topic_table_spacing"
-                android:layout_marginStart="@dimen/topic_table_spacing"
+                android:layout_marginLeft="@dimen/topic_table_column_spacing"
+                android:layout_marginStart="@dimen/topic_table_column_spacing"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
         </TableRow>
 
         <TableRow
             android:id="@+id/assignment_table_row"
-            android:layout_marginTop="@dimen/topic_table_spacing">
+            android:layout_marginTop="@dimen/topic_table_row_spacing">
 
             <ImageView
                 android:contentDescription="@string/label_topic_assignment"
@@ -61,10 +63,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/topic_table_spacing"
-                android:layout_marginStart="@dimen/topic_table_spacing"
+                android:layout_marginLeft="@dimen/topic_table_column_spacing"
+                android:layout_marginStart="@dimen/topic_table_column_spacing"
                 android:textStyle="italic"
-                tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
+                tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81; p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
