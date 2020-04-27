@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stypox.mastercom_workbook.R;
@@ -92,7 +91,6 @@ public class SubjectActivity extends ThemedActivity {
 
         RecyclerView marksLayout = findViewById(R.id.marksList);
         marksLayout.setAdapter(new ItemArrayAdapter<>(R.layout.item_mark, data.getMarks(), new MarkItemHolder.Factory()));
-
         setupListeners();
     }
 
@@ -192,7 +190,8 @@ public class SubjectActivity extends ThemedActivity {
 
     private void updateNeededMark() {
         try {
-            float neededMark = data.getNeededMark(Float.valueOf(aimMarkEdit.getText().toString()), Integer.valueOf(remainingTestsEdit.getText().toString()));
+            float neededMark = data.getNeededMark(Float.parseFloat(aimMarkEdit.getText().toString()),
+                    Integer.parseInt(remainingTestsEdit.getText().toString()));
             neededMarkView.setText(MarkFormatting.floatToString(neededMark, 3));
         } catch (Throwable e) {
             neededMarkView.setText("");
