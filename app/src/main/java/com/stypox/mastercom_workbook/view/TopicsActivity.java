@@ -52,7 +52,6 @@ public class TopicsActivity extends ThemedActivity
     ////////////////////////
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
@@ -208,10 +207,10 @@ public class TopicsActivity extends ThemedActivity
     private void switchShowOnlyAssignments() {
         showOnlyAssignments = !showOnlyAssignments;
 
-        showOnlyAssignmentsMenuItem.setIcon(ContextCompat.getDrawable(getApplicationContext(),
-                showOnlyAssignments ? R.drawable.ic_clear_white_24dp : R.drawable.ic_home_white_24dp));
         showOnlyAssignmentsMenuItem.setTitle(
                 showOnlyAssignments ? R.string.action_clear_filter : R.string.action_show_only_assignments);
+        showOnlyAssignmentsMenuItem.setIcon(ContextCompat.getDrawable(getApplicationContext(),
+                showOnlyAssignments ? R.drawable.ic_clear_white_24dp : R.drawable.ic_home_white_24dp));
 
         onFilterChanged();
     }
