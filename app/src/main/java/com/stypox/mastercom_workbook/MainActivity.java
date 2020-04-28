@@ -130,11 +130,24 @@ public class MainActivity extends ThemedActivity
     }
 
     private void openLoginActivityThenReload() {
+        disposables.dispose();
+        disposables = new CompositeDisposable();
         AuthenticationExtractor.removeAllData();
         Extractor.removeAllData();
         LoginData.logout(this);
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, requestCodeLoginActivity); // see onActivityResult
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case requestCodeLoginActivity:
+                reloadIfLoggedIn();
+                break;
+        }
     }
 
     private void reloadSubjects(boolean reload) {
@@ -163,9 +176,9 @@ public class MainActivity extends ThemedActivity
     }
 
 
-    /////////////
-    // NETWORK //
-    /////////////
+    //////////////
+    // FETCHING //
+    //////////////
 
     private void authenticate(boolean reload) {
         // show data in drawer header
@@ -266,21 +279,6 @@ public class MainActivity extends ThemedActivity
                             .show();
                 }
             });
-        }
-    }
-
-
-    ////////////////
-    // ACTIVITIES //
-    ////////////////
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case requestCodeLoginActivity:
-                reloadIfLoggedIn();
-                break;
         }
     }
 
