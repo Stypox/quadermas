@@ -39,6 +39,12 @@ public class Extractor {
     // GETTERS //
     /////////////
 
+    /**
+     * Extracts the subject list and feeds it to the handler
+     * @param forceReload if {@code true}, do not use cached results
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractSubjects(boolean forceReload,
                                        CompositeDisposable disposables,
                                        DataHandler<List<SubjectData>> handler) {
@@ -56,6 +62,13 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts the marks of the specified subject and feeds the subject to the handler when done
+     * @param subject the subject of which to extract marks, and on which to save them
+     * @param forceReload if {@code true}, do not use the results cached inside {@code subject}
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractMarks(SubjectData subject,
                                     boolean forceReload,
                                     CompositeDisposable disposables,
@@ -71,6 +84,13 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts the topics of the specified subject and feeds the subject to the handler when done
+     * @param subject the subject of which to extract topics, and on which to save them
+     * @param forceReload if {@code true}, do not use the results cached inside {@code subject}
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractTopics(SubjectData subject,
                                      boolean forceReload,
                                      CompositeDisposable disposables,
@@ -86,6 +106,12 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts the student (i.e. class list) and feeds it to the handler
+     * @param forceReload if {@code true}, do not use cached results
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractStudent(boolean forceReload,
                                       CompositeDisposable disposables,
                                       DataHandler<StudentData> handler) {
@@ -103,10 +129,17 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts the documents for the specified class and feeds the class to the handler when done
+     * @param classData the class of which to extract documents, and on which to save them
+     * @param forceReload if {@code true}, do not use the results cached inside {@code classData}
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractDocuments(ClassData classData,
-                                         boolean forceReload,
-                                         CompositeDisposable disposables,
-                                         DataHandler<ClassData> handler) {
+                                        boolean forceReload,
+                                        CompositeDisposable disposables,
+                                        DataHandler<ClassData> handler) {
         if (forceReload || classData.getDocuments() == null) {
             disposables.add(DocumentExtractor
                     .fetchDocuments(classData, t -> signalItemErrorOnMainThread(t, handler))
@@ -119,7 +152,7 @@ public class Extractor {
     }
 
     /**
-     * To be called on logout
+     * To be called on logout, to clear all data and cached results
      */
     public static void removeAllData() {
         APIUrl = "";
