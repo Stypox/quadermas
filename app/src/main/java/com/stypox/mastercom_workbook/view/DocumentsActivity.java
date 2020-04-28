@@ -22,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.DocumentData;
-import com.stypox.mastercom_workbook.data.StudentData;
 import com.stypox.mastercom_workbook.extractor.AuthenticationExtractor;
 import com.stypox.mastercom_workbook.extractor.DocumentExtractor;
 import com.stypox.mastercom_workbook.extractor.Extractor;
@@ -163,10 +162,10 @@ public class DocumentsActivity extends ThemedActivity
 
     private void fetchStudentThenDocuments(boolean reload) {
         // never force reload student, as classes usually do not change
-        Extractor.extractStudent(false, disposables, new Extractor.DataHandler<StudentData>() {
+        Extractor.extractClasses(false, disposables, new Extractor.DataHandler<List<ClassData>>() {
             @Override
-            public void onExtractedData(StudentData data) {
-                onStudentFetched(data, reload);
+            public void onExtractedData(List<ClassData> data) {
+                onClassesFetched(data, reload);
             }
 
             @Override
@@ -192,11 +191,11 @@ public class DocumentsActivity extends ThemedActivity
         }
     }
 
-    private void onStudentFetched(StudentData studentData, boolean reload) {
-        numClasses = studentData.getClasses().size();
+    private void onClassesFetched(List<ClassData> classes, boolean reload) {
+        numClasses = classes.size();
         numClassesExtracted = 0;
 
-        for (ClassData classData : studentData.getClasses()) {
+        for (ClassData classData : classes) {
             Extractor.extractDocuments(classData, reload, disposables, new Extractor.DataHandler<ClassData>() {
                 @Override
                 public void onExtractedData(ClassData data) {
