@@ -1,0 +1,18 @@
+Features:
+- Add settings activity, also containing "About" information
+- Add option to switch between light and dark theme in settings
+- Add a button to the drawer to view topics from all subjects at once
+- Switch between showing everything and showing only topics with an assignment in topics activity
+
+Improvements:
+- Show subjects in main activity before their marks have been loaded, and open topics activity when a subject with no marks is clicked
+- Improve layout of topic list items by adding some fancy icons and better detect descriptions wrongly written in the title field and viceversa
+- Replace some icons and make sort button a switch in marks activity
+- Cache extracted data to prevent reloading it
+- Center marks if they don't fill the screen horizontally in subject activity
+
+Bugs fixed:
+- Use older version of OkHttp to fix support on API 14+ (Android 4.0+)
+- Fix dates were not always considered to be in English, making parsing fail sometimes
+- Correctly detect network errors, and mark other errors as unknown
+- Migrate to AndroidX to better support old Android versions all the way up to Android 10
