@@ -1,6 +1,5 @@
 package com.stypox.mastercom_workbook.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,8 +22,6 @@ import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.MarkItemHolder;
-
-import java.util.ArrayList;
 
 import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWithSubject;
 

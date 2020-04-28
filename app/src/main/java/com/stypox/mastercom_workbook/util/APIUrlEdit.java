@@ -2,13 +2,14 @@ package com.stypox.mastercom_workbook.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.appcompat.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListPopupWindow;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.stypox.mastercom_workbook.R;
 

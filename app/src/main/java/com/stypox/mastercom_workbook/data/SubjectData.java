@@ -1,6 +1,5 @@
 package com.stypox.mastercom_workbook.data;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;

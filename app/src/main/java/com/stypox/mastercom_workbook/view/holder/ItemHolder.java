@@ -1,9 +1,10 @@
 package com.stypox.mastercom_workbook.view.holder;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 public abstract class ItemHolder<D> extends RecyclerView.ViewHolder {
     @Nullable protected ItemArrayAdapter<D> adapter;
