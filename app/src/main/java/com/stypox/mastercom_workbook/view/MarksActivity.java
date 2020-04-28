@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,9 @@ public class MarksActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
 
     private ItemArrayAdapter<MarkData> marksArrayAdapter;
+
+    private boolean sortByValue = false;
+    private MenuItem sortMenuItem;
 
 
     ////////////////////////
@@ -60,12 +64,13 @@ public class MarksActivity extends ThemedActivity
         marksArrayAdapter = new ItemArrayAdapter<>(R.layout.item_mark_detail, marks, MarkDetailItemHolder.getFactory());
         marksView.setAdapter(marksArrayAdapter);
 
-        sortMarksByDate();
+        showSortedMarks();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.marks, menu);
+        sortMenuItem = menu.findItem(R.id.sortAction);
         return true;
     }
 
@@ -78,11 +83,8 @@ public class MarksActivity extends ThemedActivity
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.sortByDateAction:
-                sortMarksByDate();
-                return true;
-            case R.id.sortByValueAction:
-                sortMarksByValue();
+            case R.id.sortAction:
+                switchSorting();
                 return true;
             default:
                 return false;
@@ -94,11 +96,21 @@ public class MarksActivity extends ThemedActivity
     // SORTING MARKS //
     ///////////////////
 
-    private void sortMarksByDate() {
-        marksArrayAdapter.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+    private void showSortedMarks() {
+        if (sortByValue) {
+            marksArrayAdapter.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+        } else {
+            marksArrayAdapter.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        }
     }
 
-    private void sortMarksByValue() {
-        marksArrayAdapter.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+    private void switchSorting() {
+        sortByValue = !sortByValue;
+
+        sortMenuItem.setTitle(sortByValue ? R.string.action_sort_by_date : R.string.action_sort_by_value);
+        sortMenuItem.setIcon(ContextCompat.getDrawable(this,
+                sortByValue ? R.drawable.ic_date_range_white_24dp : R.drawable.ic_trending_up_white_24dp));
+
+        showSortedMarks();
     }
 }

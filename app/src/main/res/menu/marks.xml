@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/sortByDateAction"
-        android:icon="@drawable/ic_date_range_white_24dp"
-        android:title="@string/action_sort_by_date"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/sortByValueAction"
+        android:id="@+id/sortAction"
         android:icon="@drawable/ic_trending_up_white_24dp"
         android:title="@string/action_sort_by_value"
         app:showAsAction="ifRoom" />
