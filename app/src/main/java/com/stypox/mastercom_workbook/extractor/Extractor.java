@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.stypox.mastercom_workbook.data.ClassData;
+import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TopicData;
@@ -80,7 +81,27 @@ public class Extractor {
             e.printStackTrace();
         }
     }};
-    private static List<ClassData> classes;
+    private static List<ClassData> classes = new ArrayList<ClassData>() {{
+        try {
+            add(new ClassData(new JSONObject("{\"year\": \"2019-2020\", \"id\": \"01010101\"}")) {{
+                setDocuments(new ArrayList<DocumentData>() {{
+                    add(new DocumentData(new JSONObject("{\"name\": \"Inverse trigonometric functions.pdf\", \"owner_name\": \"Mario\", \"owner_surname\": \"Rossi\", \"received\": \"2020-03-23T00:00:00+0000\", \"tags\": [\"Arithmetic and geometry\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"Trigonometric functions.pdf\", \"owner_name\": \"Mario\", \"owner_surname\": \"Rossi\", \"received\": \"2020-03-08T00:00:00+0000\", \"tags\": [\"Arithmetic and geometry\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"i_promessi_sposi.epub\", \"owner_name\": \"Rachel\", \"owner_surname\": \"Jonas\", \"received\": \"2020-02-25T00:00:00+0000\", \"tags\": [\"Italian language\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"vocabulary.odt\", \"owner_name\": \"Rachel\", \"owner_surname\": \"Jonas\", \"received\": \"2020-03-18T00:00:00+0000\", \"tags\": [\"Italian language\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"rosae rosarum rosis.txt\", \"owner_name\": \"John\", \"owner_surname\": \"Smith\", \"received\": \"2019-10-12T00:00:00+0000\", \"tags\": [\"Latin language and literature\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"lorem_ipsum_dolor_sit_amet.odp\", \"owner_name\": \"John\", \"owner_surname\": \"Smith\", \"received\": \"2020-03-21T00:00:00+0000\", \"tags\": [\"Latin language and literature\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"lupus lupi lupo.txt\", \"owner_name\": \"John\", \"owner_surname\": \"Smith\", \"received\": \"2020-02-28T00:00:00+0000\", \"tags\": [\"Latin language and literature\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"calculus_introduction.mp4\", \"owner_name\": \"Mario\", \"owner_surname\": \"Rossi\", \"received\": \"2019-09-28T00:00:00+0000\", \"tags\": [\"Arithmetic and geometry\"], \"id\": \"\"}")));
+                    add(new DocumentData(new JSONObject("{\"name\": \"calculus.pdf\", \"owner_name\": \"Mario\", \"owner_surname\": \"Rossi\", \"received\": \"2020-10-18T00:00:00+0000\", \"tags\": [\"Arithmetic and geometry\"], \"id\": \"\"}")));
+                }});
+            }});
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }};
 
 
     /////////////
