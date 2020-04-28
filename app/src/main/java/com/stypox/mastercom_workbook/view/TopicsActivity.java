@@ -79,7 +79,7 @@ public class TopicsActivity extends ThemedActivity
 
         topicsList.setLayoutManager(new LinearLayoutManager(this));
         topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, filteredTopics,
-                subjects.size() == 1 ? new TopicItemHolder.Factory() : new SubjectTopicItemHolder.Factory());
+                subjects.size() == 1 ? TopicItemHolder.getFactory() : SubjectTopicItemHolder.getFactory());
         topicsList.setAdapter(topicsArrayAdapter);
 
 

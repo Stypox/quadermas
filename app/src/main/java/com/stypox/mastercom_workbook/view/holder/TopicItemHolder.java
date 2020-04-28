@@ -83,10 +83,17 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
                 data.getTeacher(), DateUtils.formatDate(data.getDate()));
     }
 
-    public static class Factory implements ItemHolderFactory<TopicData> {
+
+    private static class Factory implements ItemHolderFactory<TopicData> {
         @Override
         public TopicItemHolder buildItemHolder(@NonNull View view, @Nullable ItemArrayAdapter<TopicData> adapter) {
             return new TopicItemHolder(view, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static ItemHolderFactory<TopicData> getFactory() {
+        return factory;
     }
 }

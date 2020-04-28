@@ -21,10 +21,17 @@ public class SubjectTopicItemHolder extends TopicItemHolder {
                 data.getSubject(), DateUtils.formatDate(data.getDate()));
     }
 
-    public static class Factory implements ItemHolderFactory<TopicData> {
+
+    private static class Factory implements ItemHolderFactory<TopicData> {
         @Override
         public SubjectTopicItemHolder buildItemHolder(@NonNull View view, @Nullable ItemArrayAdapter<TopicData> adapter) {
             return new SubjectTopicItemHolder(view, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static ItemHolderFactory<TopicData> getFactory() {
+        return factory;
     }
 }

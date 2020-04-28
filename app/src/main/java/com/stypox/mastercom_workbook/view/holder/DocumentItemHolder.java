@@ -46,10 +46,17 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
         }
     }
 
-    public static class Factory implements ItemHolderFactory<DocumentData> {
+
+    private static class Factory implements ItemHolderFactory<DocumentData> {
         @Override
         public DocumentItemHolder buildItemHolder(@NonNull View view, @Nullable ItemArrayAdapter<DocumentData> adapter) {
             return new DocumentItemHolder(view, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static Factory getFactory() {
+        return factory;
     }
 }

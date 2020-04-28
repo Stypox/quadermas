@@ -51,10 +51,17 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
                 data.getTeacher(), DateUtils.formatDate(data.getDate())));
     }
 
-    public static class Factory implements ItemHolderFactory<MarkData> {
+
+    private static class Factory implements ItemHolderFactory<MarkData> {
         @Override
         public MarkDetailItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<MarkData> adapter) {
             return new MarkDetailItemHolder(itemView, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static Factory getFactory() {
+        return factory;
     }
 }

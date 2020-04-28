@@ -88,7 +88,7 @@ public class DocumentsActivity extends ThemedActivity
         RecyclerView documentList = findViewById(R.id.documentList);
 
         documentList.setLayoutManager(new LinearLayoutManager(this));
-        documentsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_document, filteredDocuments, new DocumentItemHolder.Factory());
+        documentsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_document, filteredDocuments, DocumentItemHolder.getFactory());
         documentsArrayAdapter.setOnItemClickListener(this::downloadDocument);
         documentList.setAdapter(documentsArrayAdapter);
 

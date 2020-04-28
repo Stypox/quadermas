@@ -36,10 +36,17 @@ public class MarkItemHolder extends ItemHolder<MarkData> {
         dateView.setText(DateUtils.formatDate(data.getDate()));
     }
 
-    public static class Factory implements ItemHolderFactory<MarkData> {
+
+    private static class Factory implements ItemHolderFactory<MarkData> {
         @Override
         public MarkItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<MarkData> adapter) {
             return new MarkItemHolder(itemView, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static Factory getFactory() {
+        return factory;
     }
 }

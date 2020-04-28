@@ -76,10 +76,17 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         }
     }
 
-    public static class Factory implements ItemHolderFactory<SubjectData> {
+
+    private static class Factory implements ItemHolderFactory<SubjectData> {
         @Override
         public SubjectItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
             return new SubjectItemHolder(itemView, adapter);
         }
+    }
+
+    private static final Factory factory = new Factory();
+
+    public static Factory getFactory() {
+        return factory;
     }
 }
