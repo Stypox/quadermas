@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 public class SubjectData implements Serializable {
@@ -39,6 +40,9 @@ public class SubjectData implements Serializable {
             } else {
                 teacher = marks.get(0).getTeacher();
             }
+
+            // sort from latest to oldest
+            Collections.sort(marks, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         }
 
         this.marks = marks;
