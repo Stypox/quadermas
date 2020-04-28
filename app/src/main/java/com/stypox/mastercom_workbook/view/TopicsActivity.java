@@ -88,6 +88,12 @@ public class TopicsActivity extends ThemedActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.topics, menu);
         showOnlyAssignmentsMenuItem = menu.findItem(R.id.showOnlyAssignmentsAction);

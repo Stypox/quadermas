@@ -98,6 +98,12 @@ public class DocumentsActivity extends ThemedActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
