@@ -11,10 +11,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="color_mark_not_classified">#ffffff</item>
-        <item name="color_mark_failing">#B20000</item>
-        <item name="color_mark_halfway">#B2B200</item>
-        <item name="color_mark_excellent">#00B200</item>
+        <item name="color_mark_not_classified">#FFFFFF</item>
+        <item name="color_mark_failing">#E00000</item>
+        <item name="color_mark_halfway">#E0E000</item>
+        <item name="color_mark_excellent">#00E000</item>
 
         <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_white_24dp</item>
         <item name="ic_storage">@drawable/ic_storage_white_24dp</item>
@@ -43,9 +43,9 @@
         <item name="windowNoTitle">true</item>
 
         <item name="color_mark_not_classified">#000000</item>
-        <item name="color_mark_failing">#D00000</item>
-        <item name="color_mark_halfway">#D0D000</item>
-        <item name="color_mark_excellent">#00D000</item>
+        <item name="color_mark_failing">#B20000</item>
+        <item name="color_mark_halfway">#B2B200</item>
+        <item name="color_mark_excellent">#00B200</item>
 
         <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_black_24dp</item>
         <item name="ic_storage">@drawable/ic_storage_black_24dp</item>
