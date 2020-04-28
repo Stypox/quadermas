@@ -156,7 +156,8 @@ public class DocumentsActivity extends ThemedActivity
     }
 
     private void fetchStudentThenDocuments(boolean reload) {
-        Extractor.extractStudent(reload, disposables, new Extractor.DataHandler<StudentData>() {
+        // never force reload student, as classes usually do not change
+        Extractor.extractStudent(false, disposables, new Extractor.DataHandler<StudentData>() {
             @Override
             public void onExtractedData(StudentData data) {
                 onStudentFetched(data, reload);

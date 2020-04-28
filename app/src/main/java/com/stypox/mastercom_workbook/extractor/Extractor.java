@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.stypox.mastercom_workbook.data.ClassData;
-import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.data.StudentData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 
@@ -12,7 +11,6 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class Extractor {
 
@@ -118,6 +116,17 @@ public class Extractor {
         } else {
             handler.onExtractedData(classData);
         }
+    }
+
+    /**
+     * To be called on logout
+     */
+    public static void removeAllData() {
+        APIUrl = "";
+        user = "";
+        password = "";
+        subjects = null;
+        student = null;
     }
 
 

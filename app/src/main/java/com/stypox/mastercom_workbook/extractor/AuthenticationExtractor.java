@@ -83,6 +83,14 @@ public class AuthenticationExtractor {
         }).subscribeOn(Schedulers.io());
     }
 
+    /**
+     * To be called on logout
+     */
+    public static void removeAllData() {
+        phpsessidCookie = "";
+        messengerCookie = "";
+    }
+
 
     static String getCookie() {
         return phpsessidCookie + "; " + messengerCookie;

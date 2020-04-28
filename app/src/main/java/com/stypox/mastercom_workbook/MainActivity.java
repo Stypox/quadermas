@@ -107,7 +107,7 @@ public class MainActivity extends ThemedActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        reloadIfLoggedIn(false);
+        reloadIfLoggedIn();
     }
 
     @Override
@@ -121,15 +121,17 @@ public class MainActivity extends ThemedActivity
     // LOGIN AND LOAD //
     ////////////////////
 
-    private void reloadIfLoggedIn(boolean credentialsChanged) {
+    private void reloadIfLoggedIn() {
         if (LoginData.isLoggedIn(this)) {
-            reloadSubjects(credentialsChanged);
+            reloadSubjects(false);
         } else {
             openLoginActivityThenReload();
         }
     }
 
     private void openLoginActivityThenReload() {
+        AuthenticationExtractor.removeAllData();
+        Extractor.removeAllData();
         LoginData.logout(this);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivityForResult(intent, requestCodeLoginActivity); // see onActivityResult
@@ -205,7 +207,8 @@ public class MainActivity extends ThemedActivity
 
     private void fetchSubjects(boolean reload) {
         numSubjectsExtracted = 0;
-        Extractor.extractSubjects(reload, disposables, new Extractor.DataHandler<List<SubjectData>>() {
+        // never force reload subjects, as they usually do not change
+        Extractor.extractSubjects(false, disposables, new Extractor.DataHandler<List<SubjectData>>() {
             @Override
             public void onExtractedData(List<SubjectData> data) {
                 onSubjectsFetched(data, reload);
@@ -276,7 +279,7 @@ public class MainActivity extends ThemedActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case requestCodeLoginActivity:
-                reloadIfLoggedIn(true);
+                reloadIfLoggedIn();
                 break;
         }
     }
