@@ -1,0 +1,6 @@
+Features:
+- Add black theme
+
+Development:
+- Update dependencies
+- Switch to RxJava3
