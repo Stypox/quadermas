@@ -38,8 +38,8 @@ import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivity;
 import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWithAllSubjects;
