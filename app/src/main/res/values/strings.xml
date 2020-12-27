@@ -4,6 +4,7 @@
     <string name="key_theme" translatable="false">theme</string>
     <string name="value_theme_dark" translatable="false">dark</string>
     <string name="value_theme_light" translatable="false">light</string>
+    <string name="value_theme_black" translatable="false">black</string>
 
     <string name="app_name">Mastercom Workbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -19,8 +20,9 @@
 
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_summary">Choose the app color set</string>
-    <string name="settings_theme_dark">Dark</string>
     <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_black">Black</string>
     <string name="settings_source_code">View source code</string>
     <string name="settings_source_code_summary">This app is free and open source!</string>
     <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/mastercom-workbook</string>

@@ -28,6 +28,8 @@ abstract public class ThemedActivity extends AppCompatActivity {
 
         if (preference.equals(getString(R.string.value_theme_dark))) {
             return R.style.DarkAppTheme;
+        } else if (preference.equals(getString(R.string.value_theme_black))) {
+            return R.style.BlackAppTheme;
         } else /*if (preference.equals(getString(R.string.settings_value_theme_light)))*/ {
             return R.style.LightAppTheme;
         }

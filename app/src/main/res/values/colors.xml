@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="chartLine">#3366DD</color>
+    <color name="black">#FF000000</color>
 </resources>

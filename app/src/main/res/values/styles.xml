@@ -60,4 +60,9 @@
         <item name="ic_home">@drawable/ic_home_black_24dp</item>
         <item name="ic_info_outline">@drawable/ic_info_outline_black_24dp</item>
     </style>
+
+    <style name="BlackAppTheme" parent="DarkAppTheme">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+    </style>
 </resources>
