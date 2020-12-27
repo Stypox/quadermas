@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# https://stackoverflow.com/questions/63948856/android-r8-build-release-apk-fail
+-keep class io.reactivex.rxjava3.disposables.RunnableDisposable { <init>(...); }
