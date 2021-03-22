@@ -70,4 +70,11 @@
     <string name="error_could_not_load_class">Una classe non può essere caricata</string>
     <string name="error_could_not_load_a_document">Un documento della classe %1$s non può essere caricato</string>
     <string name="error_could_not_load_documents">I documenti della classe %1$s non possono essere caricati</string>
+    <string name="menu_timetable">Orario</string>
+    <string name="action_select_day">Seleziona il giorno</string>
+    <string name="action_previous_day">Giorno precedente</string>
+    <string name="action_next_day">Giorno successivo</string>
+    <string name="empty_timetable">Nulla è in programma per questa giornata!\nForse è un giorno di vacanza?</string>
+    <string name="error_could_not_load_timetable_events">Alcuni eventi nell\'orario non possono essere caricati</string>
+    <string name="error_could_not_load_timetable">L\'orario non può essere caricato</string>
 </resources>
