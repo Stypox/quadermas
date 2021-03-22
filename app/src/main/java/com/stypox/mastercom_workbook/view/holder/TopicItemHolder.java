@@ -1,7 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.view.View;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +15,9 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
 
     private final TextView titleView;
     private final TextView subtitleView;
-    private final TableRow descriptionTableRow;
+    private final View descriptionIconView;
     private final TextView descriptionView;
-    private final TableRow assignmentTableRow;
+    private final View assignmentIconRow;
     private final TextView assignmentView;
 
     public TopicItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<TopicData> adapter) {
@@ -26,25 +25,26 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
 
         titleView = itemView.findViewById(R.id.title);
         subtitleView = itemView.findViewById(R.id.subtitle);
-        descriptionTableRow = itemView.findViewById(R.id.description_table_row);
+        descriptionIconView = itemView.findViewById(R.id.descriptionIcon);
         descriptionView = itemView.findViewById(R.id.description);
-        assignmentTableRow = itemView.findViewById(R.id.assignment_table_row);
+        assignmentIconRow = itemView.findViewById(R.id.assignmentIcon);
         assignmentView = itemView.findViewById(R.id.assignment);
     }
 
     @Override
     final public void updateItemData(TopicData data) {
+        final int descriptionVisibility;
         if (data.getTitle().isEmpty()) {
             if (data.getDescription().isEmpty()) {
                 titleView.setText(data.getSubject());
-                descriptionTableRow.setVisibility(View.GONE);
+                descriptionVisibility = View.GONE;
             } else if (data.getDescription().length() > MAX_TITLE_LENGTH) {
                 titleView.setText(data.getSubject());
                 descriptionView.setText(data.getDescription());
-                descriptionTableRow.setVisibility(View.VISIBLE);
+                descriptionVisibility = View.VISIBLE;
             } else {
                 titleView.setText(data.getDescription());
-                descriptionTableRow.setVisibility(View.GONE);
+                descriptionVisibility = View.GONE;
             }
 
         } else {
@@ -52,26 +52,31 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
                 if (data.getTitle().length() > MAX_TITLE_LENGTH) {
                     titleView.setText(data.getSubject());
                     descriptionView.setText(data.getTitle());
-                    descriptionTableRow.setVisibility(View.VISIBLE);
+                    descriptionVisibility = View.VISIBLE;
                 } else {
                     titleView.setText(data.getTitle());
-                    descriptionTableRow.setVisibility(View.GONE);
+                    descriptionVisibility = View.GONE;
                 }
             } else {
                 titleView.setText(data.getTitle());
                 descriptionView.setText(data.getDescription());
-                descriptionTableRow.setVisibility(View.VISIBLE);
+                descriptionVisibility = View.VISIBLE;
             }
         }
+        descriptionIconView.setVisibility(descriptionVisibility);
+        descriptionView.setVisibility(descriptionVisibility);
 
         subtitleView.setText(getSubtitleContent(data));
 
+        final int assignmentVisibility;
         if (data.getAssignment().isEmpty()) {
-            assignmentTableRow.setVisibility(View.GONE);
+            assignmentVisibility = View.GONE;
         } else {
             assignmentView.setText(data.getAssignment());
-            assignmentTableRow.setVisibility(View.VISIBLE);
+            assignmentVisibility = View.VISIBLE;
         }
+        assignmentIconRow.setVisibility(assignmentVisibility);
+        assignmentView.setVisibility(assignmentVisibility);
     }
 
     // overridden in SubjectTopicItemHolder to return subject instead of teacher
