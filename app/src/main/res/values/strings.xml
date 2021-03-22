@@ -15,6 +15,7 @@
     <string name="menu_statistics">Statistics</string>
     <string name="menu_topics">Topics</string>
     <string name="menu_documents">Documents</string>
+    <string name="menu_timetable">Timetable</string>
     <string name="menu_setup">Setup</string>
     <string name="menu_settings">Settings</string>
 
@@ -50,6 +51,8 @@
     <string name="error_could_not_load_class">Could not load a class</string>
     <string name="error_could_not_load_a_document">Could not load a document for class %1$s</string>
     <string name="error_could_not_load_documents">Could not load documents for class %1$s</string>
+    <string name="error_could_not_load_timetable">Could not load the timetable</string>
+    <string name="error_could_not_load_timetable_events">Could not load some events in the timetable</string>
     <string name="error_no_marks">No marks</string>
     <string name="error_unknown">Unknown error</string>
     <string name="retry">Retry</string>
@@ -79,6 +82,9 @@
     <string name="action_select_year">Select year</string>
     <string name="action_show_only_assignments">Show only assignments</string>
     <string name="action_clear_filter">Clear filter</string>
+    <string name="action_select_day">Select day</string>
+    <string name="action_previous_day">Previous day</string>
+    <string name="action_next_day">Next day</string>
 
     <string name="label_overall_average">Overall average</string>
     <string name="label_overall_average_mode">Display average of:</string>
@@ -93,6 +99,8 @@
 
     <string name="all_years">All school years</string>
     <string name="all_subjects">All subjects</string>
+
+    <string name="empty_timetable">Nothing is scheduled for this day!\nIs it a day off?</string>
 
     <string name="two_strings" translatable="false">%s  -  %s</string>
     <string name="three_strings" translatable="false">%s  -  %s  -  %s</string>
