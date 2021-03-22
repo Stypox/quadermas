@@ -15,10 +15,11 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
-    private TextView nameView;
-    private TextView dateSubjectOwnerView;
 
-    private Context context;
+    private final Context context;
+
+    private final TextView nameView;
+    private final TextView dateSubjectOwnerView;
 
     @SuppressLint("ClickableViewAccessibility")
     public DocumentItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<DocumentData> adapter) {
