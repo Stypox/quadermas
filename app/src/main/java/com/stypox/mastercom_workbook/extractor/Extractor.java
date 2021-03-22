@@ -3,13 +3,22 @@ package com.stypox.mastercom_workbook.extractor;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
+
 import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.data.TimetableEventData;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
+import static com.stypox.mastercom_workbook.util.DateUtils.addDaysToDateIndex;
+import static com.stypox.mastercom_workbook.util.DateUtils.dateToIndex;
 
 public class Extractor {
 
@@ -32,6 +41,8 @@ public class Extractor {
     // extracted data
     private static List<SubjectData> subjects;
     private static List<ClassData> classes;
+    @NonNull
+    private static final Map<Integer, List<TimetableEventData>> timetable = new HashMap<>();
 
 
     /////////////
@@ -150,6 +161,41 @@ public class Extractor {
         }
     }
 
+    public static void extractTimetable(final Date date,
+                                        final CompositeDisposable disposables,
+                                        final DataHandler<List<TimetableEventData>> handler) {
+
+        final int dateIndex = dateToIndex(date);
+        if (timetable.containsKey(dateIndex)) {
+            handler.onExtractedData(timetable.get(dateIndex));
+        } else {
+            int i = 0;
+            while (i > -3 && !timetable.containsKey(addDaysToDateIndex(dateIndex, i - 1))) {
+                --i; // at most three days before
+            }
+            final int beginDateIndex = addDaysToDateIndex(dateIndex, i);
+
+            int j = 1; // at least the requested day (since end date is exclusive)
+            while (j < 14 + i && !timetable.containsKey(addDaysToDateIndex(dateIndex, j))) {
+                ++j; // at most 14 days at a time (usually 11 days in advance)
+            }
+            final int endDateIndex = addDaysToDateIndex(dateIndex, j); // end date is exclusive
+
+            disposables.add(TimetableExtractor
+                    .fetchTimetableDays(beginDateIndex, endDateIndex,
+                            t -> signalItemErrorOnMainThread(t, handler))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(data -> {
+                                for (final Map.Entry<Integer, List<TimetableEventData>> entry
+                                        : data.entrySet()) {
+                                    timetable.put(entry.getKey(), entry.getValue());
+                                }
+                                handler.onExtractedData(timetable.get(dateIndex));
+                            },
+                            throwable -> handler.onError((ExtractorError) throwable)));
+        }
+    }
+
     /**
      * To be called on logout, to clear all data and cached results
      */
@@ -159,6 +205,7 @@ public class Extractor {
         password = "";
         subjects = null;
         classes = null;
+        timetable.clear();
     }
 
 
@@ -192,9 +239,9 @@ public class Extractor {
     }
 
 
-    ////////////
-    // RANDOM //
-    ////////////
+    ///////////////////
+    // MISCELLANEOUS //
+    ///////////////////
 
     /**
      * @return a user-friendly representation of the API url
@@ -217,14 +264,15 @@ public class Extractor {
     // HELPERS //
     /////////////
 
-    private static void signalItemErrorOnMainThread(Throwable throwable, DataHandler dataHandler) {
+    private static void signalItemErrorOnMainThread(final Throwable throwable,
+                                                    final DataHandler<?> dataHandler) {
         // json has surely been already parsed: the extractor was looping through it to get items
         ExtractorError error = ExtractorError.asExtractorError(throwable, true);
         runOnMainThread(() -> dataHandler.onItemError(error));
     }
 
-    private static void runOnMainThread(Runnable runnable) {
-        Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+    private static void runOnMainThread(final Runnable runnable) {
+        final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
         mainThreadHandler.post(runnable);
     }
 }
