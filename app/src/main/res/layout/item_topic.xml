@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,65 +9,93 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:gravity="center_horizontal"
+        android:lines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_item_title"
-        android:lines="1"
-        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Hello world module" />
 
     <TextView
         android:id="@+id/subtitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="@dimen/size_item_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="John Smith  -  06/11/2019" />
 
-    <TableLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/descriptionIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:layout_marginTop="@dimen/topic_table_row_spacing"
+        android:contentDescription="@string/label_topic_description"
+        android:src="?attr/ic_info_outline"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
-        <TableRow
-            android:id="@+id/description_table_row"
-            android:layout_marginTop="@dimen/topic_table_row_spacing">
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/topic_table_column_spacing"
+        android:layout_marginLeft="@dimen/topic_table_column_spacing"
+        android:layout_marginTop="@dimen/topic_table_row_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/descriptionIcon"
+        app:layout_constraintTop_toBottomOf="@id/subtitle"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
 
-            <ImageView
-                android:contentDescription="@string/label_topic_description"
-                android:layout_gravity="top"
-                android:src="?attr/ic_info_outline" />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/descriptionBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="descriptionIcon,description"
+        app:layout_constraintTop_toBottomOf="subtitle" />
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/topic_table_column_spacing"
-                android:layout_marginStart="@dimen/topic_table_column_spacing"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
-        </TableRow>
+    <ImageView
+        android:id="@+id/assignmentIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/topic_table_row_spacing"
+        android:contentDescription="@string/label_topic_assignment"
+        android:src="?attr/ic_home"
+        app:layout_constraintBottom_toBottomOf="@id/assignmentBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionBarrier" />
 
-        <TableRow
-            android:id="@+id/assignment_table_row"
-            android:layout_marginTop="@dimen/topic_table_row_spacing">
+    <TextView
+        android:id="@+id/assignment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/topic_table_column_spacing"
+        android:layout_marginLeft="@dimen/topic_table_column_spacing"
+        android:layout_marginTop="@dimen/topic_table_row_spacing"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@id/assignmentBarrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/assignmentIcon"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionBarrier"
+        tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81; p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
 
-            <ImageView
-                android:contentDescription="@string/label_topic_assignment"
-                android:layout_gravity="top"
-                android:src="?attr/ic_home" />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/assignmentBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="assignmentIcon,assignment"
+        app:layout_constraintTop_toBottomOf="subtitle" />
 
-            <TextView
-                android:id="@+id/assignment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/topic_table_column_spacing"
-                android:layout_marginStart="@dimen/topic_table_column_spacing"
-                android:textStyle="italic"
-                tools:text="p54 45-46-47-48-49-50; p92 67-68-70-77-79-81; p54 45-46-47-48-49-50; p92 67-68-70-77-79-81;" />
-        </TableRow>
-    </TableLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
