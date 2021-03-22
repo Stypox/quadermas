@@ -22,99 +22,93 @@ public class SubjectExtractor {
 
 
     static Single<List<SubjectData>> fetchSubjects(ItemErrorHandler itemErrorHandler) {
-        return Single
-                .fromCallable(() -> {
-                    boolean jsonAlreadyParsed = false;
+        return Single.fromCallable(() -> {
+            boolean jsonAlreadyParsed = false;
+            try {
+                URL url = new URL(subjectsUrl
+                        .replace("{api_url}", Extractor.getAPIUrl()));
+
+                JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
+                jsonAlreadyParsed = true;
+
+                JSONArray list = jsonResponse.getJSONArray("result");
+                List<SubjectData> subjects = new ArrayList<>();
+                for (int i = 0; i < list.length(); i++) {
                     try {
-                        URL url = new URL(subjectsUrl
-                                .replace("{api_url}", Extractor.getAPIUrl()));
-
-                        JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
-                        jsonAlreadyParsed = true;
-
-                        JSONArray list = jsonResponse.getJSONArray("result");
-                        List<SubjectData> subjects = new ArrayList<>();
-                        for (int i = 0; i < list.length(); i++) {
-                            try {
-                                subjects.add(new SubjectData(list.getJSONObject(i)));
-                            } catch (Throwable e) {
-                                itemErrorHandler.onItemError(ExtractorError.asExtractorError(e, true));
-                            }
-                        }
-                        return subjects;
+                        subjects.add(new SubjectData(list.getJSONObject(i)));
                     } catch (Throwable e) {
-                        throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+                        itemErrorHandler.onItemError(ExtractorError.asExtractorError(e, true));
                     }
-                })
-                .subscribeOn(Schedulers.io());
+                }
+                return subjects;
+            } catch (Throwable e) {
+                throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 
     static Single<SubjectData> fetchMarks(SubjectData subjectData, ItemErrorHandler itemErrorHandler) {
-        return Single
-                .fromCallable(() -> {
-                    subjectData.setMarks(null); // remove old marks
-                    boolean jsonAlreadyParsed = false;
+        return Single.fromCallable(() -> {
+            subjectData.setMarks(null); // remove old marks
+            boolean jsonAlreadyParsed = false;
 
+            try {
+                URL url = new URL(marksUrl
+                        .replace("{api_url}", Extractor.getAPIUrl())
+                        .replace("{subject_id}", subjectData.getId()));
+
+                JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
+                jsonAlreadyParsed = true;
+
+                JSONArray list = jsonResponse.getJSONArray("result");
+                List<MarkData> marks = new ArrayList<>();
+                for (int i = 0; i < list.length(); i++) {
                     try {
-                        URL url = new URL(marksUrl
-                                .replace("{api_url}", Extractor.getAPIUrl())
-                                .replace("{subject_id}", subjectData.getId()));
-
-                        JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
-                        jsonAlreadyParsed = true;
-
-                        JSONArray list = jsonResponse.getJSONArray("result");
-                        List<MarkData> marks = new ArrayList<>();
-                        for (int i = 0; i < list.length(); i++) {
-                            try {
-                                marks.add(new MarkData(list.getJSONObject(i)));
-                            } catch (Throwable e) {
-                                itemErrorHandler.onItemError(e);
-                            }
-                        }
-                        subjectData.setMarks(marks);
+                        marks.add(new MarkData(list.getJSONObject(i)));
                     } catch (Throwable e) {
-                        e.printStackTrace();
-                        subjectData.setMarkExtractionError(
-                                ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+                        itemErrorHandler.onItemError(e);
                     }
+                }
+                subjectData.setMarks(marks);
+            } catch (Throwable e) {
+                e.printStackTrace();
+                subjectData.setMarkExtractionError(
+                        ExtractorError.asExtractorError(e, jsonAlreadyParsed));
+            }
 
-                    return subjectData;
-                })
-                .subscribeOn(Schedulers.io());
+            return subjectData;
+        }).subscribeOn(Schedulers.io());
     }
 
     static Single<SubjectData> fetchTopics(SubjectData subjectData, ItemErrorHandler itemErrorHandler) {
-        return Single
-                .fromCallable(() -> {
-                    subjectData.setTopics(null); // remove old topics
-                    boolean jsonAlreadyParsed = false;
+        return Single.fromCallable(() -> {
+            subjectData.setTopics(null); // remove old topics
+            boolean jsonAlreadyParsed = false;
 
+            try {
+                URL url = new URL(topicsUrl
+                        .replace("{api_url}", Extractor.getAPIUrl())
+                        .replace("{subject_id}", subjectData.getId()));
+
+                JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
+                jsonAlreadyParsed = true;
+
+                JSONArray jsonTopics = jsonResponse.getJSONArray("result");
+                List<TopicData> topics = new ArrayList<>();
+                for (int i = 0; i < jsonTopics.length(); i++) {
                     try {
-                        URL url = new URL(topicsUrl
-                                .replace("{api_url}", Extractor.getAPIUrl())
-                                .replace("{subject_id}", subjectData.getId()));
-
-                        JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
-                        jsonAlreadyParsed = true;
-
-                        JSONArray jsonTopics = jsonResponse.getJSONArray("result");
-                        List<TopicData> topics = new ArrayList<>();
-                        for (int i = 0; i < jsonTopics.length(); i++) {
-                            try {
-                                topics.add(new TopicData(jsonTopics.getJSONObject(i)));
-                            } catch (Throwable e) {
-                                itemErrorHandler.onItemError(e);
-                            }
-                        }
-                        subjectData.setTopics(topics);
+                        topics.add(new TopicData(jsonTopics.getJSONObject(i)));
                     } catch (Throwable e) {
-                        e.printStackTrace();
-                        throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+                        itemErrorHandler.onItemError(e);
                     }
+                }
+                subjectData.setTopics(topics);
+            } catch (Throwable e) {
+                e.printStackTrace();
+                throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+            }
 
-                    return subjectData;
-                })
-                .subscribeOn(Schedulers.io());
+            return subjectData;
+        }).subscribeOn(Schedulers.io());
     }
 }

@@ -69,32 +69,31 @@ public class DocumentExtractor {
 
     public static Single<ClassData> fetchDocuments(ClassData classData, ItemErrorHandler itemErrorHandler) {
         return Single.fromCallable(() -> {
-                    boolean jsonAlreadyParsed = false;
+            boolean jsonAlreadyParsed = false;
+            try {
+                URL url = new URL(documentsUrl
+                        .replace("{api_url}", Extractor.getAPIUrl())
+                        .replace("{year_id}", classData.getId()));
+
+                JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
+                jsonAlreadyParsed = true;
+
+                JSONArray jsonDocuments = jsonResponse.getJSONArray("results");
+                List<DocumentData> documents = new ArrayList<>();
+                for (int i = 0; i < jsonDocuments.length(); i++) {
                     try {
-                        URL url = new URL(documentsUrl
-                                .replace("{api_url}", Extractor.getAPIUrl())
-                                .replace("{year_id}", classData.getId()));
-
-                        JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
-                        jsonAlreadyParsed = true;
-
-                        JSONArray jsonDocuments = jsonResponse.getJSONArray("results");
-                        List<DocumentData> documents = new ArrayList<>();
-                        for (int i = 0; i < jsonDocuments.length(); i++) {
-                            try {
-                                documents.add(new DocumentData(jsonDocuments.getJSONObject(i)));
-                            } catch (Throwable e) {
-                                itemErrorHandler.onItemError(e);
-                            }
-                        }
-
-                        classData.setDocuments(documents);
-                        return classData;
+                        documents.add(new DocumentData(jsonDocuments.getJSONObject(i)));
                     } catch (Throwable e) {
-                        throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+                        itemErrorHandler.onItemError(e);
                     }
-                })
-                .subscribeOn(Schedulers.io());
+                }
+
+                classData.setDocuments(documents);
+                return classData;
+            } catch (Throwable e) {
+                throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
+            }
+        }).subscribeOn(Schedulers.io());
     }
 
 
