@@ -11,7 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DocumentData {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
+    private static final SimpleDateFormat DOCUMENT_DATE_FORMAT
+            = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH);
 
     private final String name;
     private final String id;
@@ -22,8 +23,9 @@ public class DocumentData {
     public DocumentData(JSONObject json) throws JSONException, ParseException {
         name = JsonUtils.getUnescapedString(json, "name");
         id = json.getString("id");
-        owner = JsonUtils.getUnescapedString(json, "owner_name") + " " + JsonUtils.getUnescapedString(json, "owner_surname");
-        date = dateFormat.parse(json.getString("received"));
+        owner = JsonUtils.getUnescapedString(json, "owner_name") + " "
+                + JsonUtils.getUnescapedString(json, "owner_surname");
+        date = DOCUMENT_DATE_FORMAT.parse(json.getString("received"));
 
         String quotedSubject = JsonUtils.getUnescapedString(json.getJSONArray("tags"), 0);
         if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {

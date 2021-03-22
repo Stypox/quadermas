@@ -9,12 +9,9 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class MarkData implements Serializable {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     private final MarkValue value;
     private final MarkType type;
@@ -27,7 +24,7 @@ public class MarkData implements Serializable {
         subject = null;
         value = new MarkValue(json.getString("valore"));
         type = MarkType.parseType(json.getString("tipo"));
-        date = dateFormat.parse(json.getString("data"));
+        date = JsonUtils.getDateTime(json, "data");
         description = JsonUtils.getUnescapedString(json, "note");
         teacher = JsonUtils.getUnescapedString(json, "docente");
     }
