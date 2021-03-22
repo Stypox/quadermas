@@ -12,7 +12,7 @@
         <item name="windowNoTitle">true</item>
 
         <item name="color_mark_not_classified">#FFFFFF</item>
-        <item name="color_mark_failing">#E00000</item>
+        <item name="color_mark_failing">#E03333</item>
         <item name="color_mark_halfway">#E0E000</item>
         <item name="color_mark_excellent">#00E000</item>
 
