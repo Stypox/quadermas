@@ -8,7 +8,7 @@
     <attr name="ic_storage" format="reference" />
     <attr name="ic_timeline" format="reference" />
     <attr name="ic_assignment" format="reference" />
-    <attr name="ic_description" format="reference" />
+    <attr name="ic_insert_drive_file" format="reference" />
     <attr name="ic_access_time" format="reference" />
     <attr name="ic_person" format="reference" />
     <attr name="ic_settings" format="reference" />

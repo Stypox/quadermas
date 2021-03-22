@@ -20,7 +20,7 @@
         <item name="ic_storage">@drawable/ic_storage_white_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_white_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_white_24dp</item>
-        <item name="ic_description">@drawable/ic_description_white_24dp</item>
+        <item name="ic_insert_drive_file">@drawable/ic_insert_drive_file_white_24dp</item>
         <item name="ic_access_time">@drawable/ic_access_time_white_24dp</item>
         <item name="ic_person">@drawable/ic_person_white_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_white_24dp</item>
@@ -55,7 +55,7 @@
         <item name="ic_storage">@drawable/ic_storage_black_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_black_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_black_24dp</item>
-        <item name="ic_description">@drawable/ic_description_black_24dp</item>
+        <item name="ic_insert_drive_file">@drawable/ic_insert_drive_file_black_24dp</item>
         <item name="ic_access_time">@drawable/ic_access_time_black_24dp</item>
         <item name="ic_person">@drawable/ic_person_black_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_black_24dp</item>
