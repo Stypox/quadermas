@@ -16,8 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:textColor="@android:color/white"
-        tools:text="7.5" />
+        tools:text="7.5"
+        tools:textColor="?attr/color_mark_halfway" />
 
     <HorizontalScrollView
         android:id="@+id/nameScrollView"
@@ -46,6 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
+        android:ellipsize="end"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/average"
         app:layout_constraintTop_toBottomOf="@id/nameScrollView"
