@@ -82,13 +82,11 @@ public class MarksActivity extends ThemedActivity
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.sortAction:
-                switchSorting();
-                return true;
-            default:
-                return false;
+        if (menuItem.getItemId() == R.id.sortAction) {
+            switchSorting();
+            return true;
         }
+        return false;
     }
 
 
