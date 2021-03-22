@@ -1,16 +1,14 @@
 package com.stypox.mastercom_workbook.util;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class DateUtils {
     private static final int endOfSchoolMonth = 7;
 
     public static int getTerm(Date date) {
-        if (date.getMonth() > endOfSchoolMonth) {
+        if (getCalendarField(date, Calendar.MONTH) > endOfSchoolMonth) {
             return 0; // first term
         } else {
             return 1; // second term
@@ -18,7 +16,7 @@ public class DateUtils {
     }
 
     public static int currentTerm() {
-        return getTerm(Calendar.getInstance().getTime());
+        return getTerm(new Date());
     }
 
     /**
@@ -26,12 +24,48 @@ public class DateUtils {
      * For example, if the date is in the school year 2018/2019,
      * the return value is 2018.
      */
-    public static int schoolYear(Date date) {
-        int year = new GregorianCalendar() {{ setTime(date); }}.get(Calendar.YEAR);
+    public static int schoolYear(final Date date) {
+        final int year = getCalendarField(date, Calendar.YEAR);
         if (DateUtils.getTerm(date) == 1) {
             return year - 1;
         } else {
             return year;
         }
+    }
+
+
+    public static Date buildDate(final int year, final int month, final int dayOfMonth) {
+        return new GregorianCalendar(year, month, dayOfMonth).getTime();
+    }
+
+    public static int getCalendarField(final Date date, final int field) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(field);
+    }
+
+    public static int dateToIndex(final Date date) {
+        return getCalendarField(date, Calendar.YEAR) * 10000
+                + getCalendarField(date, Calendar.MONTH) * 100
+                + getCalendarField(date, Calendar.DAY_OF_MONTH);
+    }
+
+    public static Date indexToDate(final int index) {
+        return buildDate(index / 10000, (index / 100) % 100, index % 100);
+    }
+
+    public static Date addDaysToDate(final Date date, final int days) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, days);
+        return calendar.getTime();
+    }
+
+    public static int addDaysToDateIndex(final int dateIndex, final int days) {
+        return dateToIndex(addDaysToDate(indexToDate(dateIndex), days));
+    }
+
+    public static String dateIndexToSecondsSinceEpoch(final int index) {
+        return String.valueOf(indexToDate(index).getTime() / 1000);
     }
 }
