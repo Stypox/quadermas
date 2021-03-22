@@ -107,13 +107,11 @@ public class TopicsActivity extends ThemedActivity
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.showOnlyAssignmentsAction:
-                switchShowOnlyAssignments();
-                return true;
-            default:
-                return false;
+        if (menuItem.getItemId() == R.id.showOnlyAssignmentsAction) {
+            switchShowOnlyAssignments();
+            return true;
         }
+        return false;
     }
 
 
