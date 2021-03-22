@@ -1,5 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,7 +9,6 @@ import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
-import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
 public class MarkDetailItemHolder extends ItemHolder<MarkData> {
@@ -45,7 +45,7 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
         }
 
         teacherDateView.setText(context.getResources().getString(R.string.two_strings,
-                data.getTeacher(), DateUtils.formatDate(data.getDate())));
+                data.getTeacher(), DateFormat.getDateFormat(context).format(data.getDate())));
     }
 
 

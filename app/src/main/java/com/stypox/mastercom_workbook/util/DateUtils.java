@@ -7,13 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class DateUtils {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ROOT);
     private static final int endOfSchoolMonth = 7;
-
-    public static String formatDate(Date date) {
-        return dateFormat.format(date);
-    }
-
 
     public static int getTerm(Date date) {
         if (date.getMonth() > endOfSchoolMonth) {

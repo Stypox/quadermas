@@ -1,5 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,7 +9,6 @@ import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.TopicData;
-import com.stypox.mastercom_workbook.util.DateUtils;
 
 public class TopicItemHolder extends ItemHolder<TopicData> {
     private static final int MAX_TITLE_LENGTH = 40; // characters
@@ -82,7 +82,7 @@ public class TopicItemHolder extends ItemHolder<TopicData> {
     // overridden in SubjectTopicItemHolder to return subject instead of teacher
     protected String getSubtitleContent(TopicData data) {
         return context.getResources().getString(R.string.two_strings,
-                data.getTeacher(), DateUtils.formatDate(data.getDate()));
+                data.getTeacher(), DateFormat.getDateFormat(context).format(data.getDate()));
     }
 
 

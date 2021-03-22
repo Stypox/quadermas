@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -177,7 +178,7 @@ public class StatisticsActivity extends ThemedActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return DateUtils.formatDate(new Date((long) value));
+                return DateFormat.getDateFormat(getBaseContext()).format(new Date((long) value));
             }
         });
 
