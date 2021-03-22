@@ -21,6 +21,7 @@
         <item name="ic_timeline">@drawable/ic_timeline_white_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_white_24dp</item>
         <item name="ic_description">@drawable/ic_description_white_24dp</item>
+        <item name="ic_access_time">@drawable/ic_access_time_white_24dp</item>
         <item name="ic_person">@drawable/ic_person_white_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_white_24dp</item>
         <item name="ic_code">@drawable/ic_code_white_24dp</item>
@@ -28,6 +29,9 @@
         <item name="ic_palette">@drawable/ic_palette_white_24dp</item>
         <item name="ic_home">@drawable/ic_home_white_24dp</item>
         <item name="ic_info_outline">@drawable/ic_info_outline_white_24dp</item>
+        <item name="ic_insert_invitation">@drawable/ic_insert_invitation_white_24dp</item>
+        <item name="ic_navigate_before">@drawable/ic_navigate_before_white_24dp</item>
+        <item name="ic_navigate_next">@drawable/ic_navigate_next_white_24dp</item>
     </style>
 
     <style name="LightAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -52,6 +56,7 @@
         <item name="ic_timeline">@drawable/ic_timeline_black_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_black_24dp</item>
         <item name="ic_description">@drawable/ic_description_black_24dp</item>
+        <item name="ic_access_time">@drawable/ic_access_time_black_24dp</item>
         <item name="ic_person">@drawable/ic_person_black_24dp</item>
         <item name="ic_settings">@drawable/ic_settings_black_24dp</item>
         <item name="ic_code">@drawable/ic_code_black_24dp</item>
@@ -59,6 +64,9 @@
         <item name="ic_palette">@drawable/ic_palette_black_24dp</item>
         <item name="ic_home">@drawable/ic_home_black_24dp</item>
         <item name="ic_info_outline">@drawable/ic_info_outline_black_24dp</item>
+        <item name="ic_insert_invitation">@drawable/ic_insert_invitation_black_24dp</item>
+        <item name="ic_navigate_before">@drawable/ic_navigate_before_black_24dp</item>
+        <item name="ic_navigate_next">@drawable/ic_navigate_next_black_24dp</item>
     </style>
 
     <style name="BlackAppTheme" parent="DarkAppTheme">
