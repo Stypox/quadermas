@@ -1,7 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -18,17 +17,14 @@ import com.stypox.mastercom_workbook.util.MarkFormatting;
 import static com.stypox.mastercom_workbook.util.ThemedActivity.resolveColor;
 
 public class SubjectItemHolder extends ItemHolder<SubjectData> {
-    private TextView nameView;
-    private TextView teacherTextView;
-    private TextView averageTextView;
 
-    private Context context;
-
+    private final TextView nameView;
+    private final TextView teacherTextView;
+    private final TextView averageTextView;
 
     @SuppressLint("ClickableViewAccessibility")
     public SubjectItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
         super(itemView, adapter);
-        context = itemView.getContext();
 
         nameView = itemView.findViewById(R.id.name);
         teacherTextView = itemView.findViewById(R.id.teacher);

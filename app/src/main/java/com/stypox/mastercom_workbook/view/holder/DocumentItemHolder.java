@@ -1,7 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -16,15 +15,12 @@ import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
 
-    private final Context context;
-
     private final TextView nameView;
     private final TextView dateSubjectOwnerView;
 
     @SuppressLint("ClickableViewAccessibility")
     public DocumentItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<DocumentData> adapter) {
         super(itemView, adapter);
-        context = itemView.getContext();
 
         nameView = itemView.findViewById(R.id.name);
         dateSubjectOwnerView = itemView.findViewById(R.id.dateSubjectOwner);

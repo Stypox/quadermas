@@ -1,6 +1,5 @@
 package com.stypox.mastercom_workbook.view.holder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,18 +14,15 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 public class TopicItemHolder extends ItemHolder<TopicData> {
     private static final int MAX_TITLE_LENGTH = 40; // characters
 
-    private TextView titleView;
-    private TextView subtitleView;
-    private TableRow descriptionTableRow;
-    private TextView descriptionView;
-    private TableRow assignmentTableRow;
-    private TextView assignmentView;
-
-    protected Context context;
+    private final TextView titleView;
+    private final TextView subtitleView;
+    private final TableRow descriptionTableRow;
+    private final TextView descriptionView;
+    private final TableRow assignmentTableRow;
+    private final TextView assignmentView;
 
     public TopicItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<TopicData> adapter) {
         super(itemView, adapter);
-        context = itemView.getContext();
 
         titleView = itemView.findViewById(R.id.title);
         subtitleView = itemView.findViewById(R.id.subtitle);
