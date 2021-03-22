@@ -119,17 +119,16 @@ public class DocumentsActivity extends ThemedActivity
     }
 
     @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.selectYearAction:
-                showSelectYearDialog();
-                return true;
-            case R.id.selectSubjectAction:
-                showSelectSubjectDialog();
-                return true;
-            default:
-                return false;
+    public boolean onMenuItemClick(final MenuItem menuItem) {
+        final int itemId = menuItem.getItemId();
+        if (itemId == R.id.selectYearAction) {
+            showSelectYearDialog();
+        } else if (itemId == R.id.selectSubjectAction) {
+            showSelectSubjectDialog();
+        } else {
+            return false;
         }
+        return true;
     }
 
 
@@ -239,13 +238,11 @@ public class DocumentsActivity extends ThemedActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case requestCodePermissionDialog:
-                if (lastDownloadDocument != null) {
-                    downloadDocument(lastDownloadDocument);
-                    lastDownloadDocument = null;
-                }
-                break;
+        if (requestCode == requestCodePermissionDialog) {
+            if (lastDownloadDocument != null) {
+                downloadDocument(lastDownloadDocument);
+                lastDownloadDocument = null;
+            }
         }
     }
 
