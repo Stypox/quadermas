@@ -1,0 +1,56 @@
+package com.stypox.mastercom_workbook.view.holder;
+
+import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.data.DocumentData;
+import com.stypox.mastercom_workbook.data.TimetableEventData;
+
+public class TimetableEventItemHolder extends ItemHolder<TimetableEventData> {
+
+    private final TextView subjectView;
+    private final TextView teacherView;
+    private final TextView beginTimeView;
+    private final TextView endTimeView;
+
+    public TimetableEventItemHolder(@NonNull final View itemView,
+                                    @Nullable final ItemArrayAdapter<TimetableEventData> adapter) {
+        super(itemView, adapter);
+
+        subjectView = itemView.findViewById(R.id.subject);
+        teacherView = itemView.findViewById(R.id.teacher);
+        beginTimeView = itemView.findViewById(R.id.beginTime);
+        endTimeView = itemView.findViewById(R.id.endTime);
+    }
+
+    @Override
+    public void updateItemData(final TimetableEventData data) {
+        subjectView.setText(data.getSubject());
+        teacherView.setText(data.getTeacher());
+
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+        beginTimeView.setText(timeFormat.format(data.getBegin()));
+        endTimeView.setText(timeFormat.format(data.getEnd()));
+    }
+
+    private static class Factory implements ItemHolderFactory<TimetableEventData> {
+        @Override
+        public TimetableEventItemHolder buildItemHolder(
+                @NonNull final View view,
+                @Nullable final ItemArrayAdapter<TimetableEventData> adapter) {
+            return new TimetableEventItemHolder(view, adapter);
+        }
+    }
+
+    private static final TimetableEventItemHolder.Factory factory
+            = new TimetableEventItemHolder.Factory();
+
+    public static TimetableEventItemHolder.Factory getFactory() {
+        return factory;
+    }
+}
