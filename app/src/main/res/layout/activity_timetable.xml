@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.TimetableActivity">
+
+    <include layout="@layout/app_bar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:gravity="center"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Monday, March 22, 2021" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/timetableEventList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_timetable_event" />
+
+        <TextView
+            android:id="@+id/timetableEmptyTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center"
+            android:text="@string/empty_timetable"
+            android:textSize="@dimen/size_item_title"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/timetableLoadingIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/timetableErrorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textColor="?attr/color_mark_failing"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/selectDayButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/error_could_not_load_timetable_events"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/previousDayButton"
+            android:layout_width="@dimen/timetable_button_size"
+            android:layout_height="@dimen/timetable_button_size"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/action_previous_day"
+            android:focusable="true"
+            android:padding="@dimen/timetable_button_padding"
+            app:layout_constraintBottom_toBottomOf="@+id/selectDayButton"
+            app:layout_constraintEnd_toStartOf="@+id/selectDayButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="?attr/ic_navigate_before" />
+
+        <ImageView
+            android:id="@+id/selectDayButton"
+            android:layout_width="@dimen/timetable_button_size"
+            android:layout_height="@dimen/timetable_button_size"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/action_select_day"
+            android:focusable="true"
+            android:padding="@dimen/timetable_button_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextDayButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/previousDayButton"
+            app:srcCompat="?attr/ic_insert_invitation" />
+
+        <ImageView
+            android:id="@+id/nextDayButton"
+            android:layout_width="@dimen/timetable_button_size"
+            android:layout_height="@dimen/timetable_button_size"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/action_next_day"
+            android:focusable="true"
+            android:padding="@dimen/timetable_button_padding"
+            app:layout_constraintBottom_toBottomOf="@+id/selectDayButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/selectDayButton"
+            app:srcCompat="?attr/ic_navigate_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

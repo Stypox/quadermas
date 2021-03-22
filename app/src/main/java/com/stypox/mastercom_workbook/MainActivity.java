@@ -31,6 +31,7 @@ import com.stypox.mastercom_workbook.view.DocumentsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
 import com.stypox.mastercom_workbook.view.SubjectActivity;
+import com.stypox.mastercom_workbook.view.TimetableActivity;
 import com.stypox.mastercom_workbook.view.TopicsActivity;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.SubjectItemHolder;
@@ -143,10 +144,8 @@ public class MainActivity extends ThemedActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case requestCodeLoginActivity:
-                reloadIfLoggedIn();
-                break;
+        if (requestCode == requestCodeLoginActivity) {
+            reloadIfLoggedIn();
         }
     }
 
@@ -298,25 +297,21 @@ public class MainActivity extends ThemedActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.loginAction:
-                openLoginActivityThenReload();
-                break;
-            case R.id.marksAction:
-                openActivityWithAllSubjects(this, MarksActivity.class);
-                break;
-            case R.id.topicsAction:
-                openActivityWithAllSubjects(this, TopicsActivity.class);
-                break;
-            case R.id.statisticsAction:
-                openActivityWithAllSubjects(this, StatisticsActivity.class);
-                break;
-            case R.id.documentsAction:
-                openActivity(this, DocumentsActivity.class);
-                break;
-            case R.id.settingsAction:
-                openActivity(this, SettingsActivity.class);
-                break;
+        final int itemId = item.getItemId();
+        if (itemId == R.id.marksAction) {
+            openActivityWithAllSubjects(this, MarksActivity.class);
+        } else if (itemId == R.id.statisticsAction) {
+            openActivityWithAllSubjects(this, StatisticsActivity.class);
+        } else if (itemId == R.id.topicsAction) {
+            openActivityWithAllSubjects(this, TopicsActivity.class);
+        } else if (itemId == R.id.documentsAction) {
+            openActivity(this, DocumentsActivity.class);
+        } else if (itemId == R.id.timetableAction) {
+            openActivity(this, TimetableActivity.class);
+        } else if (itemId == R.id.loginAction) {
+            openLoginActivityThenReload();
+        } else if (itemId == R.id.settingsAction) {
+            openActivity(this, SettingsActivity.class);
         }
 
         drawer.closeDrawer(GravityCompat.START);

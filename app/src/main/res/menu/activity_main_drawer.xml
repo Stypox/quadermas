@@ -24,6 +24,11 @@
             android:icon="?attr/ic_description"
             android:title="@string/menu_documents" />
 
+        <item
+            android:id="@+id/timetableAction"
+            android:icon="?attr/ic_access_time"
+            android:title="@string/menu_timetable" />
+
     </group>
 
     <item android:title="@string/menu_setup">
