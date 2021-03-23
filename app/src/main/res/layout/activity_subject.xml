@@ -33,290 +33,227 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:padding="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/constraintLayout">
-
-                    <FrameLayout
-                        android:id="@+id/marksButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:clickable="false"
-                            android:drawableTop="?attr/ic_storage"
-                            android:focusable="false"
-                            android:gravity="center"
-                            android:text="@string/action_details"
-                            android:textSize="@dimen/size_action" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/statisticsButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:clickable="false"
-                            android:drawableTop="?attr/ic_timeline"
-                            android:focusable="false"
-                            android:gravity="center"
-                            android:text="@string/action_statistics"
-                            android:textSize="@dimen/size_action" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/topicsButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:clickable="false"
-                            android:drawableTop="?attr/ic_assignment"
-                            android:focusable="false"
-                            android:gravity="center"
-                            android:text="@string/action_topics"
-                            android:textSize="@dimen/size_action" />
-                    </FrameLayout>
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+                <Button
+                    android:id="@+id/marksButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:drawableTop="?attr/ic_storage"
+                    android:focusable="true"
+                    android:paddingVertical="32dp"
+                    android:text="@string/action_details"
+                    android:textSize="@dimen/size_action"
+                    app:layout_constraintBottom_toTopOf="@id/marksAverageBarrier"
+                    app:layout_constraintEnd_toStartOf="@+id/statisticsButton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/statisticsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:drawableTop="?attr/ic_timeline"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingVertical="32dp"
+                    android:text="@string/action_statistics"
+                    android:textSize="@dimen/size_action"
+                    app:layout_constraintBottom_toTopOf="@id/marksAverageBarrier"
+                    app:layout_constraintEnd_toStartOf="@+id/topicsButton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/marksButton"
+                    tools:layout_editor_absoluteY="62dp" />
+
+                <Button
+                    android:id="@+id/topicsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:drawableTop="?attr/ic_assignment"
+                    android:focusable="true"
+                    android:paddingVertical="32dp"
+                    android:text="@string/action_topics"
+                    android:textSize="@dimen/size_action"
+                    app:layout_constraintBottom_toTopOf="@id/marksAverageBarrier"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/statisticsButton"
+                    tools:layout_editor_absoluteY="62dp" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/marksAverageBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="averageTitleTextView,averageTextView" />
+
+                <TextView
+                    android:id="@+id/averageTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/label_marks_average"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/size_section_header"
+                    app:layout_constraintBottom_toTopOf="@+id/termSpinner"
+                    app:layout_constraintEnd_toStartOf="@+id/averageTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/marksAverageBarrier" />
+
+                <Spinner
+                    android:id="@+id/termSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:entries="@array/entries_term_spinner"
+                    app:layout_constraintBottom_toTopOf="@+id/wantedMarkDivider"
+                    app:layout_constraintEnd_toStartOf="@+id/averageTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/termLabelTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/averageTitleTextView" />
+
+                <TextView
+                    android:id="@+id/termLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/label_term"
+                    app:layout_constraintBottom_toBottomOf="@+id/termSpinner"
+                    app:layout_constraintEnd_toStartOf="@+id/termSpinner"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/termSpinner" />
+
+                <TextView
+                    android:id="@+id/averageTextView"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="24dp"
-                    app:layout_constraintBottom_toTopOf="@id/divider3"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/size_mark_calculated"
+                    app:layout_constraintBottom_toTopOf="@+id/wantedMarkDivider"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/averageTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_marks_average"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="@dimen/size_section_header"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textView5">
-
-                            <Spinner
-                                android:id="@+id/termSpinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="36dp"
-                                android:entries="@array/entries_term_spinner"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:text="@string/label_term"
-                                app:layout_constraintBottom_toBottomOf="@id/termSpinner"
-                                app:layout_constraintEnd_toStartOf="@id/termSpinner"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="@id/termSpinner" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/averageTextView"
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/size_mark_calculated"
-                        android:gravity="center_horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="7.51"
-                        tools:textColor="?attr/color_mark_halfway"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/marksAverageBarrier"
+                    tools:text="7.51"
+                    tools:textColor="?attr/color_mark_halfway" />
 
                 <View
-                    android:id="@+id/divider3"
+                    android:id="@+id/wantedMarkDivider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="8dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintBottom_toTopOf="@id/constraintLayout10"
+                    app:layout_constraintBottom_toTopOf="@id/wantedMarkBarrier"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout10"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/wantedMarkBarrier"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="neededMarkTitleTextView,neededMarkTextView" />
+
+                <TextView
+                    android:id="@+id/neededMarkTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/label_wanted_mark"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/size_section_header"
+                    app:layout_constraintBottom_toTopOf="@id/aimMarkEdit"
+                    app:layout_constraintEnd_toStartOf="@+id/neededMarkTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/wantedMarkBarrier" />
+
+                <TextView
+                    android:id="@+id/aimMarkLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/label_aim_mark"
+                    app:layout_constraintBottom_toBottomOf="@+id/aimMarkEdit"
+                    app:layout_constraintEnd_toStartOf="@+id/aimMarkEdit"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/aimMarkEdit" />
+
+                <EditText
+                    android:id="@+id/aimMarkEdit"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintBottom_toTopOf="@+id/remainingTestsEdit"
+                    app:layout_constraintEnd_toStartOf="@+id/neededMarkTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/aimMarkLabelTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/neededMarkTitleTextView"
+                    tools:text="6" />
+
+                <TextView
+                    android:id="@+id/remainingTestsLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/label_remaining_tests"
+                    app:layout_constraintBottom_toBottomOf="@+id/remainingTestsEdit"
+                    app:layout_constraintEnd_toStartOf="@+id/remainingTestsEdit"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/remainingTestsEdit" />
+
+                <EditText
+                    android:id="@+id/remainingTestsEdit"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="16dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="@string/default_remaining_tests"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/neededMarkTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/remainingTestsLabelTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/aimMarkEdit" />
+
+                <TextView
+                    android:id="@+id/neededMarkTextView"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginBottom="32dp"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/size_mark_calculated"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/neededMarkTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_wanted_mark"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="@dimen/size_section_header"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/constraintLayout3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/textView9">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:text="@string/label_aim_mark"
-                                app:layout_constraintBottom_toBottomOf="@id/aimMarkEdit"
-                                app:layout_constraintEnd_toStartOf="@id/aimMarkEdit"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="@id/aimMarkEdit" />
-
-                            <EditText
-                                android:id="@+id/aimMarkEdit"
-                                android:layout_width="60dp"
-                                android:layout_height="45dp"
-                                android:ems="10"
-                                android:inputType="numberDecimal"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.0"
-                                tools:text="6" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/constraintLayout3">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:text="@string/label_remaining_tests"
-                                app:layout_constraintBottom_toBottomOf="@id/remainingTestsEdit"
-                                app:layout_constraintEnd_toStartOf="@id/remainingTestsEdit"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="@id/remainingTestsEdit" />
-
-                            <EditText
-                                android:id="@+id/remainingTestsEdit"
-                                android:layout_width="60dp"
-                                android:layout_height="45dp"
-                                android:ems="10"
-                                android:inputType="number"
-                                android:text="@string/default_remaining_tests"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.0" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/neededMarkTextView"
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="?android:textColorPrimary"
-                        android:textSize="@dimen/size_mark_calculated"
-                        android:gravity="center_horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="7.5"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toTopOf="@id/wantedMarkBarrier"
+                    tools:text="7.5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
