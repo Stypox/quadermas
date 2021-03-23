@@ -1,5 +1,5 @@
 # Mastercom Workbook client
-[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "Workbook" (in italian "Quaderno Elettronico") made for students to access marks, timetables, files... This app is an Android client that wraps around the website and is (currently only) able to show marks, subjects and documents. It is lightweight and uses Material Design.
+[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "Workbook" (in italian "Quaderno Elettronico") made for students to access marks, timetables, files... This app is an Android client that wraps around the website and is able to show subjects, marks, topics, documents and timetables. It is lightweight and uses Material Design.
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
@@ -36,4 +36,4 @@
 - Download a document by just tapping on it: an Android notification will show up. When the download has finished the notification can be clicked to view the downloaded document.
 
 ## Timetable
-- See the timetable for specific days.
+- See the timetable for a particular day, selectable with dedicated buttons.
