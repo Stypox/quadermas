@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/menu_settings">
 
     <ListPreference
-        android:key="@string/key_theme"
-        android:title="@string/settings_theme"
-        android:summary="@string/settings_theme_summary"
-        android:icon="?attr/ic_palette"
+        android:defaultValue="@string/value_theme_light"
         android:entries="@array/settings_theme_entries"
-        android:entryValues="@array/values_theme"/>
+        android:entryValues="@array/values_theme"
+        android:icon="?attr/ic_palette"
+        android:key="@string/key_theme"
+        android:summary="@string/settings_theme_summary"
+        android:title="@string/settings_theme" />
 
     <Preference
+        android:icon="?attr/ic_code"
         android:key="@string/key_source_code"
-        android:title="@string/settings_source_code"
         android:summary="@string/settings_source_code_summary"
-        android:icon="?attr/ic_code"/>
+        android:title="@string/settings_source_code" />
 
     <Preference
+        android:icon="?attr/ic_bug_report"
         android:key="@string/key_report_bug"
-        android:title="@string/settings_report_bug"
         android:summary="@string/settings_report_bug_summary"
-        android:icon="?attr/ic_bug_report"/>
+        android:title="@string/settings_report_bug" />
 </PreferenceScreen>
