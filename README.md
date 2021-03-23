@@ -24,3 +24,6 @@
 ## Documents
 - Find the documents you need thanks to filters (by year and by subject).
 - Download a document by just tapping on it: an Android notification will show up. When the download has finished the notification can be clicked to view the downloaded document.
+
+## Timetable
+- See the timetable for specific days.
