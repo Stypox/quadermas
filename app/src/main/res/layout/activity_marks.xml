@@ -9,16 +9,10 @@
 
     <include layout="@layout/app_bar" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/marksList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".view.MarksActivity">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/marksList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_mark_detail"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        tools:listitem="@layout/item_mark_detail"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
