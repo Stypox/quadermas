@@ -22,4 +22,10 @@
         android:key="@string/key_report_bug"
         android:summary="@string/settings_report_bug_summary"
         android:title="@string/settings_report_bug" />
+
+    <Preference
+        android:icon="?attr/ic_update"
+        android:key="@string/key_changelog"
+        android:summary="@string/settings_changelog_summary"
+        android:title="@string/settings_changelog" />
 </PreferenceScreen>

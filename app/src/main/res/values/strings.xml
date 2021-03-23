@@ -2,6 +2,7 @@
     <string name="key_source_code" translatable="false">source_code</string>
     <string name="key_report_bug" translatable="false">report_bug</string>
     <string name="key_theme" translatable="false">theme</string>
+    <string name="key_changelog" translatable="false">changelog</string>
     <string name="value_theme_dark" translatable="false">dark</string>
     <string name="value_theme_light" translatable="false">light</string>
     <string name="value_theme_black" translatable="false">black</string>
@@ -30,6 +31,9 @@
     <string name="settings_report_bug">Report bug or request feature</string>
     <string name="settings_report_bug_summary">Have you found something to improve?</string>
     <string name="settings_report_bug_url" translatable="false">https://github.com/Stypox/mastercom-workbook/issues</string>
+    <string name="settings_changelog">Version %1$s (%2$d)</string>
+    <string name="settings_changelog_summary">Read the changelog and check for updates</string>
+    <string name="settings_changelog_url" translatable="false">https://github.com/Stypox/mastercom-workbook/releases</string>
 
     <string name="activity_title_statistics">Mark statistics</string>
     <string name="activity_title_marks">Mark details</string>
