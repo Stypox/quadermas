@@ -1,1 +1,1 @@
-Visualizza voti scolastici, documenti e argomenti
+Visualizza voti scolastici, documenti, argomenti, orario
