@@ -65,8 +65,7 @@
                     app:layout_constraintBottom_toTopOf="@id/marksAverageBarrier"
                     app:layout_constraintEnd_toStartOf="@+id/topicsButton"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/marksButton"
-                    tools:layout_editor_absoluteY="62dp" />
+                    app:layout_constraintStart_toEndOf="@+id/marksButton" />
 
                 <Button
                     android:id="@+id/topicsButton"
@@ -82,8 +81,7 @@
                     app:layout_constraintBottom_toTopOf="@id/marksAverageBarrier"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/statisticsButton"
-                    tools:layout_editor_absoluteY="62dp" />
+                    app:layout_constraintStart_toEndOf="@+id/statisticsButton" />
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/marksAverageBarrier"
