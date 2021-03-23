@@ -13,6 +13,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:textAlignment="center"
         android:textSize="@dimen/size_mark_detail"
+        app:layout_constraintBottom_toTopOf="@+id/type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="5+"
@@ -39,7 +40,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:ellipsize="middle"
         android:gravity="center_horizontal"
+        android:singleLine="true"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/size_item_title"
         app:layout_constraintBottom_toTopOf="@+id/description"
@@ -61,7 +64,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/value"
         app:layout_constraintTop_toBottomOf="@+id/subject"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua" />
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua " />
 
     <TextView
         android:id="@+id/subtitle"
