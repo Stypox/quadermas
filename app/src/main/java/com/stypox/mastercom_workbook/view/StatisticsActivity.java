@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -79,14 +80,7 @@ public class StatisticsActivity extends ThemedActivity {
         if (marks.isEmpty()) {
             throw new IllegalArgumentException("Cannot create a StatisticsActivity with 0 marks");
         } else if (subjects.size() == 1) {
-            ConstraintLayout overallAverageLayout = findViewById(R.id.overallAverageLayout);
-            TextView overallAverageModeTextView = findViewById(R.id.overallAverageModeTextView);
-            View overallAverageDivider = findViewById(R.id.overallAverageDivider);
-
-            overallAverageLayout.setVisibility(View.GONE);
-            overallAverageModeTextView.setVisibility(View.GONE);
-            overallAverageModeSpinner.setVisibility(View.GONE);
-            overallAverageDivider.setVisibility(View.GONE);
+            ((Group) findViewById(R.id.overallAverageGroup)).setVisibility(View.GONE);
             actionBar.setSubtitle(subjects.get(0).getName());
         } else {
             overallAverageTermSpinner.setSelection(DateUtils.getTerm(marks.get(0).getDate()), false);
