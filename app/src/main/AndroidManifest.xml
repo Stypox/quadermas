@@ -33,7 +33,8 @@
         <activity android:name=".view.TopicsActivity" />
         <activity android:name=".view.DocumentsActivity" />
         <activity android:name=".view.TimetableActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".settings.SettingsActivity" />
     </application>
 </manifest>
