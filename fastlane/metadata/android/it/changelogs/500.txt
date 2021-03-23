@@ -1,0 +1,12 @@
+Novità:
+- Aggiunta la possibilità di vedere l'orario per un giorno, sceglibile con i bottoni dedicati
+- Aggiunta un'impostazione per vedere il changelog
+
+Miglioramenti:
+- Migliorate le prestazioni di rendering togliendo gli elementi annidati
+- Il rosso dei voti brutti è ora più chiaro
+- Date e ore sono ora formattate secondo il locale dell'utente
+- L'icona dei documenti è ora più distinguibile
+
+Problemi sistemati:
+- Sistemate crash casuali quando vengono aperte varie attività velocemente

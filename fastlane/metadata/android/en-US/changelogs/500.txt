@@ -1,0 +1,12 @@
+Features:
+- Add activity displaying the timetable for a particular day, selectable with dedicated buttons
+- Add a setting that opens the changelog page
+
+Improvements:
+- Improve rendering performance by removing nested views
+- Make the red used for bad marks a little bit lighter
+- Format dates and times according to the user's locale
+- Use a more unique icon for documents
+
+Bugs fixed:
+- Fix random crashes when switching fast between multiple activities
