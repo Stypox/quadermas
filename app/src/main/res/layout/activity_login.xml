@@ -35,6 +35,9 @@
             android:ems="10"
             android:inputType="text"
             apiurledit:entries="@array/API_urls"
+            apiurledit:layout_constraintBottom_toTopOf="@+id/APIUrlDivider"
+            apiurledit:layout_constraintHorizontal_bias="0.5"
+            apiurledit:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/APIUrlLabel"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,8 +46,11 @@
             android:id="@+id/APIUrlDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:background="?android:attr/listDivider"
+            apiurledit:layout_constraintBottom_toTopOf="@+id/userEdit"
+            apiurledit:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/APIUrlEdit" />
@@ -70,10 +76,11 @@
             android:ems="10"
             android:hint="@string/login_user_hint"
             android:inputType="number"
+            apiurledit:layout_constraintBottom_toTopOf="@+id/passwordEdit"
+            apiurledit:layout_constraintTop_toBottomOf="@+id/APIUrlDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/userLabel"
-            app:layout_constraintTop_toBottomOf="@id/APIUrlDivider" />
+            app:layout_constraintStart_toEndOf="@+id/userLabel" />
 
         <TextView
             android:id="@+id/passwordLabel"
@@ -95,6 +102,7 @@
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textPassword"
+            apiurledit:layout_constraintBottom_toTopOf="@+id/userPasswordDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/passwordLabel"
@@ -107,6 +115,8 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/listDivider"
+            apiurledit:layout_constraintBottom_toTopOf="@+id/loginButton"
+            apiurledit:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordEdit" />
@@ -117,8 +127,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/login_login"
+            apiurledit:layout_constraintBottom_toBottomOf="parent"
+            apiurledit:layout_constraintHorizontal_bias="0.5"
+            apiurledit:layout_constraintTop_toBottomOf="@+id/userPasswordDivider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userPasswordDivider" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
