@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +62,10 @@ public class TimetableExtractor {
                     }
                 }
 
+                for (int i = beginDateIndex; i < endDateIndex; i = addDaysToDateIndex(i, 1)) {
+                    Collections.sort(Objects.requireNonNull(timetableDays.get(i)),
+                            (o1, o2) -> o1.getBegin().compareTo(o2.getBegin()));
+                }
                 return timetableDays;
             } catch (Throwable e) {
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
