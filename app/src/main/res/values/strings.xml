@@ -37,7 +37,7 @@
 
     <string name="activity_title_statistics">Mark statistics</string>
     <string name="activity_title_marks">Mark details</string>
-    <string name="activity_title_login">Log in to Mastercom Workbook</string>
+    <string name="activity_title_login">Login to Mastercom workbook</string>
 
     <string name="type_written">Written</string>
     <string name="type_oral">Oral</string>
@@ -71,10 +71,13 @@
     <string name="label_remaining_tests">Remaining tests:</string>
     <string name="default_remaining_tests" translatable="false">1</string>
 
+    <string name="login_API_url_explanation">Insert in the field above here the first piece of the url assigned to your school\'s Mastercom Workbook. For example, for <i>https://davinci-tn.registroelettronico.com</i> you should insert <b>davinci-tn</b></string>
     <string name="login_API_url">School:</string>
+    <string name="login_API_url_hint" translatable="false">davinci-tn</string>
     <string name="login_user">User:</string>
     <string name="login_user_hint" translatable="false">012345</string>
     <string name="login_password">Password:</string>
+    <string name="login_password_hint" translatable="false">••••••••</string>
     <string name="login_login">LOGIN</string>
 
     <string name="action_details">Details</string>

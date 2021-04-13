@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:apiurledit="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TopicsActivity">
-
-    <include layout="@layout/app_bar" />
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".view.TopicsActivity">
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/activity_title_login"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/APIUrlEdit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/APIUrlLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_API_url"
+            android:textColor="?android:textColorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/APIUrlEdit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/APIUrlEdit" />
@@ -30,17 +51,31 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:drawableEnd="?attr/ic_arrow_drop_down"
             android:drawableRight="?attr/ic_arrow_drop_down"
             android:ems="10"
+            android:hint="@string/login_API_url_hint"
+            android:importantForAutofill="no"
             android:inputType="text"
-            apiurledit:entries="@array/API_urls"
-            apiurledit:layout_constraintBottom_toTopOf="@+id/APIUrlDivider"
-            apiurledit:layout_constraintHorizontal_bias="0.5"
-            apiurledit:layout_constraintVertical_chainStyle="packed"
+            app:entries="@array/API_urls"
+            app:layout_constraintBottom_toTopOf="@+id/APIUrlExplanation"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/APIUrlLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/titleView" />
+
+        <TextView
+            android:id="@+id/APIUrlExplanation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/login_API_url_explanation"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/APIUrlDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/APIUrlEdit" />
 
         <View
             android:id="@+id/APIUrlDivider"
@@ -49,17 +84,18 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/listDivider"
-            apiurledit:layout_constraintBottom_toTopOf="@+id/userEdit"
-            apiurledit:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/userEdit"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/APIUrlEdit" />
+            app:layout_constraintTop_toBottomOf="@+id/APIUrlExplanation" />
 
         <TextView
             android:id="@+id/userLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_user"
+            android:textColor="?android:textColorPrimary"
             app:layout_constraintBottom_toBottomOf="@id/userEdit"
             app:layout_constraintEnd_toStartOf="@+id/userEdit"
             app:layout_constraintHorizontal_bias="0.5"
@@ -73,20 +109,22 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:autofillHints="username"
             android:ems="10"
             android:hint="@string/login_user_hint"
             android:inputType="number"
-            apiurledit:layout_constraintBottom_toTopOf="@+id/passwordEdit"
-            apiurledit:layout_constraintTop_toBottomOf="@+id/APIUrlDivider"
+            app:layout_constraintBottom_toTopOf="@+id/passwordEdit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/userLabel" />
+            app:layout_constraintStart_toEndOf="@+id/userLabel"
+            app:layout_constraintTop_toBottomOf="@+id/APIUrlDivider" />
 
         <TextView
             android:id="@+id/passwordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_password"
+            android:textColor="?android:textColorPrimary"
             app:layout_constraintBottom_toBottomOf="@id/passwordEdit"
             app:layout_constraintEnd_toStartOf="@+id/passwordEdit"
             app:layout_constraintHorizontal_bias="0.5"
@@ -100,9 +138,12 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:autofillHints="password"
             android:ems="10"
+            android:hint="@string/login_password_hint"
             android:inputType="textPassword"
-            apiurledit:layout_constraintBottom_toTopOf="@+id/userPasswordDivider"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/userPasswordDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/passwordLabel"
@@ -115,9 +156,9 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:background="?android:attr/listDivider"
-            apiurledit:layout_constraintBottom_toTopOf="@+id/loginButton"
-            apiurledit:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordEdit" />
 
@@ -127,10 +168,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/login_login"
-            apiurledit:layout_constraintBottom_toBottomOf="parent"
-            apiurledit:layout_constraintHorizontal_bias="0.5"
-            apiurledit:layout_constraintTop_toBottomOf="@+id/userPasswordDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userPasswordDivider" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</ScrollView>

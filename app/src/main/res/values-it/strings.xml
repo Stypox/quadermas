@@ -8,7 +8,7 @@
     <string name="action_sort_by_value">Ordina per valore</string>
     <string name="action_statistics">Statistiche</string>
     <string name="action_topics">Argomenti</string>
-    <string name="activity_title_login">Accedi al Quaderno Elettronico Mastercom</string>
+    <string name="activity_title_login">Accedi al quaderno elettronico Mastercom</string>
     <string name="activity_title_marks">Dettagli dei voti</string>
     <string name="activity_title_statistics">Statistiche dei voti</string>
     <string name="all_subjects">Tutte le materie</string>
@@ -26,6 +26,7 @@
     <string name="label_remaining_tests">Verifiche rimaste:</string>
     <string name="label_term">Quadrimestre:</string>
     <string name="label_wanted_mark">Voto desiderato</string>
+    <string name="login_API_url_explanation">Inserisci nel campo qui sopra la prima parte dell\'URL assegnato al quaderno elettronico Mastercom della tua scuola. Ad esempio, per <i>https://davinci-tn.registroelettronico.com</i> dovresti inserire <b>davinci-tn</b></string>
     <string name="login_API_url">Scuola:</string>
     <string name="login_login">ACCEDI</string>
     <string name="login_password">Password:</string>

@@ -5,9 +5,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 
@@ -22,13 +19,6 @@ public class LoginActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        final ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle(getString(R.string.activity_title_login));
-
 
         APIUrlEdit = findViewById(R.id.APIUrlEdit);
         userEdit = findViewById(R.id.userEdit);
