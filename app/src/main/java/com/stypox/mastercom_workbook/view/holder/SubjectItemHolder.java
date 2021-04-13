@@ -23,7 +23,8 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     private final TextView averageTextView;
 
     @SuppressLint("ClickableViewAccessibility")
-    public SubjectItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
+    public SubjectItemHolder(@NonNull final View itemView,
+                             @Nullable final ItemArrayAdapter<SubjectData> adapter) {
         super(itemView, adapter);
 
         nameView = itemView.findViewById(R.id.name);
@@ -35,7 +36,7 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
     }
 
     @Override
-    public void updateItemData(SubjectData data) {
+    public void updateItemData(final SubjectData data) {
         if (adapter != null) {
             itemView.setOnClickListener(v -> adapter.onItemClick(data));
         }
@@ -75,7 +76,9 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
 
     private static class Factory implements ItemHolderFactory<SubjectData> {
         @Override
-        public SubjectItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<SubjectData> adapter) {
+        public SubjectItemHolder buildItemHolder(
+                @NonNull final View itemView,
+                @Nullable final ItemArrayAdapter<SubjectData> adapter) {
             return new SubjectItemHolder(itemView, adapter);
         }
     }
