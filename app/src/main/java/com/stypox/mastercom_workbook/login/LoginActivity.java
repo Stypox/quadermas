@@ -1,12 +1,14 @@
 package com.stypox.mastercom_workbook.login;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.settings.SettingsActivity;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
+
+import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivity;
 
 public class LoginActivity extends ThemedActivity {
 
@@ -36,8 +38,9 @@ public class LoginActivity extends ThemedActivity {
             return false;
         });
 
-        final View loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(v -> completeLogin());
+        findViewById(R.id.settingsButton).setOnClickListener(
+                v -> openActivity(this, SettingsActivity.class));
+        findViewById(R.id.loginButton).setOnClickListener(v -> completeLogin());
     }
 
     @Override
