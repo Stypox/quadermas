@@ -1,8 +1,8 @@
 package com.stypox.mastercom_workbook.login;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
@@ -22,10 +22,10 @@ public class LoginActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle(getString(R.string.activity_title_login));
 
@@ -46,7 +46,7 @@ public class LoginActivity extends ThemedActivity {
             return false;
         });
 
-        Button loginButton = findViewById(R.id.loginButton);
+        final View loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> completeLogin());
     }
 
@@ -57,9 +57,9 @@ public class LoginActivity extends ThemedActivity {
 
 
     private void completeLogin() {
-        String APIUrl = APIUrlEdit.getText().toString();
-        String user = userEdit.getText().toString();
-        String password = passwordEdit.getText().toString();
+        final String APIUrl = APIUrlEdit.getText().toString();
+        final String user = userEdit.getText().toString();
+        final String password = passwordEdit.getText().toString();
 
         LoginData.setCredentials(this, APIUrl, user, password);
         finish();
