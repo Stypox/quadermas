@@ -23,15 +23,15 @@ public class SubjectData implements Serializable {
 
     @Nullable private List<TopicData> topics;
 
-    public SubjectData(JSONObject json) throws JSONException {
+    public SubjectData(final JSONObject json) throws JSONException {
         this.id = json.getString("id");
         this.name = JsonUtils.getUnescapedString(json, "nome");
     }
 
 
-    public void setMarks(@Nullable List<MarkData> marks) {
+    public void setMarks(@Nullable final List<MarkData> marks) {
         if (marks != null) {
-            for (MarkData mark : marks) {
+            for (final MarkData mark : marks) {
                 mark.setSubject(name);
             }
 
@@ -48,15 +48,15 @@ public class SubjectData implements Serializable {
         this.marks = marks;
     }
 
-    public void setMarkExtractionError(ExtractorError extractorError) {
+    public void setMarkExtractionError(final ExtractorError extractorError) {
         this.markExtractionError = extractorError;
         teacher = null;
         marks = null;
     }
 
-    public void setTopics(@Nullable List<TopicData> topics) {
+    public void setTopics(@Nullable final List<TopicData> topics) {
         if (topics != null) {
-            for (TopicData topic : topics) {
+            for (final TopicData topic : topics) {
                 topic.setSubject(name);
             }
         }
@@ -93,29 +93,39 @@ public class SubjectData implements Serializable {
     }
 
 
-    public float getAverage(int termToConsider) throws ArithmeticException {
+    public float getAverage(final int termToConsider) throws ArithmeticException {
+        if (marks == null) {
+            throw new ArithmeticException();
+        }
+
         float marksSum = 0;
         int numberOfMarks = 0;
 
-        for (MarkData mark : marks) {
+        for (final MarkData mark : marks) {
             if (DateUtils.getTerm(mark.getDate()) == termToConsider && mark.getValue().isNumber()) {
                 marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }
         }
 
-        if (numberOfMarks == 0)
+        if (numberOfMarks == 0) {
             throw new ArithmeticException();
+        }
 
         return marksSum / numberOfMarks;
     }
 
-    public float getNeededMark(float aimMark, int remainingTests) {
+    public float getNeededMark(final float aimMark, final int remainingTests)
+            throws ArithmeticException {
+        if (marks == null || remainingTests == 0) {
+            throw new ArithmeticException();
+        }
+
         float marksSum = 0;
         int numberOfMarks = 0;
 
         int currentTerm = DateUtils.currentTerm();
-        for (MarkData mark : marks) {
+        for (final MarkData mark : marks) {
             if (DateUtils.getTerm(mark.getDate()) == currentTerm && mark.getValue().isNumber()) {
                 marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
