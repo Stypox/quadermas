@@ -9,41 +9,45 @@ public class LoginData {
     private static final String passwordKey = "password";
     private static final String userKey = "user";
 
-    public static boolean isLoggedIn(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
+    public static boolean isLoggedIn(final Context context) {
+        final SharedPreferences sp = getSharedPreferences(context);
         return sp.getString(APIUrlKey, null) != null &&
                 sp.getString(userKey, null) != null &&
                 sp.getString(passwordKey, null) != null;
     }
 
-    public static String getAPIUrl(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(APIUrlKey, "");
+    public static String getAPIUrl(final Context context) {
+        return getSharedPreferences(context).getString(APIUrlKey, "");
     }
 
-    public static String getUser(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(userKey, "");
+    public static String getUser(final Context context) {
+        return getSharedPreferences(context).getString(userKey, "");
     }
 
-    public static String getPassword(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        return sp.getString(passwordKey, "");
+    public static String getPassword(final Context context) {
+        return getSharedPreferences(context).getString(passwordKey, "");
     }
 
-    public static void setCredentials(Context context, String APIUrl, String user, String password) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(APIUrlKey, APIUrl);
-        editor.putString(userKey, user);
-        editor.putString(passwordKey, password);
-        editor.apply();
+    public static void setCredentials(final Context context,
+                                      final String APIUrl,
+                                      final String user,
+                                      final String password) {
+
+        getSharedPreferences(context).edit()
+                .putString(APIUrlKey, APIUrl)
+                .putString(userKey, user)
+                .putString(passwordKey, password)
+                .apply();
     }
 
-    public static void logout(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove(passwordKey);
-        editor.apply();
+    public static void logout(final Context context) {
+        getSharedPreferences(context).edit()
+                .remove(passwordKey)
+                .apply();
+    }
+
+
+    private static SharedPreferences getSharedPreferences(final Context context) {
+        return context.getSharedPreferences(loginPreferenceKey, Context.MODE_PRIVATE);
     }
 }
