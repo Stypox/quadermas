@@ -1,6 +1,7 @@
 <resources>
-    <string name="key_second_term_start" translatable="false">second_term_start</string>
     <string name="key_theme" translatable="false">theme</string>
+    <string name="key_second_term_start" translatable="false">second_term_start</string>
+    <string name="key_load_marks_directly" translatable="false">load_marks_directly</string>
     <string name="key_source_code" translatable="false">source_code</string>
     <string name="key_report_bug" translatable="false">report_bug</string>
     <string name="key_changelog" translatable="false">changelog</string>
@@ -11,6 +12,8 @@
     <string name="app_name">Mastercom Workbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="welcome_message">Welcome to Mastercom workbook</string>
+    <string name="welcome_load_marks">Load marks</string>
 
     <string name="menu_logout">Logout</string>
     <string name="menu_marks">Marks</string>
@@ -28,6 +31,9 @@
     <string name="settings_theme_black">Black</string>
     <string name="settings_second_term_start">Start date of second term</string>
     <string name="settings_second_term_start_summary">Used to determine which marks belong to the first term and which to the second - %1$02d/%2$02d</string>
+    <string name="settings_load_marks_directly">Load marks directly</string>
+    <string name="settings_load_marks_directly_summary">If enabled the app loads marks right after it is opened, otherwise it shows a welcome screen</string>
+    <string name="settings_about">About</string>
     <string name="settings_source_code">View source code</string>
     <string name="settings_source_code_summary">This app is free and open source!</string>
     <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/mastercom-workbook</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/menu_settings">
 
     <ListPreference
@@ -17,21 +18,30 @@
         android:summary="@string/settings_second_term_start_summary"
         android:title="@string/settings_second_term_start" />
 
-    <Preference
-        android:icon="?attr/ic_code"
-        android:key="@string/key_source_code"
-        android:summary="@string/settings_source_code_summary"
-        android:title="@string/settings_source_code" />
+    <SwitchPreference
+        android:icon="?attr/ic_storage"
+        android:defaultValue="true"
+        android:key="@string/key_load_marks_directly"
+        android:summary="@string/settings_load_marks_directly_summary"
+        android:title="@string/settings_load_marks_directly" />
 
-    <Preference
-        android:icon="?attr/ic_bug_report"
-        android:key="@string/key_report_bug"
-        android:summary="@string/settings_report_bug_summary"
-        android:title="@string/settings_report_bug" />
+    <PreferenceCategory android:title="@string/settings_about">
+        <Preference
+            android:icon="?attr/ic_code"
+            android:key="@string/key_source_code"
+            android:summary="@string/settings_source_code_summary"
+            android:title="@string/settings_source_code" />
 
-    <Preference
-        android:icon="?attr/ic_update"
-        android:key="@string/key_changelog"
-        android:summary="@string/settings_changelog_summary"
-        android:title="@string/settings_changelog" />
+        <Preference
+            android:icon="?attr/ic_bug_report"
+            android:key="@string/key_report_bug"
+            android:summary="@string/settings_report_bug_summary"
+            android:title="@string/settings_report_bug" />
+
+        <Preference
+            android:icon="?attr/ic_update"
+            android:key="@string/key_changelog"
+            android:summary="@string/settings_changelog_summary"
+            android:title="@string/settings_changelog" />
+    </PreferenceCategory>
 </PreferenceScreen>

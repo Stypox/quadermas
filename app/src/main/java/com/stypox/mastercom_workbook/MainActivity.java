@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -54,6 +56,9 @@ public class MainActivity extends ThemedActivity
 
     private CompositeDisposable disposables;
 
+    private View welcomeMessageLayout;
+    private Button loadMarksButton;
+
     private SwipeRefreshLayout refreshLayout;
     private ItemArrayAdapter<SubjectData> subjectsArrayAdapter;
 
@@ -80,6 +85,9 @@ public class MainActivity extends ThemedActivity
         setSupportActionBar(toolbar);
 
         disposables = new CompositeDisposable();
+
+        welcomeMessageLayout = findViewById(R.id.welcomeMessageLayout);
+        loadMarksButton = findViewById(R.id.loadMarksButton);
 
         refreshLayout = findViewById(R.id.refreshLayout);
         drawer = findViewById(R.id.drawer_layout);
@@ -108,7 +116,20 @@ public class MainActivity extends ThemedActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        reloadIfLoggedIn();
+
+        if (PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
+            // start loading marks directly
+            reloadIfLoggedIn();
+        } else {
+            refreshLayout.setVisibility(View.GONE);
+            welcomeMessageLayout.setVisibility(View.VISIBLE);
+            loadMarksButton.setOnClickListener(v -> {
+                refreshLayout.setVisibility(View.VISIBLE);
+                welcomeMessageLayout.setVisibility(View.GONE);
+                reloadIfLoggedIn();
+            });
+        }
     }
 
     @Override

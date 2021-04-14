@@ -41,6 +41,8 @@
     <string name="menu_statistics">Statistiche</string>
     <string name="navigation_drawer_close">Chiudi il navigation drawer</string>
     <string name="navigation_drawer_open">Apri il navigation drawer</string>
+    <string name="welcome_message">Benvenuto nel quaderno elettronico Mastercom</string>
+    <string name="welcome_load_marks">Carica i voti</string>
     <string name="label_overall_average_mode">Mostra la media di:</string>
     <string name="label_overall_average">Media generale</string>
     <string name="retry">Riprova</string>
@@ -63,6 +65,9 @@
     <string name="settings_theme_black">Nero</string>
     <string name="settings_second_term_start">Data di inizio del secondo quadrimestre</string>
     <string name="settings_second_term_start_summary">Usata per determinare quali voti siano del primo quadrimestre e quali del secondo - %1$02d/%2$02d</string>
+    <string name="settings_load_marks_directly">Carica direttamente i voti</string>
+    <string name="settings_load_marks_directly_summary">Se attivo l\'app carica i voti appena viene aperta, altrimenti mostra una schermata di benvenuto</string>
+    <string name="settings_about">Informazioni</string>
     <string name="error_could_not_load_a_topic">Un argomento della materia %1$s non può essere caricato</string>
     <string name="label_topic_description">Descrizione</string>
     <string name="label_topic_assignment">Compiti</string>
