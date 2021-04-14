@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 
@@ -42,6 +42,9 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
         }
         nameView.setText(data.getName());
 
+        averageTextView.setAlpha(1.0f); // set to 1.0, changed only if average is from another term
+        averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
+
         if (data.getMarks() == null) {
             if (data.getMarkExtractionError() == null) {
                 // marks not yet extracted
@@ -51,24 +54,42 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
                 // error while extracting marks
                 teacherTextView.setText(data.getMarkExtractionError().getMessage(context));
                 averageTextView.setText("X");
-                averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
             }
 
         } else if (data.getMarks().isEmpty()) {
             teacherTextView.setText(context.getString(R.string.error_no_marks));
             averageTextView.setText("?");
-            averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
 
         } else {
             teacherTextView.setText(data.getTeacher());
 
+            final SecondTermStart secondTermStart = SecondTermStart.fromPreferences(context);
+            final int currentTerm = secondTermStart.currentTerm();
+
+            float average = -1;
+            boolean averageIsFromCurrentTerm = true;
             try {
-                float average = data.getAverage(DateUtils.getTerm(data.getMarks().get(0).getDate())); // current average
+                average = data.getAverage(secondTermStart, currentTerm); // average of current term
+
+            } catch (final ArithmeticException e) {
+                // current term has no marks
+                try {
+                    // if currentTerm is the second term, then currentTerm-1 is the first
+                    average = data.getAverage(secondTermStart, currentTerm - 1);
+                    averageIsFromCurrentTerm = false;
+                } catch (final ArithmeticException e1) {
+                    // handled below
+                }
+            }
+
+            if (average < 0) {
+                averageTextView.setText("-");
+            } else {
                 averageTextView.setText(MarkFormatting.floatToString(average, 2));
                 averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
-            } catch (ArithmeticException e) {
-                averageTextView.setText("-");
-                averageTextView.setTextColor(resolveColor(context, R.attr.color_mark_not_classified));
+                if (!averageIsFromCurrentTerm) {
+                    averageTextView.setAlpha(0.5f);
+                }
             }
         }
     }

@@ -1,7 +1,8 @@
 <resources>
+    <string name="key_second_term_start" translatable="false">second_term_start</string>
+    <string name="key_theme" translatable="false">theme</string>
     <string name="key_source_code" translatable="false">source_code</string>
     <string name="key_report_bug" translatable="false">report_bug</string>
-    <string name="key_theme" translatable="false">theme</string>
     <string name="key_changelog" translatable="false">changelog</string>
     <string name="value_theme_dark" translatable="false">dark</string>
     <string name="value_theme_light" translatable="false">light</string>
@@ -25,6 +26,8 @@
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_theme_black">Black</string>
+    <string name="settings_second_term_start">Start date of second term</string>
+    <string name="settings_second_term_start_summary">Used to determine which marks belong to the first term and which to the second - %1$02d/%2$02d</string>
     <string name="settings_source_code">View source code</string>
     <string name="settings_source_code_summary">This app is free and open source!</string>
     <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/mastercom-workbook</string>
@@ -111,4 +114,6 @@
 
     <string name="two_strings" translatable="false">%s  -  %s</string>
     <string name="three_strings" translatable="false">%s  -  %s  -  %s</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
 </resources>

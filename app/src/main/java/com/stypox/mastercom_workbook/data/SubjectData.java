@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.data;
 import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.JsonUtils;
 
@@ -93,7 +94,8 @@ public class SubjectData implements Serializable {
     }
 
 
-    public float getAverage(final int termToConsider) throws ArithmeticException {
+    public float getAverage(final SecondTermStart secondTermStart,
+                            final int termToConsider) throws ArithmeticException {
         if (marks == null) {
             throw new ArithmeticException();
         }
@@ -102,7 +104,8 @@ public class SubjectData implements Serializable {
         int numberOfMarks = 0;
 
         for (final MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == termToConsider && mark.getValue().isNumber()) {
+            if (mark.getValue().isNumber()
+                    && secondTermStart.getTerm(mark.getDate()) == termToConsider) {
                 marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }
@@ -115,8 +118,9 @@ public class SubjectData implements Serializable {
         return marksSum / numberOfMarks;
     }
 
-    public float getNeededMark(final float aimMark, final int remainingTests)
-            throws ArithmeticException {
+    public float getNeededMark(final SecondTermStart secondTermStart,
+                               final float aimMark,
+                               final int remainingTests) throws ArithmeticException {
         if (marks == null || remainingTests == 0) {
             throw new ArithmeticException();
         }
@@ -124,9 +128,10 @@ public class SubjectData implements Serializable {
         float marksSum = 0;
         int numberOfMarks = 0;
 
-        int currentTerm = DateUtils.currentTerm();
+        int currentTerm = secondTermStart.currentTerm();
         for (final MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == currentTerm && mark.getValue().isNumber()) {
+            if (mark.getValue().isNumber()
+                    && secondTermStart.getTerm(mark.getDate()) == currentTerm) {
                 marksSum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }

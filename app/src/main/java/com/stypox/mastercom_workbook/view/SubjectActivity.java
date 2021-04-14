@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
@@ -28,6 +28,8 @@ import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivityWi
 public class SubjectActivity extends ThemedActivity {
 
     private SubjectData subject;
+
+    private SecondTermStart secondTermStart;
 
     private Spinner termSpinner;
     private TextView averageView;
@@ -59,28 +61,30 @@ public class SubjectActivity extends ThemedActivity {
         actionBar.setTitle(subject.getName());
         actionBar.setSubtitle(subject.getTeacher());
 
+        secondTermStart = SecondTermStart.fromPreferences(this);
+
 
         termSpinner = findViewById(R.id.termSpinner);
         averageView = findViewById(R.id.averageTextView);
         aimMarkEdit = findViewById(R.id.aimMarkEdit);
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkView = findViewById(R.id.neededMarkTextView);
-        View marksButton = findViewById(R.id.marksButton);
-        View statisticsButton = findViewById(R.id.statisticsButton);
-        View topicsButton = findViewById(R.id.topicsButton);
 
-        marksButton.setOnClickListener((v) -> openActivityWithSubject(this, MarksActivity.class, subject));
-        statisticsButton.setOnClickListener((v) -> openActivityWithSubject(this, StatisticsActivity.class, subject));
-        topicsButton.setOnClickListener((v) -> openActivityWithSubject(this, TopicsActivity.class, subject));
-
-
-        int selectedTerm = DateUtils.getTerm(subject.getMarks().get(0).getDate());
+        final int selectedTerm = secondTermStart.getTerm(subject.getMarks().get(0).getDate());
         termSpinner.setSelection(selectedTerm, false);
         try {
-            aimMarkEdit.setText(String.valueOf(Math.max(6, (int)Math.ceil(subject.getAverage(selectedTerm)))));
-        } catch (ArithmeticException e) {
+            aimMarkEdit.setText(String.valueOf(Math.max(6,
+                    (int)Math.ceil(subject.getAverage(secondTermStart, selectedTerm)))));
+        } catch (final ArithmeticException e) {
             aimMarkEdit.setText(String.valueOf(6));
         }
+
+        findViewById(R.id.marksButton).setOnClickListener(
+                (v) -> openActivityWithSubject(this, MarksActivity.class, subject));
+        findViewById(R.id.statisticsButton).setOnClickListener(
+                (v) -> openActivityWithSubject(this, StatisticsActivity.class, subject));
+        findViewById(R.id.topicsButton).setOnClickListener(
+                (v) -> openActivityWithSubject(this, TopicsActivity.class, subject));
 
         updateAverage();
         updateNeededMark();
@@ -155,7 +159,8 @@ public class SubjectActivity extends ThemedActivity {
 
     private void updateAverage() throws ArithmeticException {
         try {
-            float average = subject.getAverage(termSpinner.getSelectedItemPosition());
+            final float average = subject.getAverage(secondTermStart,
+                    termSpinner.getSelectedItemPosition());
             averageView.setText(MarkFormatting.floatToString(average, 3));
             averageView.setTextColor(MarkFormatting.colorOf(this, average));
         } catch (Throwable e) {
@@ -165,7 +170,8 @@ public class SubjectActivity extends ThemedActivity {
 
     private void updateNeededMark() {
         try {
-            float neededMark = subject.getNeededMark(Float.parseFloat(aimMarkEdit.getText().toString()),
+            final float neededMark = subject.getNeededMark(secondTermStart,
+                    Float.parseFloat(aimMarkEdit.getText().toString()),
                     Integer.parseInt(remainingTestsEdit.getText().toString()));
             neededMarkView.setText(MarkFormatting.floatToString(neededMark, 3));
         } catch (Throwable e) {

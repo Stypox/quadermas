@@ -26,7 +26,7 @@ import com.stypox.mastercom_workbook.extractor.AuthenticationExtractor;
 import com.stypox.mastercom_workbook.extractor.DocumentExtractor;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
-import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.DocumentItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
@@ -285,7 +285,7 @@ public class DocumentsActivity extends ThemedActivity
         TreeSet<Integer> schoolYears = new TreeSet<>();
         for (DocumentData document : documents) {
             if (isSubjectInsideFilter(document)) {
-                schoolYears.add(DateUtils.schoolYear(document.getDate()));
+                schoolYears.add(SecondTermStart.schoolYear(document.getDate()));
             }
         }
 
@@ -343,7 +343,7 @@ public class DocumentsActivity extends ThemedActivity
 
     private boolean isYearInsideFilter(DocumentData document) {
         return  selectedYear == null ||
-                selectedYear == DateUtils.schoolYear(document.getDate());
+                selectedYear == SecondTermStart.schoolYear(document.getDate());
     }
 
     private boolean isSubjectInsideFilter(DocumentData document) {

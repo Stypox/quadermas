@@ -60,6 +60,8 @@
     <string name="settings_theme_light">Chiaro</string>
     <string name="settings_theme_dark">Scuro</string>
     <string name="settings_theme_black">Nero</string>
+    <string name="settings_second_term_start">Data di inizio del secondo quadrimestre</string>
+    <string name="settings_second_term_start_summary">Usata per determinare quali voti siano del primo quadrimestre e quali del secondo - %1$02d/%2$02d</string>
     <string name="error_could_not_load_a_topic">Un argomento della materia %1$s non può essere caricato</string>
     <string name="label_topic_description">Descrizione</string>
     <string name="label_topic_assignment">Compiti</string>
@@ -80,4 +82,6 @@
     <string name="error_could_not_load_timetable">L\'orario non può essere caricato</string>
     <string name="settings_changelog">Versione %1$s (%2$d)</string>
     <string name="settings_changelog_summary">Leggi il changelog e controlla se ci sono aggiornamenti</string>
+    <string name="day">Giorno</string>
+    <string name="month">Mese</string>
 </resources>

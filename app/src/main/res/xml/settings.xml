@@ -12,6 +12,12 @@
         android:title="@string/settings_theme" />
 
     <Preference
+        android:icon="?attr/ic_insert_invitation"
+        android:key="@string/key_second_term_start"
+        android:summary="@string/settings_second_term_start_summary"
+        android:title="@string/settings_second_term_start" />
+
+    <Preference
         android:icon="?attr/ic_code"
         android:key="@string/key_source_code"
         android:summary="@string/settings_source_code_summary"

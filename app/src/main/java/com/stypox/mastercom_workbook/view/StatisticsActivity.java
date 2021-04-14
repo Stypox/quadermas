@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -28,7 +26,7 @@ import com.github.mikephil.charting.utils.EntryXComparator;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.MarkData;
 import com.stypox.mastercom_workbook.data.SubjectData;
-import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.util.NavigationHelper;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
@@ -40,8 +38,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class StatisticsActivity extends ThemedActivity {
+
     private List<SubjectData> subjects;
     private List<MarkData> marks;
+
+    private SecondTermStart secondTermStart;
 
     private Spinner overallAverageTermSpinner;
     private Spinner overallAverageModeSpinner;
@@ -70,6 +71,8 @@ public class StatisticsActivity extends ThemedActivity {
         subjects = NavigationHelper.getSelectedSubjects(getIntent());
         buildMarksArray();
 
+        secondTermStart = SecondTermStart.fromPreferences(this);
+
 
         overallAverageTermSpinner = findViewById(R.id.overallAverageTermSpinner);
         overallAverageModeSpinner = findViewById(R.id.overallAverageModeSpinner);
@@ -80,10 +83,11 @@ public class StatisticsActivity extends ThemedActivity {
         if (marks.isEmpty()) {
             throw new IllegalArgumentException("Cannot create a StatisticsActivity with 0 marks");
         } else if (subjects.size() == 1) {
-            ((Group) findViewById(R.id.overallAverageGroup)).setVisibility(View.GONE);
+            findViewById(R.id.overallAverageGroup).setVisibility(View.GONE);
             actionBar.setSubtitle(subjects.get(0).getName());
         } else {
-            overallAverageTermSpinner.setSelection(DateUtils.getTerm(marks.get(0).getDate()), false);
+            overallAverageTermSpinner.setSelection(
+                    secondTermStart.getTerm(marks.get(0).getDate()), false);
         }
 
         setupListeners();
@@ -176,10 +180,10 @@ public class StatisticsActivity extends ThemedActivity {
             }
         });
 
-        int initialTerm = DateUtils.getTerm(marks.get(0).getDate());
+        int initialTerm = secondTermStart.getTerm(marks.get(0).getDate());
         int index = 0;
         for (MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) != initialTerm) {
+            if (secondTermStart.getTerm(mark.getDate()) != initialTerm) {
                 xAxis.setAxisMinimum(marks.get(index).getDate().getTime());
             }
             ++index;
@@ -253,7 +257,7 @@ public class StatisticsActivity extends ThemedActivity {
 
         for (SubjectData subject : subjects) {
             try {
-                sum += Math.round(subject.getAverage(term));
+                sum += Math.round(subject.getAverage(secondTermStart, term));
                 ++numberOfSubjects;
             } catch (ArithmeticException ignored) {}
         }
@@ -270,7 +274,7 @@ public class StatisticsActivity extends ThemedActivity {
 
         for (SubjectData subject : subjects) {
             try {
-                sum += subject.getAverage(term);
+                sum += subject.getAverage(secondTermStart, term);
                 ++numberOfSubjects;
             } catch (ArithmeticException ignored) {}
         }
@@ -281,12 +285,12 @@ public class StatisticsActivity extends ThemedActivity {
         return sum / numberOfSubjects;
     }
 
-    private float getOverallAverageOfMarks(int term) {
+    private float getOverallAverageOfMarks(final int term) {
         float sum = 0;
         int numberOfMarks = 0;
 
-        for (MarkData mark : marks) {
-            if (DateUtils.getTerm(mark.getDate()) == term && mark.getValue().isNumber()) {
+        for (final MarkData mark : marks) {
+            if (mark.getValue().isNumber() && secondTermStart.getTerm(mark.getDate()) == term) {
                 sum += mark.getValue().getNumber();
                 ++numberOfMarks;
             }

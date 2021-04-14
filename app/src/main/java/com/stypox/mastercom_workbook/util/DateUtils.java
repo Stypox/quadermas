@@ -5,34 +5,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtils {
-    private static final int endOfSchoolMonth = 7;
-
-    public static int getTerm(Date date) {
-        if (getCalendarField(date, Calendar.MONTH) > endOfSchoolMonth) {
-            return 0; // first term
-        } else {
-            return 1; // second term
-        }
-    }
-
-    public static int currentTerm() {
-        return getTerm(new Date());
-    }
-
-    /**
-     * Calculates the first year of the school year the date is in.
-     * For example, if the date is in the school year 2018/2019,
-     * the return value is 2018.
-     */
-    public static int schoolYear(final Date date) {
-        final int year = getCalendarField(date, Calendar.YEAR);
-        if (DateUtils.getTerm(date) == 1) {
-            return year - 1;
-        } else {
-            return year;
-        }
-    }
-
 
     public static Date buildDate(final int year, final int month, final int dayOfMonth) {
         return new GregorianCalendar(year, month, dayOfMonth).getTime();
