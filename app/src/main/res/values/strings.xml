@@ -75,7 +75,7 @@
     <string name="label_remaining_tests">Remaining tests:</string>
     <string name="default_remaining_tests" translatable="false">1</string>
 
-    <string name="login_API_url_explanation">Insert in the field above here the first piece of the url assigned to your school\'s Mastercom Workbook. For example, for <i>https://davinci-tn.registroelettronico.com</i> you should insert <b>davinci-tn</b></string>
+    <string name="login_API_url_explanation">Insert in the field above here the first piece of the url assigned to your school\'s Mastercom workbook. For example, for <i>https://davinci-tn.registroelettronico.com</i> you should insert <b>davinci-tn</b></string>
     <string name="login_API_url">School:</string>
     <string name="login_API_url_hint" translatable="false">davinci-tn</string>
     <string name="login_user">User:</string>
