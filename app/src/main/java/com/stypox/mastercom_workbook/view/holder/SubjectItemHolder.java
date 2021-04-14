@@ -83,12 +83,13 @@ public class SubjectItemHolder extends ItemHolder<SubjectData> {
             }
 
             if (average < 0) {
-                averageTextView.setText("-");
+                averageTextView.setText("-"); // should not be reachable
             } else {
                 averageTextView.setText(MarkFormatting.floatToString(average, 2));
                 averageTextView.setTextColor(MarkFormatting.colorOf(context, average));
                 if (!averageIsFromCurrentTerm) {
                     averageTextView.setAlpha(0.5f);
+                    teacherTextView.setText(R.string.error_no_marks_in_current_term);
                 }
             }
         }

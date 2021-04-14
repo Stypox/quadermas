@@ -18,6 +18,7 @@
     <string name="error_malformed_url">Url malformato</string>
     <string name="error_network">Errore di rete</string>
     <string name="error_no_marks">Nessun voto</string>
+    <string name="error_no_marks_in_current_term">Nessun voto nel quadrimestre corrente</string>
     <string name="error_not_json">La risposta non era JSON</string>
     <string name="error_unsuitable_json">JSON della risposta non valido</string>
     <string name="label_aim_mark">Voto obiettivo:</string>

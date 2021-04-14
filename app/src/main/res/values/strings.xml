@@ -61,6 +61,7 @@
     <string name="error_could_not_load_timetable">Could not load the timetable</string>
     <string name="error_could_not_load_timetable_events">Could not load some events in the timetable</string>
     <string name="error_no_marks">No marks</string>
+    <string name="error_no_marks_in_current_term">No marks in current term</string>
     <string name="error_unknown">Unknown error</string>
     <string name="retry">Retry</string>
 
