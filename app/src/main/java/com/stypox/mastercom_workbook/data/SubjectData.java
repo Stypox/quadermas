@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.settings.SecondTermStart;
-import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.JsonUtils;
 
 import org.json.JSONException;

@@ -5,6 +5,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.settings.SettingsActivity;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 
@@ -55,6 +56,11 @@ public class LoginActivity extends ThemedActivity {
         final String password = passwordEdit.getText().toString();
 
         LoginData.setCredentials(this, APIUrl, user, password);
+        final SecondTermStart secondTermStart = SecondTermStart.fromAPIUrl(APIUrl);
+        if (secondTermStart != null) {
+            secondTermStart.saveToPreferences(this); // change second term start based on API url
+        }
+
         finish();
     }
 }
