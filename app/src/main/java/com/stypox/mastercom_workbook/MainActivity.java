@@ -112,6 +112,12 @@ public class MainActivity extends ThemedActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        reloadIfLoggedIn(); // softly reload, the user could have changed some settings
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         disposables.dispose();
