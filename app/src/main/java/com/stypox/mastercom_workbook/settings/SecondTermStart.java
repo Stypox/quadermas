@@ -27,7 +27,7 @@ public class SecondTermStart {
 
     private static final Map<String, SecondTermStart> SECOND_TERM_START_FOR_API_URL_MAP
             = new HashMap<String, SecondTermStart>() {{
-        put("davinci-tn", new SecondTermStart(1, 1));
+        put("davinci-tn", new SecondTermStart(1, 14));
         put("galilei-tn", new SecondTermStart(1, 1));
         put("marconi-tn", new SecondTermStart(2, 1));
         put("rosmini-tn", new SecondTermStart(1, 1));
