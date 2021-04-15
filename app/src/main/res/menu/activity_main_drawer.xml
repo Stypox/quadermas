@@ -20,14 +20,15 @@
             android:enabled="false" />
 
         <item
+            android:id="@+id/timetableAction"
+            android:icon="?attr/ic_access_time"
+            android:title="@string/menu_timetable"
+            android:enabled="false" />
+
+        <item
             android:id="@+id/documentsAction"
             android:icon="?attr/ic_insert_drive_file"
             android:title="@string/menu_documents" />
-
-        <item
-            android:id="@+id/timetableAction"
-            android:icon="?attr/ic_access_time"
-            android:title="@string/menu_timetable" />
 
     </group>
 
