@@ -66,6 +66,8 @@ public class MainActivity extends ThemedActivity
     private MenuItem marksMenuItem;
     private MenuItem topicsMenuItem;
     private MenuItem statisticsMenuItem;
+    private MenuItem timetableMenuItem;
+
     private TextView fullNameView;
     private TextView fullAPIUrlView;
 
@@ -95,6 +97,7 @@ public class MainActivity extends ThemedActivity
         marksMenuItem = navigationView.getMenu().findItem(R.id.marksAction);
         statisticsMenuItem = navigationView.getMenu().findItem(R.id.statisticsAction);
         topicsMenuItem = navigationView.getMenu().findItem(R.id.topicsAction);
+        timetableMenuItem = navigationView.getMenu().findItem(R.id.timetableAction);
 
         View headerLayout = navigationView.getHeaderView(0);
         fullNameView = headerLayout.findViewById(R.id.navigationFullName);
@@ -116,20 +119,7 @@ public class MainActivity extends ThemedActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        if (PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
-            // start loading marks directly
-            reloadIfLoggedIn();
-        } else {
-            refreshLayout.setVisibility(View.GONE);
-            welcomeMessageLayout.setVisibility(View.VISIBLE);
-            loadMarksButton.setOnClickListener(v -> {
-                refreshLayout.setVisibility(View.VISIBLE);
-                welcomeMessageLayout.setVisibility(View.GONE);
-                reloadIfLoggedIn();
-            });
-        }
+        reloadIfLoggedIn();
     }
 
     @Override
@@ -177,9 +167,21 @@ public class MainActivity extends ThemedActivity
     }
 
     private void reloadSubjects(boolean reload) {
+        if (reload || PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
+            refreshLayout.setVisibility(View.VISIBLE);
+            welcomeMessageLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout.setVisibility(View.GONE);
+            welcomeMessageLayout.setVisibility(View.VISIBLE);
+            loadMarksButton.setVisibility(View.INVISIBLE);
+            loadMarksButton.setOnClickListener(null);
+        }
+
         marksMenuItem.setEnabled(false);
-        topicsMenuItem.setEnabled(false);
         statisticsMenuItem.setEnabled(false);
+        topicsMenuItem.setEnabled(false);
+        timetableMenuItem.setEnabled(false);
         refreshLayout.setRefreshing(true);
 
         disposables.clear();
@@ -230,7 +232,7 @@ public class MainActivity extends ThemedActivity
                                 openLoginActivityThenReload();
                             } else {
                                 Snackbar.make(findViewById(android.R.id.content), error.getMessage(this), Snackbar.LENGTH_LONG)
-                                        .setAction(getString(R.string.retry), v -> reloadSubjects(false))
+                                        .setAction(getString(R.string.retry), v -> reloadSubjects(true))
                                         .show();
                             }
                             refreshLayout.setRefreshing(false);
@@ -238,13 +240,26 @@ public class MainActivity extends ThemedActivity
     }
 
     private void onAuthenticationCompleted(String fullName, boolean reload) {
+        timetableMenuItem.setEnabled(true);
         fullNameView.setText(fullName);
 
-        fetchSubjects(reload);
+        if (reload || PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
+            // start loading marks directly
+            fetchSubjects(reload);
+        } else {
+            refreshLayout.setVisibility(View.GONE);
+            welcomeMessageLayout.setVisibility(View.VISIBLE);
+            loadMarksButton.setVisibility(View.VISIBLE);
+            loadMarksButton.setOnClickListener(v -> fetchSubjects(reload));
+        }
     }
 
 
     private void fetchSubjects(boolean reload) {
+        refreshLayout.setVisibility(View.VISIBLE);
+        welcomeMessageLayout.setVisibility(View.GONE);
+
         numSubjectsExtracted = 0;
         // never force reload subjects, as they usually do not change
         Extractor.extractSubjects(false, disposables, new Extractor.DataHandler<List<SubjectData>>() {
