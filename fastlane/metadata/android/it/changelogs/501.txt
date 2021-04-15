@@ -1,0 +1,8 @@
+Novità:
+- Aggiunta un'impostazione per non caricare direttamente i voti all'avvio dell'app ma mostrare una schemata di benvenuto al loro posto
+- Aggiunta la possibilità di modificare la data di inizio del secondo quadrimestre
+
+Miglioramenti:
+- Gli eventi nell'orario sono ora sicuramente ordinati
+- Migliorato il design della schermata di login
+- Un avviso è ora mostrato quando la media di una materia nella schermata principale non è del quadrimestre corrente

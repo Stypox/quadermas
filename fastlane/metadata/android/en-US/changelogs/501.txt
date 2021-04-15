@@ -1,0 +1,8 @@
+Features:
+- Add a setting to allow disabling loading marks directly upon opening the app and instead showing a welcome screen
+- Allow customizing the start date of the second term
+
+Improvements:
+- Make sure timetable is sorted by time
+- Redesign login screen
+- Show a notice when the average for a subject in the main screen is not from the current term
