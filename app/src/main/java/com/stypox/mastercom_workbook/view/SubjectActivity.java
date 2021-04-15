@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.SubjectData;
+import com.stypox.mastercom_workbook.settings.NeededMark;
 import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.MarkFormatting;
 import com.stypox.mastercom_workbook.util.NavigationHelper;
@@ -70,21 +72,15 @@ public class SubjectActivity extends ThemedActivity {
         remainingTestsEdit = findViewById(R.id.remainingTestsEdit);
         neededMarkView = findViewById(R.id.neededMarkTextView);
 
-        final int selectedTerm = secondTermStart.getTerm(subject.getMarks().get(0).getDate());
-        termSpinner.setSelection(selectedTerm, false);
-        try {
-            aimMarkEdit.setText(String.valueOf(Math.max(6,
-                    (int)Math.ceil(subject.getAverage(secondTermStart, selectedTerm)))));
-        } catch (final ArithmeticException e) {
-            aimMarkEdit.setText(String.valueOf(6));
-        }
-
         findViewById(R.id.marksButton).setOnClickListener(
                 (v) -> openActivityWithSubject(this, MarksActivity.class, subject));
         findViewById(R.id.statisticsButton).setOnClickListener(
                 (v) -> openActivityWithSubject(this, StatisticsActivity.class, subject));
         findViewById(R.id.topicsButton).setOnClickListener(
                 (v) -> openActivityWithSubject(this, TopicsActivity.class, subject));
+
+        aimMarkEdit.setText(NeededMark.aimMarkForSubject(this, subject));
+        remainingTestsEdit.setText(NeededMark.remainingTestsForSubject(this, subject));
 
         updateAverage();
         updateNeededMark();
@@ -132,6 +128,11 @@ public class SubjectActivity extends ThemedActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 updateNeededMark();
+
+                if (!TextUtils.isEmpty(aimMarkEdit.getText())) {
+                    NeededMark.saveAimMarkForSubject(SubjectActivity.this, subject,
+                            aimMarkEdit.getText().toString());
+                }
             }
         });
 
@@ -147,6 +148,11 @@ public class SubjectActivity extends ThemedActivity {
                     s.clear();
                 }
                 updateNeededMark();
+
+                if (!TextUtils.isEmpty(remainingTestsEdit.getText())) {
+                    NeededMark.saveRemainingTestsForSubject(SubjectActivity.this, subject,
+                            remainingTestsEdit.getText().toString());
+                }
             }
         });
     }
