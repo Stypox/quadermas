@@ -1,0 +1,5 @@
+Improvements:
+- Store the wanted mark parameters (aim mark and remaining tests) for each subject and restore them
+
+Bugs fixed:
+- Fix second term start date for `davinci-tn` school

@@ -1,0 +1,5 @@
+Miglioramenti:
+- Ora i parametri per il voto desiderato (voto obiettivo e verifiche rimaste) vengono salvati per ogni materia e poi ripristinati
+
+Problemi sistemati:
+- La data di inizio del secondo quadrimestre per la scuola `davinci-tn` è ora corretta
