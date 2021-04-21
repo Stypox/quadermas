@@ -79,6 +79,7 @@ public class SubjectActivity extends ThemedActivity {
         findViewById(R.id.topicsButton).setOnClickListener(
                 (v) -> openActivityWithSubject(this, TopicsActivity.class, subject));
 
+        termSpinner.setSelection(secondTermStart.currentTerm());
         aimMarkEdit.setText(NeededMark.aimMarkForSubject(this, subject));
         remainingTestsEdit.setText(NeededMark.remainingTestsForSubject(this, subject));
 
