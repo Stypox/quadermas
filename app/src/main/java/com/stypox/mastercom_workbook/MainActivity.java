@@ -241,6 +241,7 @@ public class MainActivity extends ThemedActivity
 
     private void onAuthenticationCompleted(String fullName, boolean reload) {
         timetableMenuItem.setEnabled(true);
+        topicsMenuItem.setEnabled(true);
         fullNameView.setText(fullName);
 
         if (reload || PreferenceManager.getDefaultSharedPreferences(this)

@@ -64,26 +64,47 @@ public class TopicsActivity extends ThemedActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_topics));
 
-        subjects = NavigationHelper.getSelectedSubjects(getIntent());
-        if (subjects.size() == 1) {
-            actionBar.setSubtitle(subjects.get(0).getName());
-        }
-
-
         disposables = new CompositeDisposable();
         filteredTopics = new ArrayList<>();
 
         refreshLayout = findViewById(R.id.refreshLayout);
-        RecyclerView topicsList = findViewById(R.id.topicsList);
+        final RecyclerView topicsList = findViewById(R.id.topicsList);
 
         topicsList.setLayoutManager(new LinearLayoutManager(this));
         topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, filteredTopics,
-                subjects.size() == 1 ? TopicItemHolder.getFactory() : SubjectTopicItemHolder.getFactory());
+                NavigationHelper.isSelectedSubjectsAll(getIntent())
+                        ? SubjectTopicItemHolder.getFactory()
+                        : TopicItemHolder.getFactory());
         topicsList.setAdapter(topicsArrayAdapter);
 
+        refreshLayout.setRefreshing(true);
+        NavigationHelper.getSelectedSubjects(getIntent(), disposables,
+                new Extractor.DataHandler<List<SubjectData>>() {
+                    @Override
+                    public void onExtractedData(final List<SubjectData> data) {
+                        subjects = data;
+                        if (subjects.size() == 1) {
+                            actionBar.setSubtitle(subjects.get(0).getName());
+                        }
+                        refreshLayout.setOnRefreshListener(() -> reloadTopics(true));
+                        reloadTopics(false);
+                    }
 
-        refreshLayout.setOnRefreshListener(() -> reloadTopics(true));
-        reloadTopics(false);
+                    @Override
+                    public void onItemError(final ExtractorError error) {
+                        Toast.makeText(TopicsActivity.this,
+                                getString(R.string.error_could_not_load_a_subject),
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+
+                    @Override
+                    public void onError(final  ExtractorError error) {
+                        Toast.makeText(getApplicationContext(),
+                                error.getMessage(TopicsActivity.this), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
     }
 
     @Override
