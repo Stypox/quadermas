@@ -71,6 +71,7 @@ public class MainActivity extends ThemedActivity
     private TextView fullNameView;
     private TextView fullAPIUrlView;
 
+    private boolean loadMarksDirectly;
     private int numSubjectsExtracted;
     private List<SubjectData> subjects;
 
@@ -119,7 +120,7 @@ public class MainActivity extends ThemedActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        reloadIfLoggedIn();
+        // loading is started in onResume
     }
 
     @Override
@@ -167,8 +168,19 @@ public class MainActivity extends ThemedActivity
     }
 
     private void reloadSubjects(boolean reload) {
-        if (reload || PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
+        if (!reload && Extractor.areSomeMarksExtracted()) {
+            refreshLayout.setVisibility(View.VISIBLE);
+            welcomeMessageLayout.setVisibility(View.GONE);
+            refreshLayout.setRefreshing(!Extractor.areAllMarksExtracted());
+            topicsMenuItem.setEnabled(true);
+            timetableMenuItem.setEnabled(true);
+            onSubjectsFetched(Extractor.getExtractedSubjects(), false);
+            return;
+        }
+
+        loadMarksDirectly = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.key_load_marks_directly), true);
+        if (reload || loadMarksDirectly) {
             refreshLayout.setVisibility(View.VISIBLE);
             welcomeMessageLayout.setVisibility(View.GONE);
         } else {
@@ -244,9 +256,8 @@ public class MainActivity extends ThemedActivity
         topicsMenuItem.setEnabled(true);
         fullNameView.setText(fullName);
 
-        if (reload || PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.key_load_marks_directly), true)) {
-            // start loading marks directly
+        if (reload || loadMarksDirectly) {
+            // start loading marks directly / show marks directly if they have already been loaded
             fetchSubjects(reload);
         } else {
             refreshLayout.setVisibility(View.GONE);
@@ -261,7 +272,6 @@ public class MainActivity extends ThemedActivity
         refreshLayout.setVisibility(View.VISIBLE);
         welcomeMessageLayout.setVisibility(View.GONE);
 
-        numSubjectsExtracted = 0;
         // never force reload subjects, as they usually do not change
         Extractor.extractSubjects(false, disposables, new Extractor.DataHandler<List<SubjectData>>() {
             @Override
@@ -294,10 +304,11 @@ public class MainActivity extends ThemedActivity
     }
 
     private void onSubjectsFetched(List<SubjectData> data, boolean reload) {
+        subjects.clear();
         subjects.addAll(data);
-        topicsMenuItem.setEnabled(true);
         subjectsArrayAdapter.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
 
+        numSubjectsExtracted = 0;
         for (SubjectData subject : subjects) {
             Extractor.extractMarks(subject, reload, disposables, new Extractor.DataHandler<SubjectData>() {
                 @Override

@@ -267,6 +267,29 @@ public class Extractor {
         return subjects;
     }
 
+    public static boolean areSomeMarksExtracted() {
+        if (subjects == null) {
+            return false;
+        }
+        for (final SubjectData subject : subjects) {
+            if (subject.getMarks() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean areAllMarksExtracted() {
+        if (subjects == null) {
+            return false;
+        }
+        for (final SubjectData subject : subjects) {
+            if (subject.getMarks() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /////////////
     // HELPERS //
