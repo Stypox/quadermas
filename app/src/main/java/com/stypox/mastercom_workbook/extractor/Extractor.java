@@ -161,6 +161,14 @@ public class Extractor {
         }
     }
 
+    /**
+     * Extracts the timetable for the specified date and feeds the list of events to the handler
+     * when done. In order to optimize the loading strategy, some days before and after are also
+     * loaded and cached for later.
+     * @param date the date for which to extract the timetable
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
     public static void extractTimetable(final Date date,
                                         final CompositeDisposable disposables,
                                         final DataHandler<List<TimetableEventData>> handler) {
