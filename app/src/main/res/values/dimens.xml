@@ -14,6 +14,8 @@
 
     <dimen name="size_action">12sp</dimen>
     <dimen name="size_section_header">25sp</dimen>
+    <dimen name="scrollbar_size">2dp</dimen>
+    <dimen name="minus_scrollbar_size">-2dp</dimen>
 
     <dimen name="radius_chart_circle">1.3dp</dimen>
 
