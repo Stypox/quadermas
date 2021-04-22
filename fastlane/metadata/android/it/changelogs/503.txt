@@ -1,0 +1,7 @@
+Miglioramenti:
+- E ora possibile vedere gli argomenti anche se i voti non sono ancora stati caricati
+
+Problemi sistemati:
+- Sistemate le barre di scorrimento invasive che coprivano il testo di materie, documenti e eventi dell'orario
+- Ora il quadrimestre corrente è usato nella schermata della materia, invece di sempre il primo
+- Sistemato il bottone "Carica i voti" che veniva mostrato ogni volta che la schermata principale era riaperta

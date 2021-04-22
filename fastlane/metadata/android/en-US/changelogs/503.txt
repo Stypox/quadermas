@@ -1,0 +1,7 @@
+Improvements:
+- Allow viewing topics even if marks have not already been loaded
+
+Bugs fixed:
+- Fix invasive scroll bars hiding text in subject, document or timetable items
+- Fix first term is always used for average in the subject screen
+- Fix "Load marks" button showing up every time the main screen is resumed
