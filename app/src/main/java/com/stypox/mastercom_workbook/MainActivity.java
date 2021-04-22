@@ -172,8 +172,12 @@ public class MainActivity extends ThemedActivity
             refreshLayout.setVisibility(View.VISIBLE);
             welcomeMessageLayout.setVisibility(View.GONE);
             refreshLayout.setRefreshing(!Extractor.areAllMarksExtracted());
+
             topicsMenuItem.setEnabled(true);
             timetableMenuItem.setEnabled(true);
+            fullNameView.setText(AuthenticationExtractor.getFullName());
+            fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
+
             onSubjectsFetched(Extractor.getExtractedSubjects(), false);
             return;
         }
@@ -229,7 +233,7 @@ public class MainActivity extends ThemedActivity
         fullNameView.setText("");
         fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
-        disposables.add(AuthenticationExtractor.authenticateMain()
+        disposables.add(AuthenticationExtractor.authenticateMain(reload)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         (fullName) -> onAuthenticationCompleted(fullName, reload),

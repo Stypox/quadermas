@@ -92,8 +92,8 @@ public class DocumentsActivity extends ThemedActivity
         documentList.setAdapter(documentsArrayAdapter);
 
 
-        refreshLayout.setOnRefreshListener(() -> reloadDocuments(false));
-        reloadDocuments(true);
+        refreshLayout.setOnRefreshListener(() -> reloadDocuments(true));
+        reloadDocuments(false);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class DocumentsActivity extends ThemedActivity
     // LOADING //
     /////////////
 
-    private void reloadDocuments(boolean firstTime) {
+    private void reloadDocuments(boolean forceReload) {
         refreshLayout.setRefreshing(true);
         if (selectYearMenuItem != null) selectYearMenuItem.setEnabled(false);
         if (selectSubjectMenuItem != null) selectSubjectMenuItem.setEnabled(false);
@@ -145,23 +145,19 @@ public class DocumentsActivity extends ThemedActivity
         documents.clear();
         filterAndShowDocuments();
 
-        if (firstTime) {
-            authenticateMessengerAndFetchDocuments();
-        } else {
-            fetchStudentThenDocuments(true);
-        }
+        authenticateMessengerAndFetchDocuments(forceReload);
     }
 
-    private void authenticateMessengerAndFetchDocuments() {
-        disposables.add(AuthenticationExtractor.authenticateMessenger()
+    private void authenticateMessengerAndFetchDocuments(boolean reload) {
+        disposables.add(AuthenticationExtractor.authenticateMessenger(reload)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> fetchStudentThenDocuments(false),
+                .subscribe(() -> fetchStudentThenDocuments(reload),
                         throwable -> onFatalError((ExtractorError) throwable)));
     }
 
     private void fetchStudentThenDocuments(boolean reload) {
         // never force reload student, as classes usually do not change
-        Extractor.extractClasses(false, disposables, new Extractor.DataHandler<List<ClassData>>() {
+        Extractor.extractClasses(reload, disposables, new Extractor.DataHandler<List<ClassData>>() {
             @Override
             public void onExtractedData(List<ClassData> data) {
                 onClassesFetched(data, reload);

@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.extractor;
 
+import android.text.TextUtils;
+
 import com.stypox.mastercom_workbook.util.FullNameFormatting;
 import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 
@@ -28,21 +30,27 @@ public class AuthenticationExtractor {
 
     private static String phpsessidCookie = "";
     private static String messengerCookie = "";
+    private static String fullName = "";
 
+    public static Single<String> authenticateMain(final boolean reload) {
+        if (!reload && !TextUtils.isEmpty(phpsessidCookie) && !TextUtils.isEmpty(fullName)) {
+            // already authenticated, do not authenticate again
+            return Single.just(fullName);
+        }
 
-    public static Single<String> authenticateMain() {
         return Single.fromCallable(() -> {
             boolean jsonAlreadyParsed = false;
             try {
-                URL url = new URL(phpsessidAuthenticationUrl
+                final URL url = new URL(phpsessidAuthenticationUrl
                         .replace("{api_url}", Extractor.getAPIUrl())
                         .replace("{user}", Extractor.getUser())
                         .replace("{password}", Extractor.getPassword()));
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                String response = UrlConnectionUtils.readAll(urlConnection);
+                final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                final String response = UrlConnectionUtils.readAll(urlConnection);
 
-                phpsessidCookie = urlConnection.getHeaderField("Set-Cookie").substring(0, "PHPSESSID=00000000000000000000000000".length());
-                JSONObject jsonResponse = new JSONObject(response);
+                phpsessidCookie = urlConnection.getHeaderField("Set-Cookie")
+                        .substring(0, "PHPSESSID=00000000000000000000000000".length());
+                final JSONObject jsonResponse = new JSONObject(response);
                 jsonAlreadyParsed = true;
 
                 //noinspection PointlessBooleanExpression
@@ -50,8 +58,10 @@ public class AuthenticationExtractor {
                     throw new ExtractorError(ExtractorError.Type.invalid_credentials);
                 }
 
-                String fullNameUppercase = jsonResponse.getJSONObject("result").getString("full_name");
-                return FullNameFormatting.capitalize(fullNameUppercase);
+                final String fullNameUppercase
+                        = jsonResponse.getJSONObject("result").getString("full_name");
+                fullName = FullNameFormatting.capitalize(fullNameUppercase);
+                return fullName;
             } catch (Throwable e) {
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
             }
@@ -62,24 +72,36 @@ public class AuthenticationExtractor {
         return "messenger=" + UUID.randomUUID().toString();
     }
 
-    public static Completable authenticateMessenger() {
+    public static Completable authenticateMessenger(final boolean reload) {
+        if (!reload && !TextUtils.isEmpty(messengerCookie)) {
+            // already authenticated, do not authenticate again
+            return Completable.complete();
+        }
+
         return Completable.fromAction(() -> {
-            messengerCookie = generateMessengerCookie();
+            try {
+                messengerCookie = generateMessengerCookie();
 
-            RequestBody body = RequestBody.create(messengerAuthenticationMediaType,
-                    messengerAuthenticationBody
-                            .replace("{api_url}", Extractor.getAPIUrl())
-                            .replace("{user}", Extractor.getUser())
-                            .replace("{password}", Extractor.getPassword()));
+                final RequestBody body = RequestBody.create(messengerAuthenticationMediaType,
+                        messengerAuthenticationBody
+                                .replace("{api_url}", Extractor.getAPIUrl())
+                                .replace("{user}", Extractor.getUser())
+                                .replace("{password}", Extractor.getPassword()));
 
-            Request request = new Request.Builder()
-                    .url(messengerAuthenticationUrl
-                            .replace("{api_url}", Extractor.getAPIUrl()))
-                    .addHeader("Cookie", messengerCookie)
-                    .post(body)
-                    .build();
+                final Request request = new Request.Builder()
+                        .url(messengerAuthenticationUrl
+                                .replace("{api_url}", Extractor.getAPIUrl()))
+                        .addHeader("Cookie", messengerCookie)
+                        .post(body)
+                        .build();
 
-            okHttpClient.newCall(request).execute();
+                okHttpClient.newCall(request).execute();
+            } catch (final Throwable throwable) {
+                // reset messenger cookie so that it is forcibly reloaded if authenticateMessenger
+                // is called again
+                messengerCookie = "";
+                throw throwable;
+            }
         }).subscribeOn(Schedulers.io());
     }
 
@@ -89,6 +111,14 @@ public class AuthenticationExtractor {
     public static void removeAllData() {
         phpsessidCookie = "";
         messengerCookie = "";
+        fullName = "";
+    }
+
+    /**
+     * To be called when sure that authentication has already been done
+     */
+    public static String getFullName() {
+        return fullName;
     }
 
 
@@ -96,11 +126,10 @@ public class AuthenticationExtractor {
         return phpsessidCookie + "; " + messengerCookie;
     }
 
-    static JSONObject fetchJsonAuthenticated(URL url) throws IOException, JSONException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    static JSONObject fetchJsonAuthenticated(final URL url) throws IOException, JSONException {
+        final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.addRequestProperty("Cookie", getCookie()); // auth cookie
-        String response = UrlConnectionUtils.readAll(urlConnection);
-
+        final String response = UrlConnectionUtils.readAll(urlConnection);
         return new JSONObject(response);
     }
 }
