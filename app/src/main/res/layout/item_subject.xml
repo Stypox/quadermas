@@ -26,6 +26,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:scrollbarSize="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/average"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
+            android:paddingBottom="2dp"
             android:singleLine="true"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/size_item_title"
@@ -45,11 +47,12 @@
         android:id="@+id/teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
         android:layout_marginBottom="12dp"
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/average"
-        app:layout_constraintTop_toBottomOf="@id/nameScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/nameScrollView"
         tools:text="John Smith" />
 </androidx.constraintlayout.widget.ConstraintLayout>
