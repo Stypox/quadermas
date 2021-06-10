@@ -33,7 +33,7 @@ public class SecondTermStart {
         put("rosmini-tn", new SecondTermStart(1, 1));
     }};
 
-    private static final int END_OF_SECOND_TERM_MONTH = 8; // August
+    private static final int END_OF_SECOND_TERM_MONTH = 8; // August, exclusive
 
 
     private final int month; // starting from 1, which means January
@@ -90,10 +90,13 @@ public class SecondTermStart {
     /**
      * Calculates the first year of the school year the date is in. For example, if the date is in
      * the school year 2018/2019, the returned value is 2018.
+     *
+     * @param date the date of which to extract the school year
+     * @return the school year as int
      */
     public static int schoolYear(final Date date) {
         final int year = getCalendarField(date, Calendar.YEAR);
-        if (date.getMonth() < END_OF_SECOND_TERM_MONTH) {
+        if (date.getMonth() + 1 < END_OF_SECOND_TERM_MONTH) {
             return year - 1;
         } else {
             return year;
