@@ -19,36 +19,39 @@ public class ExtractorError extends Exception {
         network,
         not_json,
         unsuitable_json,
+        unsuitable_date,
         invalid_credentials,
         unknown;
 
         public String toString(Context context) {
             switch (this) {
                 case malformed_url:
-                    return context.getResources().getString(R.string.error_malformed_url);
+                    return context.getString(R.string.error_malformed_url);
                 case network:
-                    return context.getResources().getString(R.string.error_network);
+                    return context.getString(R.string.error_network);
                 case not_json:
-                    return context.getResources().getString(R.string.error_not_json);
+                    return context.getString(R.string.error_not_json);
                 case unsuitable_json:
-                    return context.getResources().getString(R.string.error_unsuitable_json);
+                    return context.getString(R.string.error_unsuitable_json);
+                case unsuitable_date:
+                    return context.getString(R.string.error_unsuitable_date);
                 case invalid_credentials:
-                    return context.getResources().getString(R.string.error_invalid_credentials);
+                    return context.getString(R.string.error_invalid_credentials);
                 case unknown: default: // default is useless
-                    return context.getResources().getString(R.string.error_unknown);
+                    return context.getString(R.string.error_unknown);
             }
         }
     }
 
-    private Type type;
+    private final Type type;
 
 
-    ExtractorError(Type type, Throwable e) {
+    public ExtractorError(Type type, Throwable e) {
         super(e);
         this.type = type;
     }
 
-    ExtractorError(Type type) {
+    public ExtractorError(Type type) {
         super();
         this.type = type;
     }

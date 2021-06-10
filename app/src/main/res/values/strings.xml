@@ -56,6 +56,7 @@
     <string name="error_network">Network error</string>
     <string name="error_not_json">Response was not JSON</string>
     <string name="error_unsuitable_json">Unsuitable response JSON</string>
+    <string name="error_unsuitable_date">Unsuitable response date</string>
     <string name="error_invalid_credentials">Wrong user or password</string>
     <string name="error_could_not_load_a_subject">Could not load a subject</string>
     <string name="error_could_not_load_marks">Could not load marks for subject %1$s</string>

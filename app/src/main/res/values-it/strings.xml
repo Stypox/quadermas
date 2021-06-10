@@ -21,6 +21,7 @@
     <string name="error_no_marks_in_current_term">Nessun voto nel quadrimestre corrente</string>
     <string name="error_not_json">La risposta non era JSON</string>
     <string name="error_unsuitable_json">JSON della risposta non valido</string>
+    <string name="error_unsuitable_date">Data della risposta non valida</string>
     <string name="label_aim_mark">Voto obiettivo:</string>
     <string name="label_marks_average">Media dei voti</string>
     <string name="label_marks_chart">Voti</string>
