@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.MalformedURLException;
 import java.net.SocketException;
+import java.text.ParseException;
 
 public class ExtractorError extends Exception {
     public enum Type {
@@ -70,6 +71,8 @@ public class ExtractorError extends Exception {
             return (ExtractorError) throwable;
         } else if (hasAssignableCause(throwable, MalformedURLException.class)) {
             return new ExtractorError(Type.malformed_url, throwable);
+        } else if (hasAssignableCause(throwable, ParseException.class)) {
+            return new ExtractorError(Type.unsuitable_date, throwable);
         } else if (hasAssignableCause(throwable, JSONException.class)) {
             if (jsonAlreadyParsed) {
                 return new ExtractorError(Type.unsuitable_json, throwable);
