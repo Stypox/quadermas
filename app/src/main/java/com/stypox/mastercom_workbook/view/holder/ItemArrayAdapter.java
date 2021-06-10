@@ -18,9 +18,9 @@ public class ItemArrayAdapter<D> extends RecyclerView.Adapter<ItemHolder<D>> {
     }
 
 
-    private int resource;
-    private List<D> dataItems;
-    private ItemHolderFactory<D> factory;
+    private final int resource;
+    private final List<D> dataItems;
+    private final ItemHolderFactory<D> factory;
     @Nullable private OnItemClickListener<D> onItemClickListener;
 
 
