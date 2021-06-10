@@ -1,42 +1,72 @@
 package com.stypox.mastercom_workbook.data;
 
+import com.stypox.mastercom_workbook.extractor.ExtractorError;
+import com.stypox.mastercom_workbook.settings.SecondTermStart;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * The object that represents a single event
  */
 public class EventData {
+
+    public enum Type {
+        annotation, event
+    }
+
+    private static final SimpleDateFormat DATE_FORMAT
+            = new SimpleDateFormat("dd MMM HH:mm", Locale.ITALY);
+
+    private final Type type;
     private final String title;
-    private final String teacher;
     private final String description;
+    private final String teacher;
 
-    private final String day;
-    private final String month;
+    private final Date begin;
+    private final Date end;
 
-    private final String timeEnd;
-    private final String timeStart;
-
-    public EventData(final String title,
+    public EventData(final Type type,
+                     final String title,
                      final String description,
                      final String teacher,
                      final String day,
                      final String month,
-                     final String timeStart,
-                     final String timeEnd) {
+                     final String dateTime) throws ExtractorError {
 
+        this.type = type;
         this.title = title;
         this.description = description;
         this.teacher = teacher;
-        this.day = day;
-        this.month = month;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
+
+        final String[] dateTimePieces = dateTime.split(" ");
+        try {
+            if (dateTimePieces[0].contains(":")) {
+                // <hour start>:<minute start> <hour end>:<minute end>
+                begin = DATE_FORMAT.parse(day + " " + month + " " + dateTimePieces[0]);
+                end = DATE_FORMAT.parse(day + " " + month + " " + dateTimePieces[1]);
+            } else {
+                // <full date start> <full date end> (with other spaces in between)
+                begin = DATE_FORMAT.parse(
+                        dateTimePieces[1] + " " + dateTimePieces[2] + " " + dateTimePieces[3]);
+                end = DATE_FORMAT.parse(
+                        dateTimePieces[5] + " " + dateTimePieces[6] + " " + dateTimePieces[7]);
+            }
+
+            if (begin == null || end == null) {
+                throw new NullPointerException();
+            }
+
+            begin.setYear(SecondTermStart.yearFromMonth(begin.getMonth() + 1) - 1900);
+            end.setYear(SecondTermStart.yearFromMonth(end.getMonth() + 1) - 1900);
+        } catch (final Throwable e) {
+            throw new ExtractorError(ExtractorError.Type.unsuitable_date, e);
+        }
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public String getMonth() {
-        return month;
+    public Type getType() {
+        return type;
     }
 
     public String getTitle() {
@@ -51,11 +81,11 @@ public class EventData {
         return description;
     }
 
-    public String getTimeEnd() {
-        return timeEnd;
+    public Date getBegin() {
+        return begin;
     }
 
-    public String getTimeStart() {
-        return timeStart;
+    public Date getEnd() {
+        return end;
     }
 }

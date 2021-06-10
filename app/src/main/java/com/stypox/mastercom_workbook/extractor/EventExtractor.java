@@ -20,8 +20,34 @@ public class EventExtractor {
      *
      * @return the event list
      */
-    public static List<EventData> getEvents() throws IOException {
+    public static List<EventData> getEvents() throws IOException, ExtractorError {
         return getEvents(getPage());
+    }
+
+    private static EventData eventDataFrom(final EventData.Type type,
+                                           final String day,
+                                           final String month,
+                                           final Element event) throws ExtractorError {
+        // time is usually in a format like this:
+        // <hour start>:<minute start> <hour end>:<minute end>
+        // but sometimes it could also contain the date for each time
+        final String dateTime = event.select("div").text().trim();
+
+        // teacher is always in a format like this: (<teacher name>)
+        String teacher = event.select("i").text().trim();
+        if (teacher.startsWith("(") && teacher.endsWith(")")) {
+            // remove the parenthesis
+            teacher = teacher.substring(1, teacher.length() - 1).trim();
+        }
+
+        // title is always in a format like this: <event title>
+        final String title = event.select("strong").text().trim();
+
+        // description is always in a format like this: <event description>
+        // gets the text that is ONLY into the element <event>
+        final String description = event.ownText().trim();
+
+        return new EventData(type, title, description, teacher, day, month, dateTime);
     }
 
     /**
@@ -30,11 +56,11 @@ public class EventExtractor {
      * @param agendaPage the HTML document
      * @return the event list
      */
-    private static List<EventData> getEvents(final Document agendaPage) {
-        List<EventData> eventList = new ArrayList<>();
+    private static List<EventData> getEvents(final Document agendaPage) throws ExtractorError {
+        final List<EventData> eventList = new ArrayList<>();
 
         // select the table where the annotations are stored
-        Elements annotationTable = agendaPage.select("tbody tr");
+        final Elements annotationTable = agendaPage.select("tbody tr");
 
         // cycle through every "td" which represents a single day
         for (final Element annotation : annotationTable) {
@@ -43,7 +69,7 @@ public class EventExtractor {
             final Element eventsContainer = annotation.select("td").last();
 
             // save the date of the events
-            // date is always in <day number> <month name> <day name> [DOMANI] format
+            // date is always in <day number> <month name> [...] format
             final String[] date = eventsDate.text().split(" ");
             final String day = date[0].trim();
             final String month = date[1].trim();
@@ -51,26 +77,11 @@ public class EventExtractor {
             //cycle through every event in that day
             for (final Element event
                     : eventsContainer.getElementsByAttributeValue("data-type", "annotazione")) {
-                // time is always in a format like this:
-                // <hour start>:<minute start> <hour end>:<minute end>
-                final String[] time = event.select("div").text().split(" ");
-                final String timeStart = time[0].trim();
-                final String timeEnd = time[1].trim();
-
-                // teacher is always in a format like this: (<teacher name>)
-                String teacher = event.select("i").text();
-                // remove the parenthesis
-                teacher = teacher.substring(1, teacher.length() - 1).trim();
-
-                // title is always in a format like this: <event title>
-                final String title = event.select("strong").text().trim();
-
-                // description is always in a format like this: <event description>
-                // gets the text that is ONLY into the element <event>
-                final String description = event.ownText().trim();
-
-                eventList.add(
-                        new EventData(title, description, teacher, day, month, timeStart, timeEnd));
+                eventList.add(eventDataFrom(EventData.Type.annotation, day, month, event));
+            }
+            for (final Element event
+                    : eventsContainer.getElementsByAttributeValue("data-type", "evento")) {
+                eventList.add(eventDataFrom(EventData.Type.event, day, month, event));
             }
         }
 
