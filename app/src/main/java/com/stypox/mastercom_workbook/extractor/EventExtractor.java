@@ -45,10 +45,8 @@ public class EventExtractor {
             // save the date of the events
             // date is always in <day number> <month name> <day name> [DOMANI] format
             final String[] date = eventsDate.text().split(" ");
-            final String day = date[0];
-            final String month = date[1];
-            final String dayName = date[2];
-            final boolean isTomorrow = date[date.length - 1].endsWith("DOMANI");
+            final String day = date[0].trim();
+            final String month = date[1].trim();
 
             //cycle through every event in that day
             for (final Element event
@@ -56,23 +54,23 @@ public class EventExtractor {
                 // time is always in a format like this:
                 // <hour start>:<minute start> <hour end>:<minute end>
                 final String[] time = event.select("div").text().split(" ");
-                final String timeStart = time[0];
-                final String timeEnd = time[1];
+                final String timeStart = time[0].trim();
+                final String timeEnd = time[1].trim();
 
                 // teacher is always in a format like this: (<teacher name>)
                 String teacher = event.select("i").text();
                 // remove the parenthesis
-                teacher = teacher.substring(1, teacher.length() - 1);
+                teacher = teacher.substring(1, teacher.length() - 1).trim();
 
                 // title is always in a format like this: <event title>
-                final String title = event.select("strong").text();
+                final String title = event.select("strong").text().trim();
 
                 // description is always in a format like this: <event description>
                 // gets the text that is ONLY into the element <event>
-                final String description = event.ownText();
+                final String description = event.ownText().trim();
 
-                eventList.add(new EventData(title, description, teacher, day, month, dayName,
-                        isTomorrow, timeStart, timeEnd));
+                eventList.add(
+                        new EventData(title, description, teacher, day, month, timeStart, timeEnd));
             }
         }
 
