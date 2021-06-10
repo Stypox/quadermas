@@ -5,8 +5,10 @@ import com.stypox.mastercom_workbook.settings.SecondTermStart;
 import com.stypox.mastercom_workbook.util.FullNameFormatting;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * The object that represents a single event
@@ -89,5 +91,23 @@ public class EventData {
 
     public Date getEnd() {
         return end;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final EventData eventData = (EventData) o;
+        return type == eventData.type &&
+                title.equals(eventData.title) &&
+                description.equals(eventData.description) &&
+                teacher.equals(eventData.teacher) &&
+                begin.equals(eventData.begin) &&
+                end.equals(eventData.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{type, title, description, teacher, begin, end});
     }
 }

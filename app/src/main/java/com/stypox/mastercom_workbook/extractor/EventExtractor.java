@@ -10,6 +10,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
@@ -29,7 +31,7 @@ public class EventExtractor {
         return Single.fromCallable(() -> {
             try {
                 final Document document = downloadPage();
-                final List<EventData> events = new ArrayList<>();
+                final HashSet<EventData> events = new HashSet<>(); // set with UNIQUE items
 
                 // select the table where the annotations are stored
                 final Elements annotationTable = document.select("tbody tr");
@@ -65,7 +67,10 @@ public class EventExtractor {
                     }
                 }
 
-                return events;
+                // convert set (used to get unique items) to a sorted list (from latest to oldest)
+                final List<EventData> result = new ArrayList<>(events);
+                Collections.sort(result, (o1, o2) -> o2.getBegin().compareTo(o1.getBegin()));
+                return result;
 
             } catch (final Throwable e) {
                 throw ExtractorError.asExtractorError(e, true);
