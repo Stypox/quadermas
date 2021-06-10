@@ -35,7 +35,6 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
             android:paddingBottom="@dimen/scrollbar_size"
             android:singleLine="true"
             android:textColor="?android:textColorPrimary"

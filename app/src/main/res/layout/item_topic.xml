@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <HorizontalScrollView
-        android:id="@+id/nameScrollView"
+        android:id="@+id/titleScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scrollbarSize="@dimen/scrollbar_size"
@@ -36,7 +36,7 @@
         android:textSize="@dimen/size_item_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/titleScrollView"
         tools:text="John Smith  -  06/11/2019" />
 
     <ImageView
