@@ -31,9 +31,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class TimetableActivity extends ThemedActivity {
 
-    ////////////////////////
-    // ACTIVITY LIFECYCLE //
-    ////////////////////////
+    private static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
 
     private TextView dateTextView;
     private TextView emptyTextView;
@@ -48,6 +46,11 @@ public class TimetableActivity extends ThemedActivity {
 
     @NonNull private final CompositeDisposable disposables = new CompositeDisposable();
     private Date currentDay;
+
+
+    ////////////////////////
+    // ACTIVITY LIFECYCLE //
+    ////////////////////////
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -116,7 +119,7 @@ public class TimetableActivity extends ThemedActivity {
         currentDay = date;
         disposables.clear(); // first clear any current operation
 
-        dateTextView.setText(DateFormat.getDateInstance(DateFormat.FULL).format(date));
+        dateTextView.setText(dateFormat.format(date));
         emptyTextView.setVisibility(View.GONE);
         loadingIndicator.setVisibility(View.VISIBLE);
         errorTextView.setVisibility(View.GONE);
