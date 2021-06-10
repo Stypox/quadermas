@@ -8,27 +8,35 @@
     android:layout_marginVertical="8dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
+    <HorizontalScrollView
+        android:id="@+id/nameScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/size_item_title"
+        android:scrollbarSize="@dimen/scrollbar_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem[10]" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/scrollbar_size"
+            android:singleLine="true"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/size_item_title"
+            tools:text="@tools:sample/lorem[10]" />
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:singleLine="true"
         android:textSize="@dimen/size_item_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/nameScrollView"
         tools:text="John Smith  -  06/11/2019" />
 
     <ImageView
