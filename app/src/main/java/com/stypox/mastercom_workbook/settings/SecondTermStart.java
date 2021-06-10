@@ -103,6 +103,19 @@ public class SecondTermStart {
         }
     }
 
+    /**
+     * Deduces the calendar year a month belongs to, given that it happened in the current school
+     * year. For example, if the month is March the returned value is the current year, while if it
+     * is September the returned value is the current year {@code - 1}.
+     *
+     * @param month the month, 1-based (1 is January)
+     * @return the current year as int
+     */
+    public static int yearFromMonth(final int month) {
+        return getCalendarField(new Date(), Calendar.YEAR)
+                - (month < END_OF_SECOND_TERM_MONTH ? 0 : 1);
+    }
+
 
     public static SecondTermStart fromPreferences(final Context context) {
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
