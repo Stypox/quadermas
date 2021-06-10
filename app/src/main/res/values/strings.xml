@@ -21,6 +21,7 @@
     <string name="menu_topics">Topics</string>
     <string name="menu_documents">Documents</string>
     <string name="menu_timetable">Timetable</string>
+    <string name="menu_events">Events</string>
     <string name="menu_setup">Setup</string>
     <string name="menu_settings">Settings</string>
 
@@ -67,6 +68,7 @@
     <string name="error_could_not_load_documents">Could not load documents for class %1$s</string>
     <string name="error_could_not_load_timetable">Could not load the timetable</string>
     <string name="error_could_not_load_timetable_events">Could not load some events in the timetable</string>
+    <string name="error_could_not_load_an_event">Could not load an event</string>
     <string name="error_no_marks">No marks</string>
     <string name="error_no_marks_in_current_term">No marks in current term</string>
     <string name="error_unknown">Unknown error</string>
@@ -120,8 +122,12 @@
 
     <string name="empty_timetable">Nothing is scheduled for this day!\nIs it a day off?</string>
 
-    <string name="two_strings" translatable="false">%s  -  %s</string>
-    <string name="three_strings" translatable="false">%s  -  %s  -  %s</string>
+    <string name="event_time_same_minute" translatable="false">%1$s&#160;&#160;&#160;%2$s</string>
+    <string name="event_time_same_day" translatable="false">%1$s&#160;&#160;&#160;%2$s • %3$s</string>
+    <string name="event_time_different_days" translatable="false">%1$s %2$s&#160;&#160;&#160;•&#160;&#160;&#160;%3$s %4$s</string>
+
+    <string name="two_strings" translatable="false">%s&#160;&#160;&#160;•&#160;&#160;&#160;%s</string>
+    <string name="three_strings" translatable="false">%s&#160;&#160;&#160;•&#160;&#160;&#160;%s&#160;&#160;&#160;•&#160;&#160;&#160;%s</string>
     <string name="day">Day</string>
     <string name="month">Month</string>
 </resources>

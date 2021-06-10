@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.data;
 
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.settings.SecondTermStart;
+import com.stypox.mastercom_workbook.util.FullNameFormatting;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,9 +37,10 @@ public class EventData {
                      final String dateTime) throws ExtractorError {
 
         this.type = type;
-        this.title = title;
-        this.description = description;
-        this.teacher = teacher;
+        // swap title with description if title is empty
+        this.title = title.isEmpty() ? description : title;
+        this.description = title.isEmpty() ? title : description;
+        this.teacher = FullNameFormatting.capitalize(teacher);
 
         final String[] dateTimePieces = dateTime.split(" ");
         try {

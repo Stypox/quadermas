@@ -26,6 +26,11 @@
             android:enabled="false" />
 
         <item
+            android:id="@+id/eventsAction"
+            android:icon="?attr/ic_insert_invitation"
+            android:title="@string/menu_events" />
+
+        <item
             android:id="@+id/documentsAction"
             android:icon="?attr/ic_insert_drive_file"
             android:title="@string/menu_documents" />

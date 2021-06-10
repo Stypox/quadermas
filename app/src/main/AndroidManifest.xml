@@ -31,8 +31,9 @@
         <activity android:name=".view.MarksActivity" />
         <activity android:name=".view.StatisticsActivity" />
         <activity android:name=".view.TopicsActivity" />
-        <activity android:name=".view.DocumentsActivity" />
         <activity android:name=".view.TimetableActivity" />
+        <activity android:name=".view.EventsActivity" />
+        <activity android:name=".view.DocumentsActivity" />
         <activity android:name=".login.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".settings.SettingsActivity" />

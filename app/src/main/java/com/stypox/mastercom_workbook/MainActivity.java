@@ -30,6 +30,7 @@ import com.stypox.mastercom_workbook.login.LoginData;
 import com.stypox.mastercom_workbook.settings.SettingsActivity;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.DocumentsActivity;
+import com.stypox.mastercom_workbook.view.EventsActivity;
 import com.stypox.mastercom_workbook.view.MarksActivity;
 import com.stypox.mastercom_workbook.view.StatisticsActivity;
 import com.stypox.mastercom_workbook.view.SubjectActivity;
@@ -362,10 +363,12 @@ public class MainActivity extends ThemedActivity
             openActivityWithAllSubjects(this, StatisticsActivity.class);
         } else if (itemId == R.id.topicsAction) {
             openActivityWithAllSubjects(this, TopicsActivity.class);
-        } else if (itemId == R.id.documentsAction) {
-            openActivity(this, DocumentsActivity.class);
         } else if (itemId == R.id.timetableAction) {
             openActivity(this, TimetableActivity.class);
+        } else if (itemId == R.id.eventsAction) {
+            openActivity(this, EventsActivity.class);
+        } else if (itemId == R.id.documentsAction) {
+            openActivity(this, DocumentsActivity.class);
         } else if (itemId == R.id.loginAction) {
             openLoginActivityThenReload();
         } else if (itemId == R.id.settingsAction) {

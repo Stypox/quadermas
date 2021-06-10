@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginRight="16dp">
+
+    <View
+        android:id="@+id/coloredBar"
+        android:layout_width="6dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorAccent" />
+
+
+    <HorizontalScrollView
+        android:id="@+id/titleScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="2dp"
+        android:scrollbarSize="@dimen/scrollbar_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coloredBar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/scrollbar_size"
+            android:singleLine="true"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/size_item_title"
+            tools:text="@tools:sample/lorem[10]" />
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:textSize="@dimen/size_item_info"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coloredBar"
+        app:layout_constraintTop_toBottomOf="@+id/titleScrollView"
+        tools:text="06/11/2019 9:40 AM - 06/11/2019 10:30 AM" />
+
+    <TextView
+        android:id="@+id/teacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="@dimen/scrollbar_size"
+        android:textSize="@dimen/size_item_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coloredBar"
+        app:layout_constraintTop_toBottomOf="@id/time"
+        tools:text="John Smith" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="@dimen/topic_table_row_spacing"
+        android:layout_marginBottom="2dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coloredBar"
+        app:layout_constraintTop_toBottomOf="@id/teacher"
+        tools:text="@tools:sample/lorem[30]" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

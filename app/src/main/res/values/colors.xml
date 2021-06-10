@@ -6,4 +6,6 @@
 
     <color name="chartLine">#3366DD</color>
     <color name="black">#FF000000</color>
+    <color name="annotationEvent">#FFCC0000</color>
+    <color name="eventEvent">#FF00AAFF</color>
 </resources>
