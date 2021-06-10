@@ -67,7 +67,7 @@ public class TimetableExtractor {
                             (o1, o2) -> o1.getBegin().compareTo(o2.getBegin()));
                 }
                 return timetableDays;
-            } catch (Throwable e) {
+            } catch (final Throwable e) {
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
             }
         }).subscribeOn(Schedulers.io());

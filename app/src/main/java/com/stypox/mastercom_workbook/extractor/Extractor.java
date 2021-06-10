@@ -6,6 +6,7 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 
 import com.stypox.mastercom_workbook.data.ClassData;
+import com.stypox.mastercom_workbook.data.EventData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TimetableEventData;
 
@@ -41,9 +42,9 @@ public class Extractor {
     // extracted data
     private static List<SubjectData> subjects;
     private static List<ClassData> classes;
+    private static List<EventData> events;
     @NonNull
     private static final Map<Integer, List<TimetableEventData>> timetable = new HashMap<>();
-
 
     /////////////
     // GETTERS //
@@ -158,6 +159,29 @@ public class Extractor {
                             throwable -> handler.onError((ExtractorError) throwable)));
         } else {
             handler.onExtractedData(classData);
+        }
+    }
+
+    /**
+     * Extracts the event list and feeds it to the handler
+     * @param forceReload if {@code true}, do not use cached results
+     * @param disposables ReactiveX disposables are added here if needed
+     * @param handler where to notify about extracted data and errors, on the main thread
+     */
+    public static void extractEvents(boolean forceReload,
+                                     CompositeDisposable disposables,
+                                     DataHandler<List<EventData>> handler) {
+        if (forceReload || events == null) {
+            disposables.add(EventExtractor
+                    .fetchEvents(t -> signalItemErrorOnMainThread(t, handler))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(data -> {
+                                events = data;
+                                handler.onExtractedData(data);
+                            },
+                            throwable -> handler.onError((ExtractorError) throwable)));
+        } else {
+            handler.onExtractedData(events);
         }
     }
 
