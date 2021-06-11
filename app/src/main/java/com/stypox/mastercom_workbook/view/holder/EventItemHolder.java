@@ -3,6 +3,7 @@ package com.stypox.mastercom_workbook.view.holder;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -11,6 +12,8 @@ import com.stypox.mastercom_workbook.data.EventData;
 import com.stypox.mastercom_workbook.util.DateUtils;
 
 import java.text.DateFormat;
+
+import static com.stypox.mastercom_workbook.util.DateUtils.DAY_AFTER_TOMORROW;
 
 public class EventItemHolder extends ItemHolder<EventData> {
 
@@ -76,8 +79,17 @@ public class EventItemHolder extends ItemHolder<EventData> {
             descriptionView.setText(data.getDescription());
         }
 
-        itemView.setBackgroundColor(context.getResources().getColor(
-                DateUtils.inTheFuture(data.getEnd()) ? R.color.futureEvent : R.color.transparent));
+        @ColorRes final int backgroundColor;
+        if (DateUtils.inTheFuture(data.getEnd())) {
+            if (data.getBegin().before(DAY_AFTER_TOMORROW)) {
+                backgroundColor = R.color.imminentEvent;
+            } else {
+                backgroundColor = R.color.futureEvent;
+            }
+        } else {
+            backgroundColor = R.color.transparent;
+        }
+        itemView.setBackgroundColor(context.getResources().getColor(backgroundColor));
     }
 
 
