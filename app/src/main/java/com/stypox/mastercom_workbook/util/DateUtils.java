@@ -10,6 +10,10 @@ public class DateUtils {
         return new GregorianCalendar(year, month, dayOfMonth).getTime();
     }
 
+    public static boolean inTheFuture(final Date date) {
+        return date.after(new Date());
+    }
+
     public static int getCalendarField(final Date date, final int field) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

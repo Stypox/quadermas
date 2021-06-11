@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.EventData;
+import com.stypox.mastercom_workbook.util.DateUtils;
 
 import java.text.DateFormat;
 
@@ -35,13 +36,9 @@ public class EventItemHolder extends ItemHolder<EventData> {
 
     @Override
     public void updateItemData(final EventData data) {
-        final int barColor;
-        if (data.getType() == EventData.Type.annotation) {
-            barColor = R.color.annotationEvent;
-        } else {
-            barColor = R.color.eventEvent;
-        }
-        coloredBarView.setBackgroundColor(context.getResources().getColor(barColor));
+        coloredBarView.setBackgroundColor(context.getResources().getColor(
+                data.getType() == EventData.Type.annotation
+                        ? R.color.annotationEvent : R.color.eventEvent));
 
         titleView.setText(data.getTitle());
 
@@ -78,6 +75,9 @@ public class EventItemHolder extends ItemHolder<EventData> {
             descriptionView.setVisibility(View.VISIBLE);
             descriptionView.setText(data.getDescription());
         }
+
+        itemView.setBackgroundColor(context.getResources().getColor(
+                DateUtils.inTheFuture(data.getEnd()) ? R.color.futureEvent : R.color.transparent));
     }
 
 

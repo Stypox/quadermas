@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="chartLine">#3366DD</color>
-    <color name="black">#FF000000</color>
     <color name="annotationEvent">#FFCC0000</color>
     <color name="eventEvent">#FF00AAFF</color>
+    <color name="futureEvent">#22FFFF00</color>
 </resources>
