@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.stypox.mastercom_workbook.util.DateUtils.TODAY;
 import static com.stypox.mastercom_workbook.util.DateUtils.getCalendarField;
 
 public class SecondTermStart {
@@ -76,7 +77,7 @@ public class SecondTermStart {
     }
 
     public int currentTerm() {
-        return getTerm(new Date());
+        return getTerm(TODAY);
     }
 
     public void saveToPreferences(final Context context) {
@@ -112,7 +113,7 @@ public class SecondTermStart {
      * @return the current year as int
      */
     public static int yearFromMonth(final int month) {
-        return getCalendarField(new Date(), Calendar.YEAR)
+        return getCalendarField(TODAY, Calendar.YEAR)
                 - (month < END_OF_SECOND_TERM_MONTH ? 0 : 1);
     }
 

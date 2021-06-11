@@ -6,12 +6,14 @@ import java.util.GregorianCalendar;
 
 public class DateUtils {
 
+    public static final Date TODAY = new Date();
+
     public static Date buildDate(final int year, final int month, final int dayOfMonth) {
         return new GregorianCalendar(year, month, dayOfMonth).getTime();
     }
 
     public static boolean inTheFuture(final Date date) {
-        return date.after(new Date());
+        return date.after(TODAY);
     }
 
     public static int getCalendarField(final Date date, final int field) {
