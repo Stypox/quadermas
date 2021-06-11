@@ -1,6 +1,8 @@
 package com.stypox.mastercom_workbook.view;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,9 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.EventData;
-import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
+import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
 import com.stypox.mastercom_workbook.view.holder.EventItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
@@ -28,6 +30,7 @@ public class EventsActivity extends ThemedActivity {
 
     private CompositeDisposable disposables;
     private SwipeRefreshLayout refreshLayout;
+    private RecyclerView eventsView;
 
     private List<EventData> events;
     private ItemArrayAdapter<EventData> eventsArrayAdapter;
@@ -51,12 +54,12 @@ public class EventsActivity extends ThemedActivity {
         events = new ArrayList<>();
 
         refreshLayout = findViewById(R.id.refreshLayout);
-        final RecyclerView marksView = findViewById(R.id.eventsList);
+        eventsView = findViewById(R.id.eventsList);
 
-        marksView.setLayoutManager(new LinearLayoutManager(this));
+        eventsView.setLayoutManager(new LinearLayoutManager(this));
         eventsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_event, events,
                 EventItemHolder.getFactory());
-        marksView.setAdapter(eventsArrayAdapter);
+        eventsView.setAdapter(eventsArrayAdapter);
 
         refreshLayout.setOnRefreshListener(() -> reloadEvents(true));
         reloadEvents(false);
@@ -114,9 +117,49 @@ public class EventsActivity extends ThemedActivity {
     }
 
     private void onEventsFetched(final List<EventData> data) {
+        refreshLayout.setRefreshing(false);
+
         events.clear();
         events.addAll(data);
+
         eventsArrayAdapter.notifyDataSetChanged();
-        refreshLayout.setRefreshing(false);
+        scrollToFirstEventInTheFuture();
+    }
+
+    private void scrollToFirstEventInTheFuture() {
+        int i = 0;
+        for(; i < events.size(); ++i) {
+            if (!DateUtils.inTheFuture(events.get(i).getEnd())) {
+                break;
+            }
+        }
+
+        if (i > 0) {
+            // nested post() calls to process things in the correct order
+            final int scrollPosition = i - 1;
+            eventsView.post(() -> {
+                // first move the item on screen
+                eventsView.scrollToPosition(scrollPosition);
+
+                eventsView.post(() -> {
+                    // then scroll to move the item in the middle
+                    int scrollBy = 0; // default to not scrolling if view not found
+                    for (int c = 0; c < eventsView.getChildCount(); ++c) {
+                        final View child = eventsView.getChildAt(c);
+                        if (child == null) {
+                            break; // should be unreachable, but let's be sure
+                        }
+
+                        if (eventsView.getChildAdapterPosition(child) == scrollPosition) {
+                            scrollBy = (int)((child.getY() - eventsView.getY() + child.getHeight())
+                                    - eventsView.getHeight() / 2);
+                            break;
+                        }
+                    }
+
+                    eventsView.scrollBy(0, scrollBy);
+                });
+            });
+        }
     }
 }
