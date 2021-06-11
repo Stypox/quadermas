@@ -22,6 +22,7 @@ import com.stypox.mastercom_workbook.view.holder.EventItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -49,6 +50,8 @@ public class EventsActivity extends ThemedActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_events));
+        actionBar.setSubtitle(getString(R.string.today_is,
+                EventItemHolder.dateFormat.format(new Date())));
 
         disposables = new CompositeDisposable();
         events = new ArrayList<>();

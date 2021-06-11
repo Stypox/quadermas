@@ -14,7 +14,7 @@ import java.text.DateFormat;
 
 public class EventItemHolder extends ItemHolder<EventData> {
 
-    private static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+    public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
     private static final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
     private final View coloredBarView;

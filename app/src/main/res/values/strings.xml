@@ -128,6 +128,7 @@
     <string name="event_time_same_minute" translatable="false">%1$s \u0020\u0020%2$s</string>
     <string name="event_time_same_day" translatable="false">%1$s \u0020\u0020%2$s • %3$s</string>
     <string name="event_time_different_days" translatable="false">%1$s %2$s \u0020\u0020• \u0020\u0020%3$s %4$s</string>
+    <string name="today_is">Today is the %s</string>
 
     <string name="two_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s</string>
     <string name="three_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s \u0020\u0020• \u0020\u0020%s</string>
