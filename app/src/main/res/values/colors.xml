@@ -8,7 +8,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="chartLine">#3366DD</color>
-    <color name="annotationEvent">#FFCC0000</color>
-    <color name="eventEvent">#FF00AAFF</color>
+    <color name="annotationEvent">#BBCC0000</color>
+    <color name="eventEvent">#BB00AAFF</color>
     <color name="futureEvent">#22FFFF00</color>
 </resources>
