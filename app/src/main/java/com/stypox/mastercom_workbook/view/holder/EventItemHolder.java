@@ -14,14 +14,11 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.ShareUtils;
 
-import java.text.DateFormat;
-
 import static com.stypox.mastercom_workbook.util.DateUtils.DAY_AFTER_TOMORROW;
+import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
+import static com.stypox.mastercom_workbook.util.DateUtils.TIME_FORMAT;
 
 public class EventItemHolder extends ItemHolder<EventData> {
-
-    public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
-    private static final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
     private final View coloredBackgroundView;
     private final View coloredBarView;
@@ -65,10 +62,10 @@ public class EventItemHolder extends ItemHolder<EventData> {
 
         titleView.setText(data.getTitle());
 
-        final String beginDate = dateFormat.format(data.getBegin());
-        final String beginTime = timeFormat.format(data.getBegin());
-        final String endDate = dateFormat.format(data.getEnd());
-        final String endTime = timeFormat.format(data.getEnd());
+        final String beginDate = SHORT_DATE_FORMAT.format(data.getBegin());
+        final String beginTime = TIME_FORMAT.format(data.getBegin());
+        final String endDate = SHORT_DATE_FORMAT.format(data.getEnd());
+        final String endTime = TIME_FORMAT.format(data.getEnd());
         if (data.getBegin().getDate() == data.getEnd().getDate()) {
             if (data.getBegin().equals(data.getEnd())) {
                 // the two date-times are equal, show only one of them
@@ -99,10 +96,9 @@ public class EventItemHolder extends ItemHolder<EventData> {
             descriptionView.setText(data.getDescription());
         }
 
-        itemView.setOnClickListener(v -> {
-            ShareUtils.addEventToCalendar(context, data.getTitle(), data.getDescription(),
-                    data.getTeacher(), data.getBegin(), data.getEnd());
-        });
+        itemView.setOnClickListener(v ->
+                ShareUtils.addEventToCalendar(context, data.getTitle(), data.getDescription(),
+                        data.getTeacher(), data.getBegin(), data.getEnd()));
     }
 
 

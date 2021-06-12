@@ -28,6 +28,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
 import static com.stypox.mastercom_workbook.util.DateUtils.TODAY;
 
 public class EventsActivity extends ThemedActivity {
@@ -53,8 +54,7 @@ public class EventsActivity extends ThemedActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_events));
-        actionBar.setSubtitle(getString(R.string.today_is,
-                EventItemHolder.dateFormat.format(TODAY)));
+        actionBar.setSubtitle(getString(R.string.today_is, SHORT_DATE_FORMAT.format(TODAY)));
 
         disposables = new CompositeDisposable();
         events = new ArrayList<>();

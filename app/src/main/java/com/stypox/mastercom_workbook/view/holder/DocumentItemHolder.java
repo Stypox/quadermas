@@ -1,7 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.annotation.SuppressLint;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -12,6 +11,8 @@ import androidx.annotation.Nullable;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
+
+import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
 
@@ -35,7 +36,7 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
     public void updateItemData(DocumentData data) {
         nameView.setText(data.getName());
         dateSubjectOwnerView.setText(context.getResources().getString(R.string.three_strings,
-                DateFormat.getDateFormat(context).format(data.getDate()),data.getSubject(),
+                SHORT_DATE_FORMAT.format(data.getDate()), data.getSubject(),
                 data.getOwner()));
 
         if (adapter == null) {

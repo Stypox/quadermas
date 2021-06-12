@@ -1,14 +1,19 @@
 package com.stypox.mastercom_workbook.util;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtils {
 
-    public static final Date NOW = buildDate(2021, 0, 25);
+    public static final Date NOW = new Date();
     public static final Date TODAY = new Date(NOW.getYear(), NOW.getMonth(), NOW.getDate());
     public static final Date DAY_AFTER_TOMORROW = addDaysToDate(TODAY, 2);
+
+    public static final DateFormat SHORT_DATE_FORMAT = DateFormat.getDateInstance(DateFormat.SHORT);
+    public static final DateFormat FULL_DATE_FORMAT = DateFormat.getDateInstance(DateFormat.FULL);
+    public static final DateFormat TIME_FORMAT = DateFormat.getTimeInstance(DateFormat.SHORT);
 
     public static Date buildDate(final int year, final int month, final int dayOfMonth) {
         return new GregorianCalendar(year, month, dayOfMonth).getTime();

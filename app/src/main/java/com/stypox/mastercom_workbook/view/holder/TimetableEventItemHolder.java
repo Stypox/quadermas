@@ -1,6 +1,5 @@
 package com.stypox.mastercom_workbook.view.holder;
 
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -9,10 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.stypox.mastercom_workbook.R;
-import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.data.TimetableEventData;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 import com.stypox.mastercom_workbook.util.ShareUtils;
+
+import static com.stypox.mastercom_workbook.util.DateUtils.TIME_FORMAT;
 
 public class TimetableEventItemHolder extends ItemHolder<TimetableEventData> {
 
@@ -40,14 +40,12 @@ public class TimetableEventItemHolder extends ItemHolder<TimetableEventData> {
         subjectView.setText(data.getSubject());
         teacherView.setText(data.getTeacher());
 
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        beginTimeView.setText(timeFormat.format(data.getBegin()));
-        endTimeView.setText(timeFormat.format(data.getEnd()));
+        beginTimeView.setText(TIME_FORMAT.format(data.getBegin()));
+        endTimeView.setText(TIME_FORMAT.format(data.getEnd()));
 
-        itemView.setOnClickListener(v -> {
-            ShareUtils.addEventToCalendar(context, data.getSubject(), null, data.getTeacher(),
-                    data.getBegin(), data.getEnd());
-        });
+        itemView.setOnClickListener(v ->
+                ShareUtils.addEventToCalendar(context, data.getSubject(), null,
+                        data.getTeacher(), data.getBegin(), data.getEnd()));
     }
 
     private static class Factory implements ItemHolderFactory<TimetableEventData> {

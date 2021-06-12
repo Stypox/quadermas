@@ -18,11 +18,9 @@ import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
-import com.stypox.mastercom_workbook.view.holder.EventItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.TimetableEventItemHolder;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,11 +28,11 @@ import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+import static com.stypox.mastercom_workbook.util.DateUtils.FULL_DATE_FORMAT;
+import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
 import static com.stypox.mastercom_workbook.util.DateUtils.TODAY;
 
 public class TimetableActivity extends ThemedActivity {
-
-    private static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
 
     private TextView dateTextView;
     private TextView emptyTextView;
@@ -65,8 +63,7 @@ public class TimetableActivity extends ThemedActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_timetable));
-        actionBar.setSubtitle(getString(R.string.today_is,
-                EventItemHolder.dateFormat.format(TODAY)));
+        actionBar.setSubtitle(getString(R.string.today_is, SHORT_DATE_FORMAT.format(TODAY)));
 
         dateTextView = findViewById(R.id.dateTextView);
         emptyTextView = findViewById(R.id.timetableEmptyTextView);
@@ -124,7 +121,7 @@ public class TimetableActivity extends ThemedActivity {
         currentDay = date;
         disposables.clear(); // first clear any current operation
 
-        dateTextView.setText(dateFormat.format(date));
+        dateTextView.setText(FULL_DATE_FORMAT.format(date));
         emptyTextView.setVisibility(View.GONE);
         loadingIndicator.setVisibility(View.VISIBLE);
         errorTextView.setVisibility(View.GONE);
