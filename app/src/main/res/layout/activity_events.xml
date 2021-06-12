@@ -13,6 +13,15 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorBackgroundFloating"
+            app:layout_constraintBottom_toBottomOf="@+id/dismissLegendButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"

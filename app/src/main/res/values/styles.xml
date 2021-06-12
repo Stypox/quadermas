@@ -76,5 +76,6 @@
     <style name="BlackAppTheme" parent="DarkAppTheme">
         <item name="android:windowBackground">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
+        <item name="colorBackgroundFloating">#ff212121</item> <!-- material_grey_900 -->
     </style>
 </resources>
