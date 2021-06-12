@@ -40,6 +40,8 @@ import java.util.TreeSet;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
+import static org.jsoup.internal.StringUtil.isBlank;
+
 public class DocumentsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
     private final int requestCodePermissionDialog = 0;
@@ -310,7 +312,7 @@ public class DocumentsActivity extends ThemedActivity
     private void showSelectSubjectDialog() {
         Set<String> subjects = new TreeSet<>();
         for (DocumentData document : documents) {
-            if (isYearInsideFilter(document)) {
+            if (!isBlank(document.getSubject()) && isYearInsideFilter(document)) {
                 subjects.add(document.getSubject());
             }
         }

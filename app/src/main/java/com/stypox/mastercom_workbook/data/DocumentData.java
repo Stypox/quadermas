@@ -27,11 +27,15 @@ public class DocumentData {
                 + JsonUtils.getUnescapedString(json, "owner_surname");
         date = DOCUMENT_DATE_FORMAT.parse(json.getString("received"));
 
-        String quotedSubject = JsonUtils.getUnescapedString(json.getJSONArray("tags"), 0);
-        if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {
-            subject = quotedSubject.substring(1, quotedSubject.length() - 1);
+        if (json.getJSONArray("tags").length() == 0) {
+            subject = "";
         } else {
-            subject = quotedSubject;
+            String quotedSubject = JsonUtils.getUnescapedString(json.getJSONArray("tags"), 0);
+            if (quotedSubject.startsWith("\"") && quotedSubject.endsWith("\"")) {
+                subject = quotedSubject.substring(1, quotedSubject.length() - 1);
+            } else {
+                subject = quotedSubject;
+            }
         }
     }
 

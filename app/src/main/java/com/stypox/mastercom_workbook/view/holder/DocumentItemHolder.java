@@ -13,6 +13,7 @@ import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
+import static org.jsoup.internal.StringUtil.isBlank;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
 
@@ -35,9 +36,13 @@ public class DocumentItemHolder extends ItemHolder<DocumentData> {
     @Override
     public void updateItemData(DocumentData data) {
         nameView.setText(data.getName());
-        dateSubjectOwnerView.setText(context.getResources().getString(R.string.three_strings,
-                SHORT_DATE_FORMAT.format(data.getDate()), data.getSubject(),
-                data.getOwner()));
+        if (isBlank(data.getSubject())) {
+            dateSubjectOwnerView.setText(context.getResources().getString(R.string.two_strings,
+                    SHORT_DATE_FORMAT.format(data.getDate()), data.getOwner()));
+        } else {
+            dateSubjectOwnerView.setText(context.getResources().getString(R.string.three_strings,
+                    SHORT_DATE_FORMAT.format(data.getDate()), data.getSubject(), data.getOwner()));
+        }
 
         if (adapter == null) {
             itemView.setOnClickListener(null);

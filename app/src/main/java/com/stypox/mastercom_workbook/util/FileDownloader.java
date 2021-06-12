@@ -4,6 +4,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
 
+import static org.jsoup.internal.StringUtil.isBlank;
+
 public class FileDownloader {
     public static void download(String url, String cookie,
                                 String title, String description,
@@ -11,9 +13,9 @@ public class FileDownloader {
                                 Context context) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
-        if (title != null && !title.isEmpty()) request.setTitle(title);
-        if (description != null && !description.isEmpty()) request.setDescription(title);
-        if (cookie != null && !cookie.isEmpty()) request.addRequestHeader("Cookie", cookie);
+        if (!isBlank(title)) request.setTitle(title);
+        if (!isBlank(description)) request.setDescription(title);
+        if (!isBlank(cookie)) request.addRequestHeader("Cookie", cookie);
 
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
