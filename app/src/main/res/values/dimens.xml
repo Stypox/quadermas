@@ -9,7 +9,6 @@
 
     <dimen name="size_item_title">17sp</dimen>
     <dimen name="size_item_info">13sp</dimen>
-    <dimen name="item_mark_height">112dp</dimen>
     <dimen name="item_mark_width">80dp</dimen>
 
     <dimen name="size_action">12sp</dimen>
