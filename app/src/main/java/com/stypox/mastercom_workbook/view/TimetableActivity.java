@@ -79,7 +79,7 @@ public class TimetableActivity extends ThemedActivity {
                 events, TimetableEventItemHolder.getFactory());
         timetableEventList.setAdapter(eventArrayAdapter);
 
-        currentDay = new Date(); // start with today
+        currentDay = (Date) TODAY.clone(); // start with today
         setupListeners();
         loadDay(currentDay);
     }

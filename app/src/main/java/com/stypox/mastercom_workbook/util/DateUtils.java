@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 
 public class DateUtils {
 
-    public static final Date NOW = new Date();
+    public static final Date NOW = buildDate(2021, 3, 2);
     public static final Date TODAY = new Date(NOW.getYear(), NOW.getMonth(), NOW.getDate());
     public static final Date DAY_AFTER_TOMORROW = addDaysToDate(TODAY, 2);
 

@@ -30,7 +30,7 @@ public class AuthenticationExtractor {
 
     private static String phpsessidCookie = "";
     private static String messengerCookie = "";
-    private static String fullName = "";
+    private static String fullName = "Theresa Aurelius";
 
     public static Single<String> authenticateMain(final boolean reload) {
         if (!reload && !TextUtils.isEmpty(phpsessidCookie) && !TextUtils.isEmpty(fullName)) {
