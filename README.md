@@ -1,5 +1,5 @@
 # Mastercom Workbook client
-[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "*Workbook*" (in italian "*Quaderno Elettronico*") made for **students to access marks, timetables, files**... This app is an Android client that **wraps around the website** and is able to show subjects, marks, topics, homework, documents and timetables. It is lightweight (`~5MB`) and uses Material Design.
+[Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "*Workbook*" (in italian "*Quaderno Elettronico*") made for **students to access marks, timetables, files**... This app is an Android client that **wraps around the website** and is able to show subjects, marks, topics, homework, timetables, events and documents. It is lightweight (`~5MB`) and uses Material Design.
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.stypox.mastercom_workbook/)
 
@@ -35,9 +35,20 @@
 - Every topic belongs to a subject and has a title, a date and possibly also a description and some assigned homework.
 - The `topics` view shows topics (from a subject, or all) in a list, with a button that allows showing only topics with **homework** assigned.
 
+## Timetable
+- See the timetable for a **particular day**, selectable with dedicated buttons.
+- Tap on a timetable event to add it to the **phone's calendar**.
+
+## Events
+- Every event has a title, a begin-end pair of dates/times and possibly also an organizer and a description.
+- There can be two types of events: *annotations*, with a red **indicator**, and *events*, with a blue one. *Imminent* events and events *in the future* are **highlighted**, respectively, in yellow and green. A dismissable **legend** helps keep track of the meaning of the colors.
+- Tap on an event to add it to the **phone's calendar**.
+
 ## Documents
 - Find the documents you need thanks to **filters** (by **year** and by **subject**).
 - **Download** a document by just tapping on it: an Android notification will show up. After the download has finished the notification can be clicked to view the downloaded document.
 
-## Timetable
-- See the timetable for a **particular day**, selectable with dedicated buttons.
+## Settings
+- Choose the **theme** you prefer between *light*, *dark* and *black*.
+- Setup the start date of the second term.
+- Choose not to load marks directly.
