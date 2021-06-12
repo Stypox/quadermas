@@ -134,7 +134,7 @@
     <string name="event_event">Event</string>
     <string name="event_in_the_future">In the future</string>
     <string name="event_imminent">Imminent</string>
-    <string name="today_is">Today is the %s</string>
+    <string name="today_is">Today is %s</string>
     <string name="dismiss">Dismiss</string>
 
     <string name="two_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s</string>
