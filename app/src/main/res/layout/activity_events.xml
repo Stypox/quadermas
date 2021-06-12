@@ -149,6 +149,8 @@
                 android:id="@+id/eventsList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fadeScrollbars="false"
+                android:scrollbars="vertical"
                 tools:listitem="@layout/item_event" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
