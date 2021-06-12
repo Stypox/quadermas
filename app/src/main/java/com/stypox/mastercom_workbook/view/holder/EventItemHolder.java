@@ -1,6 +1,7 @@
 package com.stypox.mastercom_workbook.view.holder;
 
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
@@ -10,6 +11,8 @@ import androidx.annotation.Nullable;
 import com.stypox.mastercom_workbook.R;
 import com.stypox.mastercom_workbook.data.EventData;
 import com.stypox.mastercom_workbook.util.DateUtils;
+import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
+import com.stypox.mastercom_workbook.util.ShareUtils;
 
 import java.text.DateFormat;
 
@@ -20,6 +23,7 @@ public class EventItemHolder extends ItemHolder<EventData> {
     public static final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
     private static final DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
 
+    private final View coloredBackgroundView;
     private final View coloredBarView;
     private final TextView titleView;
     private final TextView timeView;
@@ -30,15 +34,31 @@ public class EventItemHolder extends ItemHolder<EventData> {
                            @Nullable final ItemArrayAdapter<EventData> adapter) {
         super(itemView, adapter);
 
+        coloredBackgroundView = itemView.findViewById(R.id.coloredBackground);
         coloredBarView = itemView.findViewById(R.id.coloredBar);
         titleView = itemView.findViewById(R.id.title);
         timeView = itemView.findViewById(R.id.time);
         teacherView = itemView.findViewById(R.id.teacher);
         descriptionView = itemView.findViewById(R.id.description);
+
+        final HorizontalScrollView titleScrollView = itemView.findViewById(R.id.titleScrollView);
+        titleScrollView.setOnTouchListener(new HorizontalScrollViewTouchListener(itemView));
     }
 
     @Override
     public void updateItemData(final EventData data) {
+        @ColorRes final int backgroundColor;
+        if (DateUtils.inTheFuture(data.getEnd())) {
+            if (data.getBegin().before(DAY_AFTER_TOMORROW)) {
+                backgroundColor = R.color.imminentEvent;
+            } else {
+                backgroundColor = R.color.futureEvent;
+            }
+        } else {
+            backgroundColor = R.color.transparent;
+        }
+        coloredBackgroundView.setBackgroundColor(context.getResources().getColor(backgroundColor));
+
         coloredBarView.setBackgroundColor(context.getResources().getColor(
                 data.getType() == EventData.Type.annotation
                         ? R.color.annotationEvent : R.color.eventEvent));
@@ -79,17 +99,10 @@ public class EventItemHolder extends ItemHolder<EventData> {
             descriptionView.setText(data.getDescription());
         }
 
-        @ColorRes final int backgroundColor;
-        if (DateUtils.inTheFuture(data.getEnd())) {
-            if (data.getBegin().before(DAY_AFTER_TOMORROW)) {
-                backgroundColor = R.color.imminentEvent;
-            } else {
-                backgroundColor = R.color.futureEvent;
-            }
-        } else {
-            backgroundColor = R.color.transparent;
-        }
-        itemView.setBackgroundColor(context.getResources().getColor(backgroundColor));
+        itemView.setOnClickListener(v -> {
+            ShareUtils.addEventToCalendar(context, data.getTitle(), data.getDescription(),
+                    data.getTeacher(), data.getBegin(), data.getEnd());
+        });
     }
 
 
