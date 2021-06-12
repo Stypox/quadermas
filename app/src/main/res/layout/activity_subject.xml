@@ -22,13 +22,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/marksList"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_mark" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
