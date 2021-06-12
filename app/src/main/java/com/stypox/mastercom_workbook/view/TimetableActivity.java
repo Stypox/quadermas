@@ -18,6 +18,7 @@ import com.stypox.mastercom_workbook.extractor.Extractor;
 import com.stypox.mastercom_workbook.extractor.ExtractorError;
 import com.stypox.mastercom_workbook.util.DateUtils;
 import com.stypox.mastercom_workbook.util.ThemedActivity;
+import com.stypox.mastercom_workbook.view.holder.EventItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 import com.stypox.mastercom_workbook.view.holder.TimetableEventItemHolder;
 
@@ -28,6 +29,8 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
+import static com.stypox.mastercom_workbook.util.DateUtils.TODAY;
 
 public class TimetableActivity extends ThemedActivity {
 
@@ -62,6 +65,8 @@ public class TimetableActivity extends ThemedActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.menu_timetable));
+        actionBar.setSubtitle(getString(R.string.today_is,
+                EventItemHolder.dateFormat.format(TODAY)));
 
         dateTextView = findViewById(R.id.dateTextView);
         emptyTextView = findViewById(R.id.timetableEmptyTextView);
