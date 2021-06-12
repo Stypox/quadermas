@@ -33,6 +33,7 @@
         <item name="ic_navigate_before">@drawable/ic_navigate_before_white_24dp</item>
         <item name="ic_navigate_next">@drawable/ic_navigate_next_white_24dp</item>
         <item name="ic_update">@drawable/ic_update_white_24dp</item>
+        <item name="ic_legend_toggle">@drawable/ic_legend_toggle_white_24dp</item>
     </style>
 
     <style name="LightAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
@@ -69,6 +70,7 @@
         <item name="ic_navigate_before">@drawable/ic_navigate_before_black_24dp</item>
         <item name="ic_navigate_next">@drawable/ic_navigate_next_black_24dp</item>
         <item name="ic_update">@drawable/ic_update_black_24dp</item>
+        <item name="ic_legend_toggle">@drawable/ic_legend_toggle_black_24dp</item>
     </style>
 
     <style name="BlackAppTheme" parent="DarkAppTheme">

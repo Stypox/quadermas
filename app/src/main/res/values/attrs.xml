@@ -21,6 +21,7 @@
     <attr name="ic_navigate_before" format="reference" />
     <attr name="ic_navigate_next" format="reference" />
     <attr name="ic_update" format="reference" />
+    <attr name="ic_legend_toggle" format="reference" />
 
     <attr name="color_mark_not_classified" format="color" />
     <attr name="color_mark_failing" format="color" />

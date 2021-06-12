@@ -23,4 +23,6 @@
     <dimen name="topic_table_row_spacing">4dp</dimen>
     <dimen name="timetable_button_size">64dp</dimen>
     <dimen name="timetable_button_padding">16dp</dimen>
+
+    <dimen name="event_legend_color_size">12dp</dimen>
 </resources>

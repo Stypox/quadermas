@@ -1,12 +1,14 @@
 package com.stypox.mastercom_workbook.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.Group;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,7 +24,6 @@ import com.stypox.mastercom_workbook.view.holder.EventItemHolder;
 import com.stypox.mastercom_workbook.view.holder.ItemArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -60,6 +61,7 @@ public class EventsActivity extends ThemedActivity {
 
         refreshLayout = findViewById(R.id.refreshLayout);
         eventsView = findViewById(R.id.eventsList);
+        setupLegend();
 
         eventsView.setLayoutManager(new LinearLayoutManager(this));
         eventsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_event, events,
@@ -68,6 +70,21 @@ public class EventsActivity extends ThemedActivity {
 
         refreshLayout.setOnRefreshListener(() -> reloadEvents(true));
         reloadEvents(false);
+    }
+
+    private void setupLegend() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String showEventsLegendKey = getString(R.string.key_show_events_legend);
+        if (prefs.getBoolean(showEventsLegendKey, true)) {
+            final Group legendGroup = findViewById(R.id.legendGroup);
+            final View dismissLegendButton = findViewById(R.id.dismissLegendButton);
+
+            legendGroup.setVisibility(View.VISIBLE);
+            dismissLegendButton.setOnClickListener(v -> {
+                legendGroup.setVisibility(View.GONE);
+                prefs.edit().putBoolean(showEventsLegendKey, false).apply();
+            });
+        }
     }
 
     @Override

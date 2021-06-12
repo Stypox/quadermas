@@ -68,6 +68,7 @@
     <string name="settings_second_term_start_summary">Usata per determinare quali voti siano del primo quadrimestre e quali del secondo - %1$02d/%2$02d</string>
     <string name="settings_load_marks_directly">Carica direttamente i voti</string>
     <string name="settings_load_marks_directly_summary">Se attivo l\'app carica i voti appena viene aperta, altrimenti mostra una schermata di benvenuto</string>
+    <string name="settings_show_events_legend">Mostra una legenda nella schermata degli eventi</string>
     <string name="settings_about">Informazioni</string>
     <string name="error_could_not_load_a_topic">Un argomento della materia %1$s non può essere caricato</string>
     <string name="label_topic_description">Descrizione</string>
@@ -93,5 +94,10 @@
     <string name="settings_changelog_summary">Leggi il changelog e controlla se ci sono aggiornamenti</string>
     <string name="day">Giorno</string>
     <string name="month">Mese</string>
+    <string name="event_annotation">Annotazione</string>
+    <string name="event_event">Evento</string>
+    <string name="event_in_the_future">Nel futuro</string>
+    <string name="event_imminent">Imminente</string>
     <string name="today_is">Oggi è il %s</string>
+    <string name="dismiss">Nascondi</string>
 </resources>

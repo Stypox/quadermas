@@ -2,6 +2,7 @@
     <string name="key_theme" translatable="false">theme</string>
     <string name="key_second_term_start" translatable="false">second_term_start</string>
     <string name="key_load_marks_directly" translatable="false">load_marks_directly</string>
+    <string name="key_show_events_legend" translatable="false">show_events_legend</string>
     <string name="key_source_code" translatable="false">source_code</string>
     <string name="key_report_bug" translatable="false">report_bug</string>
     <string name="key_changelog" translatable="false">changelog</string>
@@ -34,6 +35,7 @@
     <string name="settings_second_term_start_summary">Used to determine which marks belong to the first term and which to the second - %1$02d/%2$02d</string>
     <string name="settings_load_marks_directly">Load marks directly</string>
     <string name="settings_load_marks_directly_summary">If enabled the app loads marks right after it is opened, otherwise it shows a welcome screen</string>
+    <string name="settings_show_events_legend">Show a legend in the events screen</string>
     <string name="settings_about">About</string>
     <string name="settings_source_code">View source code</string>
     <string name="settings_source_code_summary">This app is free and open source!</string>
@@ -128,7 +130,12 @@
     <string name="event_time_same_minute" translatable="false">%1$s \u0020\u0020%2$s</string>
     <string name="event_time_same_day" translatable="false">%1$s \u0020\u0020%2$s • %3$s</string>
     <string name="event_time_different_days" translatable="false">%1$s %2$s \u0020\u0020• \u0020\u0020%3$s %4$s</string>
+    <string name="event_annotation">Annotation</string>
+    <string name="event_event">Event</string>
+    <string name="event_in_the_future">In the future</string>
+    <string name="event_imminent">Imminent</string>
     <string name="today_is">Today is the %s</string>
+    <string name="dismiss">Dismiss</string>
 
     <string name="two_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s</string>
     <string name="three_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s \u0020\u0020• \u0020\u0020%s</string>

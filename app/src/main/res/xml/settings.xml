@@ -25,6 +25,12 @@
         android:summary="@string/settings_load_marks_directly_summary"
         android:title="@string/settings_load_marks_directly" />
 
+    <SwitchPreference
+        android:icon="?attr/ic_legend_toggle"
+        android:defaultValue="true"
+        android:key="@string/key_show_events_legend"
+        android:title="@string/settings_show_events_legend" />
+
     <PreferenceCategory android:title="@string/settings_about">
         <Preference
             android:icon="?attr/ic_code"
