@@ -1,0 +1,11 @@
+Novità:
+- Aggiunta una schermata per vedere annotazioni ed eventi, con colori, una legenda e lo scorrimento automatico al primo evento futuro
+- Clicca su eventi o ore nell'orario per aggiungerli al calendario
+
+Miglioramenti:
+- Migliorato il layout degli argomenti, il titolo è ora scorribile
+- Aggiunto più spazio tra le didascalie e i separatori • in tutta l'app
+
+Problemi sistemati:
+- Sistemato il calcolo della fine dell'anno scolastico
+- Sistemato il caricamento di documenti senza autore

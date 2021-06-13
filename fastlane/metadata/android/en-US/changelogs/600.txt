@@ -1,0 +1,11 @@
+Features:
+- Add events activity to see annotations and events, with color codes, a legend and auto-scrolling to the first future event
+- Click on events or timetable events to add them to the calendar
+
+Improvements:
+- Improve topic item layout and use scrollable title
+- Add more space between labels and • separators throughout the app
+
+Bugs fixed:
+- Fix school year calculation: the second term ends on 01/08, not 01/09
+- Fix parsing documents with no subject
