@@ -1,10 +1,8 @@
 # Mastercom Workbook client
 [Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "*Workbook*" (in italian "*Quaderno Elettronico*") made for **students to access marks, timetables, files**... This app is an Android client that **wraps around the website** and is able to show subjects, marks, topics, homework, timetables, events and documents. It is lightweight (`~5MB`) and uses Material Design.
 
-<table border="0"><th>
-<td><a href="https://f-droid.org/packages/com.stypox.mastercom_workbook/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80"></a></td>
-<td>or download the APK from <a href="https://github.com/Stypox/mastercom-workbook/releases">Releases</a></td>
-</th></table>
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.stypox.mastercom_workbook/)
+[<img src="./get-it-on-github.png" alt="Get it on GitHub" height="80">](https://github.com/Stypox/mastercom-workbook/releases)
 
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/0.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/0.png)
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png)
