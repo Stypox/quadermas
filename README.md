@@ -1,6 +1,8 @@
 # Mastercom Workbook client
 [Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "*Workbook*" (in italian "*Quaderno Elettronico*") made for **students to access marks, timetables, files**... This app is an Android client that **wraps around the website** and is able to show subjects, marks, topics, homework, timetables, events and documents. It is lightweight (`~5MB`) and uses Material Design.
 
+*Note: only the student's credentials will work, the parents' ones won't*
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.stypox.mastercom_workbook/)
 [<img src="./get-it-on-github.png" alt="Get it on GitHub" height="80">](https://github.com/Stypox/mastercom-workbook/releases)
 
