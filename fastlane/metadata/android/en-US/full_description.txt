@@ -1,8 +1,11 @@
 This is an unofficial client for the Mastercom Workbook, a tool for school students.
 
 Features:
-- Login support for many schools.
-- Subjects: calculates averages and needed marks, creates graphs and shows topics.
-- Marks: shows all marks in a list or in a graph, and calculates the overall average.
-- Documents: find and download documents.
-- Timetable: view the timetable of school days.
+- Login support for many schools
+- Subjects: calculate averages and needed marks, plot graphs and view topics
+- Marks: view all marks in a list or in a graph and calculate the overall average
+- Topics: view all topics also with a filter for homework
+- Timetable: view the timetable of school days
+- Events: view color coded events
+- Documents: find and download documents
+- Light and dark themes are available
