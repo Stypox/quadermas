@@ -2,9 +2,11 @@ package com.stypox.mastercom_workbook.login;
 
 import static com.stypox.mastercom_workbook.util.NavigationHelper.openActivity;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -84,6 +86,37 @@ public class LoginActivity extends ThemedActivity {
         moveTaskToBack(true);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(final MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN && !touchesAPIUrlPopup(ev)) {
+            // motion started outside of APIUrl popup: dismiss it
+            hideAPIUrlPopup();
+            APIUrlEdit.clearFocus();
+        }
+
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private boolean touchesAPIUrlPopup(final MotionEvent ev) {
+        final View currentlyOpenPopup;
+        if (APIUrlLoading.getVisibility() == View.VISIBLE) {
+            currentlyOpenPopup = APIUrlLoading;
+        } else if (APIUrlList.getVisibility() == View.VISIBLE) {
+            currentlyOpenPopup = APIUrlList;
+        } else {
+            return true;
+        }
+
+        final Rect currentlyOpenPopupRect = new Rect();
+        currentlyOpenPopup.getHitRect(currentlyOpenPopupRect);
+        if (currentlyOpenPopupRect.contains((int) ev.getX(), (int) ev.getY())) {
+            return true;
+        }
+
+        final Rect APIUrlEditRect = new Rect();
+        APIUrlEdit.getHitRect(APIUrlEditRect);
+        return APIUrlEditRect.contains((int) ev.getX(), (int) ev.getY());
+    }
 
     private void setupAPIUrlEdit() {
         APIUrlEdit.setOnFocusChangeListener((view, focused) -> {
@@ -120,6 +153,7 @@ public class LoginActivity extends ThemedActivity {
         APIUrlAdapter.setOnItemClickListener(school -> {
             APIUrlEdit.setText(school.getAPIUrl());
             hideAPIUrlPopup();
+            userEdit.requestFocus(); // focus next field
         });
         APIUrlList.setLayoutManager(new LinearLayoutManager(this));
         APIUrlList.setAdapter(APIUrlAdapter);
