@@ -41,12 +41,16 @@ public class Extractor {
     private static String password;
 
     // extracted data
-    private static List<SchoolData> schools;
+    private static List<SchoolData> schools = null; // others are set by static initialization
     private static List<SubjectData> subjects;
     private static List<ClassData> classes;
     private static List<EventData> events;
     @NonNull
     private static final Map<Integer, List<TimetableEventData>> timetable = new HashMap<>();
+
+    static {
+        resetUserCachedData();
+    }
 
     /////////////
     // GETTERS //
@@ -249,13 +253,14 @@ public class Extractor {
     /**
      * To be called on logout, to clear all data and cached results
      */
-    public static void removeAllData() {
+    public static void resetUserCachedData() {
         APIUrl = "";
         user = "";
         password = "";
+        // do not clear schools, since they're not user-specific
         subjects = null;
         classes = null;
-        // TODO
+        events = null;
         timetable.clear();
     }
 

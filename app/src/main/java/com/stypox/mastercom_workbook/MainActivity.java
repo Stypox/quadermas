@@ -153,7 +153,7 @@ public class MainActivity extends ThemedActivity
         disposables.dispose();
         disposables = new CompositeDisposable();
         AuthenticationExtractor.removeAllData();
-        Extractor.removeAllData();
+        Extractor.resetUserCachedData();
         LoginData.logout(this);
 
         Intent intent = new Intent(this, LoginActivity.class);
