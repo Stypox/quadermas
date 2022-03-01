@@ -45,25 +45,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/APIUrlEdit" />
 
-        <com.stypox.mastercom_workbook.util.APIUrlEdit
+        <EditText
             android:id="@+id/APIUrlEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:drawableEnd="?attr/ic_arrow_drop_down"
-            android:drawableRight="?attr/ic_arrow_drop_down"
+            android:drawableEnd="?attr/ic_search"
+            android:drawableRight="?attr/ic_search"
             android:ems="10"
             android:hint="@string/login_API_url_hint"
             android:importantForAutofill="no"
-            android:inputType="text"
-            app:entries="@array/API_urls"
+            android:inputType="textNoSuggestions|textVisiblePassword"
+            android:nextFocusDown="@id/userEdit"
             app:layout_constraintBottom_toTopOf="@+id/APIUrlExplanation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/APIUrlLabel"
-            app:layout_constraintTop_toBottomOf="@id/titleView" />
+            app:layout_constraintTop_toBottomOf="@id/titleView"
+            tools:ignore="TextFields" />
 
         <TextView
             android:id="@+id/APIUrlExplanation"
@@ -113,6 +114,7 @@
             android:ems="10"
             android:hint="@string/login_user_hint"
             android:inputType="number"
+            android:nextFocusDown="@id/passwordEdit"
             app:layout_constraintBottom_toTopOf="@+id/passwordEdit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -142,6 +144,7 @@
             android:ems="10"
             android:hint="@string/login_password_hint"
             android:inputType="textPassword"
+            android:nextFocusDown="@id/loginButton"
             android:textColor="?android:textColorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/userPasswordDivider"
             app:layout_constraintEnd_toEndOf="parent"
@@ -180,14 +183,39 @@
             android:id="@+id/settingsButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:contentDescription="@string/menu_settings"
             app:layout_constraintBottom_toBottomOf="@+id/loginButton"
             app:layout_constraintEnd_toStartOf="@+id/loginButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/loginButton"
-            app:srcCompat="?attr/ic_settings"
-            android:contentDescription="@string/menu_settings" />
+            app:srcCompat="?attr/ic_settings" />
+
+        <ProgressBar
+            android:id="@+id/APIUrlLoadingIndicator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorBackgroundFloating"
+            android:elevation="8dp"
+            android:paddingVertical="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/APIUrlEdit"
+            app:layout_constraintStart_toStartOf="@+id/APIUrlEdit"
+            app:layout_constraintTop_toBottomOf="@+id/APIUrlEdit" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/APIUrlList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorBackgroundFloating"
+            android:elevation="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/APIUrlEdit"
+            app:layout_constraintStart_toStartOf="@+id/APIUrlEdit"
+            app:layout_constraintTop_toBottomOf="@+id/APIUrlEdit"
+            tools:listitem="@layout/item_login_api_url" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

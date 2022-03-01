@@ -4,7 +4,7 @@
         <attr name="entries" format="reference" />
     </declare-styleable>
 
-    <attr name="ic_arrow_drop_down" format="reference" />
+    <attr name="ic_search" format="reference" />
     <attr name="ic_storage" format="reference" />
     <attr name="ic_timeline" format="reference" />
     <attr name="ic_assignment" format="reference" />

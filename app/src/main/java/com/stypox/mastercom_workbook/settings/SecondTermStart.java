@@ -26,6 +26,7 @@ public class SecondTermStart {
     private static final String MONTH_KEY = "second_term_start_month";
     private static final String DAY_KEY = "second_term_start_day";
 
+    // unfortunately there is no way to obtain these with an API
     private static final Map<String, SecondTermStart> SECOND_TERM_START_FOR_API_URL_MAP
             = new HashMap<String, SecondTermStart>() {{
         put("davinci-tn", new SecondTermStart(1, 14));

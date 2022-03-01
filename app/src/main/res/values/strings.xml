@@ -139,4 +139,6 @@
 
     <string name="two_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s</string>
     <string name="three_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s \u0020\u0020• \u0020\u0020%s</string>
+    <string name="label_school_municipality" translatable="false">%1$s  -  %2$s</string>
+    <string name="label_school_municipality_province" translatable="false">%1$s  -  %2$s (%3$s)</string>
 </resources>

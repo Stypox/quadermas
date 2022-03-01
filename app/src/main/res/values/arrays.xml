@@ -11,14 +11,6 @@
         <item>@string/overall_average_mode_all_marks</item>
     </string-array>
 
-    <string-array name="API_urls">
-        <item>davinci-tn</item>
-        <item>galilei-tn</item>
-        <item>marconi-tn</item>
-        <item>rosmini-tn</item>
-        <item>rosmini-trento-tn</item>
-    </string-array>
-
     <string-array name="settings_theme_entries">
         <item>@string/settings_theme_light</item>
         <item>@string/settings_theme_dark</item>

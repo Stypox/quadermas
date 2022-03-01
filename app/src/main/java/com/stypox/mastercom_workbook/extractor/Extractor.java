@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.EventData;
+import com.stypox.mastercom_workbook.data.SchoolData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TimetableEventData;
 
@@ -40,6 +41,7 @@ public class Extractor {
     private static String password;
 
     // extracted data
+    private static List<SchoolData> schools;
     private static List<SubjectData> subjects;
     private static List<ClassData> classes;
     private static List<EventData> events;
@@ -49,6 +51,22 @@ public class Extractor {
     /////////////
     // GETTERS //
     /////////////
+
+    public static void extractSchools(final CompositeDisposable disposables,
+                                      final DataHandler<List<SchoolData>> handler) {
+        if (schools == null) {
+            disposables.add(SchoolExtractor
+                    .fetchSchools(t -> signalItemErrorOnMainThread(t, handler))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(data -> {
+                                schools = data;
+                                handler.onExtractedData(data);
+                            },
+                            throwable -> handler.onError((ExtractorError) throwable)));
+        } else {
+            handler.onExtractedData(schools);
+        }
+    }
 
     /**
      * Extracts the subject list and feeds it to the handler
@@ -237,6 +255,7 @@ public class Extractor {
         password = "";
         subjects = null;
         classes = null;
+        // TODO
         timetable.clear();
     }
 

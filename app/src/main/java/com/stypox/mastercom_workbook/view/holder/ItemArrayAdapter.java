@@ -1,5 +1,6 @@
 package com.stypox.mastercom_workbook.view.holder;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class ItemArrayAdapter<D> extends RecyclerView.Adapter<ItemHolder<D>> {
 
 
     private final int resource;
-    private final List<D> dataItems;
+    private List<D> dataItems;
     private final ItemHolderFactory<D> factory;
     @Nullable private OnItemClickListener<D> onItemClickListener;
 
@@ -42,6 +43,13 @@ public class ItemArrayAdapter<D> extends RecyclerView.Adapter<ItemHolder<D>> {
 
     public void sort(Comparator<D> comparator) {
         Collections.sort(dataItems, comparator);
+        //noinspection NotifyDataSetChanged
+        notifyDataSetChanged();
+    }
+
+    public void setDataItems(final List<D> dataItems) {
+        this.dataItems = dataItems;
+        //noinspection NotifyDataSetChanged
         notifyDataSetChanged();
     }
 

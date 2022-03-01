@@ -16,7 +16,7 @@
         <item name="color_mark_halfway">#E0E000</item>
         <item name="color_mark_excellent">#00E000</item>
 
-        <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_white_24dp</item>
+        <item name="ic_search">@drawable/ic_search_white_24dp</item>
         <item name="ic_storage">@drawable/ic_storage_white_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_white_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_white_24dp</item>
@@ -53,7 +53,7 @@
         <item name="color_mark_halfway">#B2B200</item>
         <item name="color_mark_excellent">#00B200</item>
 
-        <item name="ic_arrow_drop_down">@drawable/ic_arrow_drop_down_black_24dp</item>
+        <item name="ic_search">@drawable/ic_search_black_24dp</item>
         <item name="ic_storage">@drawable/ic_storage_black_24dp</item>
         <item name="ic_timeline">@drawable/ic_timeline_black_24dp</item>
         <item name="ic_assignment">@drawable/ic_assignment_black_24dp</item>
