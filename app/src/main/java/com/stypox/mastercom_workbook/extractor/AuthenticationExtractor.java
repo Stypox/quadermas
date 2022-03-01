@@ -8,9 +8,11 @@ import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -62,7 +64,12 @@ public class AuthenticationExtractor {
                         = jsonResponse.getJSONObject("result").getString("full_name");
                 fullName = FullNameFormatting.capitalize(fullNameUppercase);
                 return fullName;
-            } catch (Throwable e) {
+
+            } catch (final Throwable e) {
+                if (e instanceof FileNotFoundException || e instanceof UnknownHostException) {
+                    // error 404: the API url is invalid
+                    throw new ExtractorError(ExtractorError.Type.invalid_api_url, e);
+                }
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
             }
         }).subscribeOn(Schedulers.io());

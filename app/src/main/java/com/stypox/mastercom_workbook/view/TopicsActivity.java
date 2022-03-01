@@ -28,6 +28,7 @@ import com.stypox.mastercom_workbook.view.holder.TopicItemHolder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
@@ -78,33 +79,7 @@ public class TopicsActivity extends ThemedActivity
         topicsList.setAdapter(topicsArrayAdapter);
 
         refreshLayout.setRefreshing(true);
-        NavigationHelper.getSelectedSubjects(getIntent(), disposables,
-                new Extractor.DataHandler<List<SubjectData>>() {
-                    @Override
-                    public void onExtractedData(final List<SubjectData> data) {
-                        subjects = data;
-                        if (subjects.size() == 1) {
-                            actionBar.setSubtitle(subjects.get(0).getName());
-                        }
-                        refreshLayout.setOnRefreshListener(() -> reloadTopics(true));
-                        reloadTopics(false);
-                    }
-
-                    @Override
-                    public void onItemError(final ExtractorError error) {
-                        Toast.makeText(TopicsActivity.this,
-                                getString(R.string.error_could_not_load_a_subject),
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-
-                    @Override
-                    public void onError(final  ExtractorError error) {
-                        Toast.makeText(getApplicationContext(),
-                                error.getMessage(TopicsActivity.this), Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
+        reloadSubjects();
     }
 
     @Override
@@ -139,6 +114,48 @@ public class TopicsActivity extends ThemedActivity
     /////////////
     // LOADING //
     /////////////
+
+    private void reloadSubjects() {
+        NavigationHelper.getSelectedSubjects(getIntent(), disposables,
+                new Extractor.DataHandler<List<SubjectData>>() {
+                    @Override
+                    public void onExtractedData(final List<SubjectData> data) {
+                        if (data.isEmpty()) {
+                            onNoSubjectFetched();
+                            return;
+                        }
+
+                        subjects = data;
+                        if (subjects.size() == 1) {
+                            Objects.requireNonNull(getSupportActionBar())
+                                    .setSubtitle(subjects.get(0).getName());
+                        }
+                        refreshLayout.setOnRefreshListener(() -> reloadTopics(true));
+                        reloadTopics(false);
+                    }
+
+                    @Override
+                    public void onItemError(final ExtractorError error) {
+                        Toast.makeText(TopicsActivity.this,
+                                getString(R.string.error_could_not_load_a_subject),
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+
+                    @Override
+                    public void onError(final ExtractorError error) {
+                        onNoSubjectFetched();
+                        Toast.makeText(getApplicationContext(),
+                                error.getMessage(TopicsActivity.this), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+    }
+
+    private void onNoSubjectFetched() {
+        refreshLayout.setRefreshing(false);
+        refreshLayout.setOnRefreshListener(this::reloadSubjects);
+    }
 
     private void reloadTopics(boolean reload) {
         refreshLayout.setRefreshing(true);

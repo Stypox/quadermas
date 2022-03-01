@@ -205,6 +205,7 @@ public class LoginActivity extends ThemedActivity {
             if (toBeShown.isEmpty()) {
                 // nothing to show: dismiss window
                 hideAPIUrlPopup();
+
             } else {
                 APIUrlLoading.setVisibility(View.GONE);
                 APIUrlList.setVisibility(View.VISIBLE);

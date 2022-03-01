@@ -31,6 +31,10 @@ public class SubjectExtractor {
                 JSONObject jsonResponse = AuthenticationExtractor.fetchJsonAuthenticated(url);
                 jsonAlreadyParsed = true;
 
+                if (jsonResponse.isNull("result")) {
+                    throw new ExtractorError(ExtractorError.Type.user_has_no_subjects);
+                }
+
                 JSONArray list = jsonResponse.getJSONArray("result");
                 List<SubjectData> subjects = new ArrayList<>();
                 for (int i = 0; i < list.length(); i++) {

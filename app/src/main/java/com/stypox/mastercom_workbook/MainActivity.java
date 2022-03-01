@@ -243,7 +243,9 @@ public class MainActivity extends ThemedActivity
                             if (!(throwable instanceof ExtractorError)) return;
                             ExtractorError error = (ExtractorError) throwable;
 
-                            if (error.isType(Type.invalid_credentials) || error.isType(Type.malformed_url)) {
+                            if (error.isType(Type.invalid_credentials)
+                                    || error.isType(Type.invalid_api_url)
+                                    || error.isType(Type.malformed_url)) {
                                 Toast.makeText(this, error.getMessage(this), Toast.LENGTH_LONG)
                                         .show();
                                 openLoginActivityThenReload();
@@ -281,7 +283,11 @@ public class MainActivity extends ThemedActivity
         Extractor.extractSubjects(false, disposables, new Extractor.DataHandler<List<SubjectData>>() {
             @Override
             public void onExtractedData(List<SubjectData> data) {
-                onSubjectsFetched(data, reload);
+                if (data.isEmpty()) {
+                    onNoSubjectFetched();
+                } else {
+                    onSubjectsFetched(data, reload);
+                }
             }
 
             @Override
@@ -293,6 +299,7 @@ public class MainActivity extends ThemedActivity
 
             @Override
             public void onError(ExtractorError error) {
+                onNoSubjectFetched();
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(MainActivity.this), Toast.LENGTH_LONG)
                         .show();
@@ -300,6 +307,11 @@ public class MainActivity extends ThemedActivity
         });
     }
 
+
+    private void onNoSubjectFetched() {
+        refreshLayout.setRefreshing(false);
+        topicsMenuItem.setEnabled(false);
+    }
 
     private void increaseNumSubjectsExtracted() {
         ++numSubjectsExtracted;

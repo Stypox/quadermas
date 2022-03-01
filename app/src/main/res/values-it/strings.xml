@@ -15,6 +15,8 @@
     <string name="all_years">Tutti gli anni scolastici</string>
     <string name="error_could_not_load_a_mark">Un voto della materia %1$s non può essere caricato</string>
     <string name="error_invalid_credentials">Utente o password errati</string>
+    <string name="error_invalid_api_url">Url dell\'API della scuola errato</string>
+    <string name="error_user_has_no_subjects">L\'utente non ha materie</string>
     <string name="error_malformed_url">Url malformato</string>
     <string name="error_network">Errore di rete</string>
     <string name="error_no_marks">Nessun voto</string>

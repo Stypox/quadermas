@@ -22,6 +22,8 @@ public class ExtractorError extends Exception {
         unsuitable_json,
         unsuitable_date,
         invalid_credentials,
+        invalid_api_url,
+        user_has_no_subjects,
         unknown;
 
         public String toString(Context context) {
@@ -38,6 +40,10 @@ public class ExtractorError extends Exception {
                     return context.getString(R.string.error_unsuitable_date);
                 case invalid_credentials:
                     return context.getString(R.string.error_invalid_credentials);
+                case invalid_api_url:
+                    return context.getString(R.string.error_invalid_api_url);
+                case user_has_no_subjects:
+                    return context.getString(R.string.error_user_has_no_subjects);
                 case unknown: default: // default is useless
                     return context.getString(R.string.error_unknown);
             }
@@ -67,7 +73,7 @@ public class ExtractorError extends Exception {
 
 
     public static ExtractorError asExtractorError(Throwable throwable, boolean jsonAlreadyParsed) {
-        if (hasAssignableCause(throwable, ExtractorError.class)) {
+        if (throwable instanceof ExtractorError) {
             return (ExtractorError) throwable;
         } else if (hasAssignableCause(throwable, MalformedURLException.class)) {
             return new ExtractorError(Type.malformed_url, throwable);

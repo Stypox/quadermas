@@ -61,6 +61,8 @@
     <string name="error_unsuitable_json">Unsuitable response JSON</string>
     <string name="error_unsuitable_date">Unsuitable response date</string>
     <string name="error_invalid_credentials">Wrong user or password</string>
+    <string name="error_invalid_api_url">Wrong school API url</string>
+    <string name="error_user_has_no_subjects">User has no subjects</string>
     <string name="error_could_not_load_a_subject">Could not load a subject</string>
     <string name="error_could_not_load_marks">Could not load marks for subject %1$s</string>
     <string name="error_could_not_load_a_mark">Could not load a mark for subject %1$s</string>
