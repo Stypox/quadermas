@@ -239,7 +239,6 @@ public class StatisticsActivity extends ThemedActivity {
             markLayout.addView(LayoutInflater.from(this).inflate(R.layout.item_mark_detail, markLayout, false));
         }
 
-        // TODO
         new MarkDetailItemHolder(markLayout.getChildAt(0), null).updateItemData(markData);
     }
 
