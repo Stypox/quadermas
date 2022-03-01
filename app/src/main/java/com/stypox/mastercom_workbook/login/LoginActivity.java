@@ -230,7 +230,7 @@ public class LoginActivity extends ThemedActivity {
 
         final List<SchoolWithScore> schoolsWithScore = new ArrayList<>();
         for (final SchoolData school : schools) {
-            final int score = 2 * StringUtils.customStringDistance(text, school.getAPIUrl())
+            final int score = StringUtils.customStringDistance(text, school.getAPIUrl())
                     + StringUtils.customStringDistance(text, school.getName())
                     + StringUtils.customStringDistance(text, school.getMunicipality());
             schoolsWithScore.add(new SchoolWithScore(score, school));
