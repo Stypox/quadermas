@@ -108,7 +108,7 @@ public class MainActivity extends ThemedActivity
         subjects = new ArrayList<>();
         RecyclerView subjectList = findViewById(R.id.subjectList);
         subjectList.setLayoutManager(new LinearLayoutManager(this));
-        subjectsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_subject, subjects, SubjectItemHolder.getFactory());
+        subjectsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_subject, subjects, SubjectItemHolder::new);
         subjectsArrayAdapter.setOnItemClickListener(this);
         subjectList.setAdapter(subjectsArrayAdapter);
 

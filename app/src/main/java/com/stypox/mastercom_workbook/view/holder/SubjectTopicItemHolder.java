@@ -21,18 +21,4 @@ public class SubjectTopicItemHolder extends TopicItemHolder {
         return context.getResources().getString(R.string.two_strings,
                 data.getSubject(), SHORT_DATE_FORMAT.format(data.getDate()));
     }
-
-
-    private static class Factory implements ItemHolderFactory<TopicData> {
-        @Override
-        public SubjectTopicItemHolder buildItemHolder(@NonNull View view, @Nullable ItemArrayAdapter<TopicData> adapter) {
-            return new SubjectTopicItemHolder(view, adapter);
-        }
-    }
-
-    private static final Factory factory = new Factory();
-
-    public static ItemHolderFactory<TopicData> getFactory() {
-        return factory;
-    }
 }

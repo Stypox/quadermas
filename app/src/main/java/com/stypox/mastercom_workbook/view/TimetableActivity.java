@@ -76,7 +76,7 @@ public class TimetableActivity extends ThemedActivity {
         RecyclerView timetableEventList = findViewById(R.id.timetableEventList);
         timetableEventList.setLayoutManager(new LinearLayoutManager(this));
         eventArrayAdapter = new ItemArrayAdapter<>(R.layout.item_timetable_event,
-                events, TimetableEventItemHolder.getFactory());
+                events, TimetableEventItemHolder::new);
         timetableEventList.setAdapter(eventArrayAdapter);
 
         currentDay = new Date(); // start with today

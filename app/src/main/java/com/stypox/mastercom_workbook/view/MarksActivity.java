@@ -61,7 +61,7 @@ public class MarksActivity extends ThemedActivity
 
         RecyclerView marksView = findViewById(R.id.marksList);
         marksView.setLayoutManager(new LinearLayoutManager(this));
-        marksArrayAdapter = new ItemArrayAdapter<>(R.layout.item_mark_detail, marks, MarkDetailItemHolder.getFactory());
+        marksArrayAdapter = new ItemArrayAdapter<>(R.layout.item_mark_detail, marks, MarkDetailItemHolder::new);
         marksView.setAdapter(marksArrayAdapter);
 
         showSortedMarks();

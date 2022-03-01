@@ -47,20 +47,4 @@ public class TimetableEventItemHolder extends ItemHolder<TimetableEventData> {
                 ShareUtils.addEventToCalendar(context, data.getSubject(), null,
                         data.getTeacher(), data.getBegin(), data.getEnd()));
     }
-
-    private static class Factory implements ItemHolderFactory<TimetableEventData> {
-        @Override
-        public TimetableEventItemHolder buildItemHolder(
-                @NonNull final View view,
-                @Nullable final ItemArrayAdapter<TimetableEventData> adapter) {
-            return new TimetableEventItemHolder(view, adapter);
-        }
-    }
-
-    private static final TimetableEventItemHolder.Factory factory
-            = new TimetableEventItemHolder.Factory();
-
-    public static TimetableEventItemHolder.Factory getFactory() {
-        return factory;
-    }
 }

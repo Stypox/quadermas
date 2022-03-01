@@ -74,8 +74,8 @@ public class TopicsActivity extends ThemedActivity
         topicsList.setLayoutManager(new LinearLayoutManager(this));
         topicsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_topic, filteredTopics,
                 NavigationHelper.isSelectedSubjectsAll(getIntent())
-                        ? SubjectTopicItemHolder.getFactory()
-                        : TopicItemHolder.getFactory());
+                        ? SubjectTopicItemHolder::new
+                        : TopicItemHolder::new);
         topicsList.setAdapter(topicsArrayAdapter);
 
         refreshLayout.setRefreshing(true);

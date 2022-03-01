@@ -48,18 +48,4 @@ public class MarkDetailItemHolder extends ItemHolder<MarkData> {
         teacherDateView.setText(context.getResources().getString(R.string.two_strings,
                 data.getTeacher(), SHORT_DATE_FORMAT.format(data.getDate())));
     }
-
-
-    private static class Factory implements ItemHolderFactory<MarkData> {
-        @Override
-        public MarkDetailItemHolder buildItemHolder(@NonNull View itemView, @Nullable ItemArrayAdapter<MarkData> adapter) {
-            return new MarkDetailItemHolder(itemView, adapter);
-        }
-    }
-
-    private static final Factory factory = new Factory();
-
-    public static Factory getFactory() {
-        return factory;
-    }
 }

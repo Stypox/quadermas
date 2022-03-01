@@ -65,7 +65,7 @@ public class EventsActivity extends ThemedActivity {
 
         eventsView.setLayoutManager(new LinearLayoutManager(this));
         eventsArrayAdapter = new ItemArrayAdapter<>(R.layout.item_event, events,
-                EventItemHolder.getFactory());
+                EventItemHolder::new);
         eventsView.setAdapter(eventsArrayAdapter);
 
         refreshLayout.setOnRefreshListener(() -> reloadEvents(true));

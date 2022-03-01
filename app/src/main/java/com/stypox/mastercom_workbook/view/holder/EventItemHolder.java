@@ -100,19 +100,4 @@ public class EventItemHolder extends ItemHolder<EventData> {
                 ShareUtils.addEventToCalendar(context, data.getTitle(), data.getDescription(),
                         data.getTeacher(), data.getBegin(), data.getEnd()));
     }
-
-
-    private static class Factory implements ItemHolderFactory<EventData> {
-        @Override
-        public EventItemHolder buildItemHolder(
-                @NonNull final View itemView, @Nullable final ItemArrayAdapter<EventData> adapter) {
-            return new EventItemHolder(itemView, adapter);
-        }
-    }
-
-    private static final Factory factory = new Factory();
-
-    public static Factory getFactory() {
-        return factory;
-    }
 }
