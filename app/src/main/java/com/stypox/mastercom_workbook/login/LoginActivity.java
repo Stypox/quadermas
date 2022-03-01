@@ -39,6 +39,7 @@ public class LoginActivity extends ThemedActivity {
     private EditText userEdit;
     private EditText passwordEdit;
 
+    private RecyclerView.LayoutManager APIUrlLayoutManager;
     private ItemArrayAdapter<SchoolData> APIUrlAdapter;
     private List<SchoolData> schools = null;
     private boolean currentlyExtractingSchools = false;
@@ -155,7 +156,9 @@ public class LoginActivity extends ThemedActivity {
             hideAPIUrlPopup();
             userEdit.requestFocus(); // focus next field
         });
-        APIUrlList.setLayoutManager(new LinearLayoutManager(this));
+
+        APIUrlLayoutManager = new LinearLayoutManager(this);
+        APIUrlList.setLayoutManager(APIUrlLayoutManager);
         APIUrlList.setAdapter(APIUrlAdapter);
     }
 
@@ -205,7 +208,7 @@ public class LoginActivity extends ThemedActivity {
             } else {
                 APIUrlLoading.setVisibility(View.GONE);
                 APIUrlList.setVisibility(View.VISIBLE);
-                APIUrlList.scrollTo(0, 0); // text changed: scroll to top
+                APIUrlLayoutManager.scrollToPosition(0); // text changed: scroll to top
                 APIUrlAdapter.setDataItems(toBeShown);
             }
         }
