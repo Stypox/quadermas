@@ -1,0 +1,8 @@
+Novità:
+- Aggiunto un popup nella schermata di login che permette di cercare l'id della scuola in una lista di tutte le scuole che usano Mastercom. Il caricamento di tale lista dai server Mastercom è però molto lento.
+
+Miglioramenti:
+- Migliorata la gestione dell'errore di login nel caso di id della scuola invalido, o nel caso di utente senza materie
+- Migliorato il codice in vari punti
+- Aggiornate alcune librerie
+- Incrementato targetSdk da 30 a 31

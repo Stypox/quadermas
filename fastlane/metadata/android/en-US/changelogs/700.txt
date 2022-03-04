@@ -1,0 +1,8 @@
+Features:
+- Add a popup in the login screen that allows searching the school id in a list of all schools that use Mastercom. Loading such list from Mastercom servers is slow, though.
+
+Improvements:
+- Improve handling login errors when the school id is invalid, or when the user has no subjects
+- Improve the code in various places
+- Update some libraries
+- Increase targetSdk from 30 to 31
