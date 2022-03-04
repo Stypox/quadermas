@@ -1,11 +1,11 @@
 Questo è un client non ufficiale per il Quaderno Elettronico Mastercom, uno strumento per gli studenti di alcune scuole.
 
 Funzionalità:
-- Accesso al quaderno elettronico di molte scuole
+- Accesso al quaderno elettronico di molte scuole, ricercabili in un popup
 - Materie: calcola medie e voti necessari, crea grafici e visualizza gli argomenti
 - Voti: visualizza tutti i voti in una lista o in un grafico e calcola la media generale
 - Argomenti: visualizza tutti gli argomenti, anche con un filtro per i compiti
 - Orario: visualizza l'orario dei giorni scolastici
 - Eventi: visualizza i tuoi eventi identificati secondo un codice di colori
 - Documenti: trova e scarica i documenti
-- Sono disponibili i temi chiaro e scuro
+- Sono disponibili i temi chiaro, scuro e nero
