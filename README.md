@@ -22,6 +22,7 @@
 
 ## Login
 - Log in with your **Workbook credentials** to any school that uses the Mastercom platform. Just insert the id of the school (e.g. `marconi-tn`), the user id (e.g. `123456`) and the password, and you are ready to go!
+- The id of the school is the first part of the URL you would use to access the workbook online, as explained in the app. You will get a **popup list** with all of the schools that use Mastercom and you will be able to **search** through them.
 - Log out is available, and school id and user id are **remembered**.
 
 ## Subjects
