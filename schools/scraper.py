@@ -9,7 +9,9 @@ token = hashlib.sha256(token.encode("utf-8")).hexdigest()
 
 municipalities = []
 municipality_data = requests.get("https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv").content
-for line in municipality_data.split(b"\r\n"):
+for line in municipality_data.split(b"\r\n")[1:]:
+    if not line:
+        continue
     line = line.split(b";")
     if len(line) < 20:
         print("WARNING, SKIPPING MUNICIPALITY LINE: ", line)
@@ -17,7 +19,6 @@ for line in municipality_data.split(b"\r\n"):
         municipalities.append((line[14].decode("utf-8"), line[19].decode("utf-8")))
 print(f"Extracted {len(municipalities)} municipalities")
 
-municipalities = municipalities
 schools = {}
 i = 0
 for province, municipality in municipalities:
@@ -45,10 +46,10 @@ for api_url, (name, municipality, province) in schools.items():
         "comune": municipality.title(),
         "provincia": province.title(),
     })
-json.dump(output_json, "schools.json")
+json.dump(output_json, open("schools.json", "w"), separators=(',', ':'))
 
 def fix_string(s: str):
     return s.title().replace("\"", "\\\"")
-with open("schools.java") as output_file:
+with open("schools.java", "w") as output_file:
     for api_url, (name, municipality, province) in schools.items():
         print(f"add(new SchoolData(\"{api_url}\", \"{fix_string(name)}\", \"{fix_string(municipality)}\", \"{fix_string(province)}\"));", file=output_file)
