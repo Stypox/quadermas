@@ -22,6 +22,11 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SchoolExtractor {
+    // Schools are obtained from the GitHub repository, where they have already been scraped and
+    // preprocessed, otherwise it would take too long to get the same data from the official APIs
+    // here (or not work at all due to 504 Bad Gateway on requests that don't specify municipality).
+    // See schools/README.md from the repository root for more information. In case reverting to the
+    // official APIs is needed, just check the commits that changed this file.
     public static final String schoolsUrl
             = "https://raw.githubusercontent.com/Stypox/mastercom-workbook/master/schools/schools.json";
 
