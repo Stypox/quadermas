@@ -9,3 +9,5 @@ Funzionalità:
 - Eventi: visualizza i tuoi eventi identificati secondo un codice di colori
 - Documenti: trova e scarica i documenti
 - Sono disponibili i temi chiaro, scuro e nero
+
+NOTA BENE: Le informazioni mostrate in Mastercom Workbook vengono dalle stesse APIs dei siti ufficiali dei quaderni elettronici delle scuole, ma Mastercom Workbook non è affiliata con "Mastercom", qualsiasi scuola, il governo italiano o altre entità governative.
