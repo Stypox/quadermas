@@ -15,11 +15,13 @@ android {
     }
     buildTypes {
         release {
+            multiDexEnabled true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            multiDexEnabled true
             debuggable true
             applicationIdSuffix ".debug"
         }
@@ -34,9 +36,10 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.preference:preference:1.1.1' // updating this would require multidex
+    implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.android.support:multidex:2.0.1'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
