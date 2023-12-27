@@ -4,4 +4,4 @@ Quadermas connects to the APIs of "[Quaderno Elettronico Mastercom](https://www.
 
 The data Quadermas stores about the user are school ID, user ID, password and app preferences. They are kept in a local and private database which is only used by Quadermas itself to customize how the app behaves (in the case of preferences) and make network request to "Quaderno Elettronico Mastercom"'s servers (in the case of school ID, user ID, password).
 
-The user can easily delete all of his personal data by just clearing the app's storage from Android settings, or by uninstalling the app completely.
+The user can easily delete all of the personal data stored on the device (i.e. school ID, user ID, password and app preferences) by just clearing the app's storage from Android settings, or by uninstalling the app completely.
