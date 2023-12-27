@@ -8,3 +8,4 @@
 .externalNativeBuild
 .directory
 app/release/
+./schools/schools.java
