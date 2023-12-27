@@ -23,28 +23,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SchoolExtractor {
     public static final String schoolsUrl
-            = "https://mp.registroelettronico.com/v3/scuole/?format=json&token=";
+            = "https://raw.githubusercontent.com/Stypox/mastercom-workbook/master/schools/schools.json";
 
     static Single<List<SchoolData>> fetchSchools(
             final Extractor.ItemErrorHandler itemErrorHandler) {
         return Single.fromCallable(() -> {
             boolean jsonAlreadyParsed = false;
             try {
-                final URL url = new URL(schoolsUrl + generateSchoolsToken());
-
+                final URL url = new URL(schoolsUrl);
                 final JSONArray jsonResponse = fetchJsonArray(url);
                 jsonAlreadyParsed = true;
 
-                // make sure not to add duplicate schools
-                final Set<String> seenAPIUrls = new HashSet<>();
                 final List<SchoolData> schools = new ArrayList<>();
                 for (int i = 0; i < jsonResponse.length(); i++) {
                     try {
-                        final SchoolData schoolData = new SchoolData(jsonResponse.getJSONObject(i));
-                        if (schoolData.isValid() && !seenAPIUrls.contains(schoolData.getAPIUrl())) {
-                            schools.add(schoolData);
-                            seenAPIUrls.add(schoolData.getAPIUrl());
-                        }
+                        schools.add(new SchoolData(jsonResponse.getJSONObject(i)));
                     } catch (Throwable e) {
                         itemErrorHandler.onItemError(ExtractorError.asExtractorError(e, true));
                     }
@@ -54,30 +47,6 @@ public class SchoolExtractor {
                 throw ExtractorError.asExtractorError(e, jsonAlreadyParsed);
             }
         }).subscribeOn(Schedulers.io());
-    }
-
-    private static String generateSchoolsToken() {
-        final String dateString = new SimpleDateFormat("yyyyMMdd", Locale.ITALY).format(new Date())
-                + "secret";
-
-        try {
-            //noinspection CharsetObjectCanBeUsed
-            final byte[] digest = MessageDigest.getInstance("SHA-256")
-                    .digest(dateString.getBytes("UTF-8"));
-
-            final StringBuilder result = new StringBuilder();
-            for (final byte b : digest) {
-                final String hexString = Integer.toHexString(b & 255);
-                if (hexString.length() == 1) {
-                    result.append('0');
-                }
-                result.append(hexString);
-            }
-            return result.toString();
-
-        } catch (final Exception e) {
-            throw new RuntimeException("Failed to generate schools token", e);
-        }
     }
 
     private static JSONArray fetchJsonArray(final URL url) throws IOException, JSONException {
