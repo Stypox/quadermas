@@ -3,8 +3,19 @@
 
 *Note: only the student's credentials will work, the parents' ones won't*
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/com.stypox.mastercom_workbook/)
-[<img src="./get-it-on-github.png" alt="Get it on GitHub" height="80">](https://github.com/Stypox/mastercom-workbook/releases)
+<sub>Mastercom Workbook is not affiliated with "Mastercom", any school, the Italian government or other government entities.</sub>
+
+<p align="center">
+    <a href="https://f-droid.org/packages/com.stypox.mastercom_workbook/">
+        <img height="80" alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png">
+    </a>
+    <a href="https://github.com/Stypox/mastercom-workbook/releases">
+        <img height="80" alt="Get it on GitHub" src="./meta/get-it-on-github.png">
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.stypox.mastercom_workbook">
+        <img height="80" alt="Get it on Play Store" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png">
+    </a>
+</p>
 
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/0.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/0.png)
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png)
@@ -14,9 +25,6 @@
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/5.png)
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/6.png)
 [<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/7.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/7.png)
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/8.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/8.png)
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/9.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/9.png)
-[<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/10.png" width=160>](fastlane/metadata/android/en-US/images/phoneScreenshots/10.png)
 
 # Features
 
