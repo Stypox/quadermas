@@ -5,7 +5,7 @@
    for details.
 -->
 <data-extraction-rules>
-    <cloud-backup>
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
         <!--
         TODO: Use <include> and <exclude> to control what is backed up.
         The domain can be file, database, sharedpref, external or root.
@@ -26,11 +26,9 @@
         <include domain="root" path="file_to_include"/>
         <exclude domain="root" path="file_to_exclude"/>
         -->
+        <include domain="sharedpref" />
     </cloud-backup>
-    <!--
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <include domain="sharedpref" />
     </device-transfer>
-    -->
 </data-extraction-rules>
