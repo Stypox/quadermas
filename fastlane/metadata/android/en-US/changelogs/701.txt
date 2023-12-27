@@ -1,0 +1,7 @@
+Fixes:
+- Fix loading school list in login screen, and also make it much faster
+- Now the app can be installed on newer Android versions, too
+
+Improvements:
+- Update some libraries
+- Increase targetSdk from 31 to 34
