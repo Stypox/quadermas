@@ -10,10 +10,10 @@
     <string name="value_theme_light" translatable="false">light</string>
     <string name="value_theme_black" translatable="false">black</string>
 
-    <string name="app_name">Mastercom Workbook</string>
+    <string name="app_name">Quadermas</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="welcome_message">Welcome to Mastercom workbook</string>
+    <string name="welcome_message">Welcome to Quadermas</string>
     <string name="welcome_load_marks">Load marks</string>
 
     <string name="menu_logout">Logout</string>

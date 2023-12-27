@@ -1,6 +1,6 @@
 # Schools scraper
 
-See https://github.com/Stypox/mastercom-workbook/issues/15
+See https://github.com/Stypox/quadermas/issues/15
 
 Fetching schools from the official APIs inside the app takes too long, as it requires one request per municipality, and there are 7900 municipalities in Italy. A while ago making a request without specifying a municipality would return all schools in italy, but it was really slow to respond nonetheless, and now it does not work anymore (504 Bad Gateway).
 

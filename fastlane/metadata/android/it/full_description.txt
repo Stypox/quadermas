@@ -1,4 +1,4 @@
-Questo è un client non ufficiale per il Quaderno Elettronico Mastercom, uno strumento per gli studenti di alcune scuole.
+Quadermas è un client non ufficiale per il Quaderno Elettronico Mastercom, uno strumento per gli studenti di alcune scuole.
 
 Funzionalità:
 - Accesso al quaderno elettronico di molte scuole, ricercabili in un popup
@@ -10,4 +10,4 @@ Funzionalità:
 - Documenti: trova e scarica i documenti
 - Sono disponibili i temi chiaro, scuro e nero
 
-NOTA BENE: Le informazioni mostrate in Mastercom Workbook vengono dalle stesse APIs dei siti ufficiali dei quaderni elettronici delle scuole, ma Mastercom Workbook non è affiliata con "Mastercom", qualsiasi scuola, il governo italiano o altre entità governative.
+NOTA BENE: Le informazioni mostrate in Quadermas vengono dalle stesse APIs dei siti ufficiali dei quaderni elettronici delle scuole, ma Mastercom Workbook non è affiliata con "Mastercom", qualsiasi scuola, il governo italiano o altre entità governative.

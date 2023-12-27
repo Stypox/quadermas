@@ -7,7 +7,7 @@ import androidx.multidex.MultiDex;
 
 import io.reactivex.rxjava3.plugins.RxJavaPlugins;
 
-public class MastercomWorkbookApp extends Application {
+public class QuadermasApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

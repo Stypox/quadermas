@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mastercom Workbook</string>
+    <string name="app_name">Quadermas</string>
     <string name="action_details">Dettagli</string>
     <string name="action_select_subject">Seleziona materia</string>
     <string name="action_select_year">Seleziona anno</string>
@@ -44,7 +44,7 @@
     <string name="menu_statistics">Statistiche</string>
     <string name="navigation_drawer_close">Chiudi il navigation drawer</string>
     <string name="navigation_drawer_open">Apri il navigation drawer</string>
-    <string name="welcome_message">Benvenuto nel quaderno elettronico Mastercom</string>
+    <string name="welcome_message">Benvenuto in Quadermas</string>
     <string name="welcome_load_marks">Carica i voti</string>
     <string name="label_overall_average_mode">Mostra la media di:</string>
     <string name="label_overall_average">Media generale</string>

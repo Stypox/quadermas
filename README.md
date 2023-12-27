@@ -1,4 +1,4 @@
-# Mastercom Workbook client
+# Quadermas - Mastercom workbook client
 [Mastercom](https://www.mastercompro.it/) is an italian company which provides services to schools (i.e. register-logs). One of these services is a website named "*Workbook*" (in italian "*Quaderno Elettronico*") made for **students to access marks, timetables, files**... This app is an Android client that **wraps around the website** and is able to show subjects, marks, topics, homework, timetables, events and documents. It is lightweight (`~5MB`) and uses Material Design.
 
 *Note: only the student's credentials will work, the parents' ones won't*
@@ -21,7 +21,7 @@
 # Features
 
 ## Login
-- Log in with your **Workbook credentials** to any school that uses the Mastercom platform. Just insert the id of the school (e.g. `marconi-tn`), the user id (e.g. `123456`) and the password, and you are ready to go!
+- Log in with your **Workbook credentials** to any school that uses the Mastercom platform. Just insert the id of the school (e.g. `davinci-tn`), the user id (e.g. `123456`) and the password, and you are ready to go!
 - The id of the school is the first part of the URL you would use to access the workbook online, as explained in the app. You will get a **popup list** with all of the schools that use Mastercom and you will be able to **search** through them.
 - Log out is available, and school id and user id are **remembered**.
 
