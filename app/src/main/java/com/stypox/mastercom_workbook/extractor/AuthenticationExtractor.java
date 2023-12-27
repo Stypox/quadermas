@@ -2,6 +2,7 @@ package com.stypox.mastercom_workbook.extractor;
 
 import android.text.TextUtils;
 
+import com.stypox.mastercom_workbook.data.FakeFetchedData;
 import com.stypox.mastercom_workbook.util.FullNameFormatting;
 import com.stypox.mastercom_workbook.util.UrlConnectionUtils;
 
@@ -35,6 +36,16 @@ public class AuthenticationExtractor {
     private static String fullName = "";
 
     public static Single<String> authenticateMain(final boolean reload) {
+        if (Extractor.isFakeAccount()) {
+            if (FakeFetchedData.PASSWORD.equals(Extractor.getPassword()) &&
+                    FakeFetchedData.USER.equals(Extractor.getUser())) {
+                fullName = FakeFetchedData.FULL_NAME;
+                return Single.just(FakeFetchedData.FULL_NAME);
+            } else {
+                return Single.error(new ExtractorError(ExtractorError.Type.invalid_credentials));
+            }
+        }
+
         if (!reload && !TextUtils.isEmpty(phpsessidCookie) && !TextUtils.isEmpty(fullName)) {
             // already authenticated, do not authenticate again
             return Single.just(fullName);
@@ -80,6 +91,10 @@ public class AuthenticationExtractor {
     }
 
     public static Completable authenticateMessenger(final boolean reload) {
+        if (Extractor.isFakeAccount()) {
+            return Completable.complete();
+        }
+
         if (!reload && !TextUtils.isEmpty(messengerCookie)) {
             // already authenticated, do not authenticate again
             return Completable.complete();

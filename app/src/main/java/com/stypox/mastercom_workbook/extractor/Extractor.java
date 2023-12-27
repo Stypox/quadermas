@@ -7,10 +7,12 @@ import androidx.annotation.NonNull;
 
 import com.stypox.mastercom_workbook.data.ClassData;
 import com.stypox.mastercom_workbook.data.EventData;
+import com.stypox.mastercom_workbook.data.FakeFetchedData;
 import com.stypox.mastercom_workbook.data.SchoolData;
 import com.stypox.mastercom_workbook.data.SubjectData;
 import com.stypox.mastercom_workbook.data.TimetableEventData;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,7 @@ public class Extractor {
     private static String APIUrl;
     private static String user;
     private static String password;
+    private static boolean isFakeAccount;
 
     // extracted data
     private static List<SchoolData> schools = null; // others are set by static initialization
@@ -81,7 +84,9 @@ public class Extractor {
     public static void extractSubjects(boolean forceReload,
                                        CompositeDisposable disposables,
                                        DataHandler<List<SubjectData>> handler) {
-        if (forceReload || subjects == null) {
+        if (isFakeAccount) {
+            handler.onExtractedData(FakeFetchedData.SUBJECTS);
+        } else if (forceReload || subjects == null) {
             disposables.add(SubjectExtractor
                     .fetchSubjects(t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -106,7 +111,7 @@ public class Extractor {
                                     boolean forceReload,
                                     CompositeDisposable disposables,
                                     DataHandler<SubjectData> handler) {
-        if (forceReload || subject.getMarks() == null) {
+        if (!isFakeAccount && (forceReload || subject.getMarks() == null)) {
             disposables.add(SubjectExtractor
                     .fetchMarks(subject, t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +133,7 @@ public class Extractor {
                                      boolean forceReload,
                                      CompositeDisposable disposables,
                                      DataHandler<SubjectData> handler) {
-        if (forceReload || subject.getTopics() == null) {
+        if (!isFakeAccount && (forceReload || subject.getTopics() == null)) {
             disposables.add(SubjectExtractor
                     .fetchTopics(subject, t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -148,7 +153,9 @@ public class Extractor {
     public static void extractClasses(boolean forceReload,
                                       CompositeDisposable disposables,
                                       DataHandler<List<ClassData>> handler) {
-        if (forceReload || classes == null) {
+        if (isFakeAccount) {
+            handler.onExtractedData(FakeFetchedData.CLASSES);
+        } else if (forceReload || classes == null) {
             disposables.add(DocumentExtractor
                     .fetchClasses(t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -173,7 +180,7 @@ public class Extractor {
                                         boolean forceReload,
                                         CompositeDisposable disposables,
                                         DataHandler<ClassData> handler) {
-        if (forceReload || classData.getDocuments() == null) {
+        if (!isFakeAccount && (forceReload || classData.getDocuments() == null)) {
             disposables.add(DocumentExtractor
                     .fetchDocuments(classData, t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -193,7 +200,9 @@ public class Extractor {
     public static void extractEvents(boolean forceReload,
                                      CompositeDisposable disposables,
                                      DataHandler<List<EventData>> handler) {
-        if (forceReload || events == null) {
+        if (isFakeAccount) {
+            handler.onExtractedData(FakeFetchedData.EVENTS);
+        } else if (forceReload || events == null) {
             disposables.add(EventExtractor
                     .fetchEvents(t -> signalItemErrorOnMainThread(t, handler))
                     .observeOn(AndroidSchedulers.mainThread())
@@ -218,8 +227,16 @@ public class Extractor {
     public static void extractTimetable(final Date date,
                                         final CompositeDisposable disposables,
                                         final DataHandler<List<TimetableEventData>> handler) {
-
         final int dateIndex = dateToIndex(date);
+        if (isFakeAccount) {
+            if (FakeFetchedData.TIMETABLE.containsKey(dateIndex)) {
+                handler.onExtractedData(FakeFetchedData.TIMETABLE.get(dateIndex));
+            } else {
+                handler.onExtractedData(Collections.emptyList());
+            }
+            return;
+        }
+
         if (timetable.containsKey(dateIndex)) {
             handler.onExtractedData(timetable.get(dateIndex));
         } else {
@@ -257,6 +274,8 @@ public class Extractor {
         APIUrl = "";
         user = "";
         password = "";
+        isFakeAccount = false;
+
         // do not clear schools, since they're not user-specific
         subjects = null;
         classes = null;
@@ -271,6 +290,7 @@ public class Extractor {
 
     public static void setAPIUrl(String APIUrl) {
         Extractor.APIUrl = APIUrl;
+        Extractor.isFakeAccount = FakeFetchedData.API_URL.equals(APIUrl);
     }
 
     public static void setUser(String user) {
@@ -294,6 +314,10 @@ public class Extractor {
         return password;
     }
 
+    public static boolean isFakeAccount() {
+        return isFakeAccount;
+    }
+
 
     ///////////////////
     // MISCELLANEOUS //
@@ -312,10 +336,16 @@ public class Extractor {
      * @return the already extracted SubjectData
      */
     public static List<SubjectData> getExtractedSubjects() {
+        if (isFakeAccount) {
+            return FakeFetchedData.SUBJECTS;
+        }
         return subjects;
     }
 
     public static boolean areSomeMarksExtracted() {
+        if (isFakeAccount) {
+            return true;
+        }
         if (subjects == null) {
             return false;
         }
@@ -328,6 +358,9 @@ public class Extractor {
     }
 
     public static boolean areAllMarksExtracted() {
+        if (isFakeAccount) {
+            return true;
+        }
         if (subjects == null) {
             return false;
         }

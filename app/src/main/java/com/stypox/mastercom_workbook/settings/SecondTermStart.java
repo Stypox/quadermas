@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.stypox.mastercom_workbook.R;
+import com.stypox.mastercom_workbook.extractor.Extractor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +79,12 @@ public class SecondTermStart {
     }
 
     public int currentTerm() {
-        return getTerm(TODAY);
+        if (Extractor.isFakeAccount()) {
+            // hacky workaround, since most marks in the fake account are from the second term
+            return SECOND_TERM;
+        } else {
+            return getTerm(TODAY);
+        }
     }
 
     public void saveToPreferences(final Context context) {
