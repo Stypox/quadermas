@@ -21,6 +21,8 @@ public class FileDownloader {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setDestinationInExternalPublicDir(directory, filename);
         request.setVisibleInDownloadsUi(true);
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE |
+                DownloadManager.Request.NETWORK_WIFI);
 
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);

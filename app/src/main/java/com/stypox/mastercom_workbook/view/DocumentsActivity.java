@@ -2,6 +2,10 @@ package com.stypox.mastercom_workbook.view;
 
 import static com.stypox.mastercom_workbook.util.StringUtils.isBlank;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -39,7 +45,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class DocumentsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
+    private final int requestCodePermissionDialog = 432364;
+
     private CompositeDisposable disposables;
+    private DocumentData lastDownloadDocument;
 
     private MenuItem selectYearMenuItem;
     private MenuItem selectSubjectMenuItem;
@@ -225,8 +234,36 @@ public class DocumentsActivity extends ThemedActivity
     // DOWNLOAD //
     //////////////
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == requestCodePermissionDialog) {
+            if (lastDownloadDocument != null) {
+                downloadDocument(lastDownloadDocument);
+                lastDownloadDocument = null;
+            }
+        }
+    }
+
     public void downloadDocument(DocumentData documentData) {
-        DocumentExtractor.downloadDocument(documentData, this);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+            if (lastDownloadDocument != null) {
+                // user just denied permission
+                return;
+            }
+
+            // onActivityResult waits for when we are ready to download
+            lastDownloadDocument = documentData;
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    requestCodePermissionDialog);
+
+        } else {
+            // on Android 11+
+            DocumentExtractor.downloadDocument(documentData, this);
+        }
     }
 
 
