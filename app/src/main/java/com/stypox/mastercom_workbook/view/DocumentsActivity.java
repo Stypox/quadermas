@@ -47,7 +47,6 @@ public class DocumentsActivity extends ThemedActivity
     private final int requestCodePermissionDialog = 0;
 
     private CompositeDisposable disposables;
-    private DocumentData lastDownloadDocument;
 
     private MenuItem selectYearMenuItem;
     private MenuItem selectSubjectMenuItem;
@@ -233,34 +232,8 @@ public class DocumentsActivity extends ThemedActivity
     // DOWNLOAD //
     //////////////
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == requestCodePermissionDialog) {
-            if (lastDownloadDocument != null) {
-                downloadDocument(lastDownloadDocument);
-                lastDownloadDocument = null;
-            }
-        }
-    }
-
     public void downloadDocument(DocumentData documentData) {
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (lastDownloadDocument != null) {
-                // user just denied permission
-                return;
-            }
-
-            // onActivityResult waits for when we are ready to download
-            lastDownloadDocument = documentData;
-            ActivityCompat.requestPermissions(this,
-                    new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    requestCodePermissionDialog);
-
-        } else {
-            DocumentExtractor.downloadDocument(documentData, this);
-        }
+        DocumentExtractor.downloadDocument(documentData, this);
     }
 
 

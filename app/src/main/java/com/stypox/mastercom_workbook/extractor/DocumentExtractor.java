@@ -98,10 +98,16 @@ public class DocumentExtractor {
 
 
     public static void downloadDocument(DocumentData documentData, Context context) {
-        FileDownloader.download(
-                documentDownloadUrl
-                        .replace("{api_url}", Extractor.getAPIUrl())
-                        .replace("{file_id}", documentData.getId()),
+        final String url;
+        if (Extractor.isFakeAccount()) {
+            url = documentData.getId();
+        } else {
+            url = documentDownloadUrl
+                    .replace("{api_url}", Extractor.getAPIUrl())
+                    .replace("{file_id}", documentData.getId());
+        }
+
+        FileDownloader.download(url,
                 AuthenticationExtractor.getCookie(),
                 documentData.getName(), documentData.getSubject(),
                 Environment.DIRECTORY_DOWNLOADS, documentData.getName(),
