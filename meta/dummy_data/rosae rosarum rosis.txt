@@ -1,0 +1,6 @@
+rosa	rosae
+rosae	rosarum
+rosae	rosis
+rosam	rosas
+rosa	rosae
+rosa	rosis
