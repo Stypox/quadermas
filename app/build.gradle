@@ -6,8 +6,8 @@ android {
         applicationId "com.stypox.mastercom_workbook"
         minSdkVersion 14
         targetSdkVersion 34
-        versionCode 701
-        versionName "7.1"
+        versionCode 702
+        versionName "7.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
