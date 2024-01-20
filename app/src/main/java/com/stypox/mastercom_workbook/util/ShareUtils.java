@@ -1,5 +1,7 @@
 package com.stypox.mastercom_workbook.util;
 
+import static com.stypox.mastercom_workbook.util.StringUtils.isBlank;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +11,6 @@ import android.provider.CalendarContract;
 import androidx.annotation.Nullable;
 
 import java.util.Date;
-
-import static org.jsoup.internal.StringUtil.isBlank;
 
 public class ShareUtils {
     public static void openUrlInBrowser(final Context context, final String url) {

@@ -13,7 +13,7 @@ import com.stypox.mastercom_workbook.data.DocumentData;
 import com.stypox.mastercom_workbook.util.HorizontalScrollViewTouchListener;
 
 import static com.stypox.mastercom_workbook.util.DateUtils.SHORT_DATE_FORMAT;
-import static org.jsoup.internal.StringUtil.isBlank;
+import static com.stypox.mastercom_workbook.util.StringUtils.isBlank;
 
 public class DocumentItemHolder extends ItemHolder<DocumentData> {
 

@@ -1,10 +1,10 @@
 package com.stypox.mastercom_workbook.util;
 
+import static com.stypox.mastercom_workbook.util.StringUtils.isBlank;
+
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
-
-import static org.jsoup.internal.StringUtil.isBlank;
 
 public class FileDownloader {
     public static void download(String url, String cookie,

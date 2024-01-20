@@ -7,6 +7,22 @@ import java.util.List;
 public class StringUtils {
 
     /**
+     * copied from org.jsoup.internal.StringUtil
+     * for compatibility on older Android versions
+     */
+    public static boolean isBlank(final String string) {
+        if (string == null || string.length() == 0)
+            return true;
+
+        int l = string.length();
+        for (int i = 0; i < l; i++) {
+            if (!Character.isWhitespace(string.codePointAt(i)))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * Returns the dynamic programming memory obtained when calculating the Levenshtein distance.
      * The solution lies at {@code memory[a.length()][b.length()]}. This memory can be used to find
      * the set of actions (insertion, deletion or substitution) to be done on the two strings to

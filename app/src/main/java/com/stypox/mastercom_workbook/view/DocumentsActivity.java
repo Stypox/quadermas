@@ -1,8 +1,7 @@
 package com.stypox.mastercom_workbook.view;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import static com.stypox.mastercom_workbook.util.StringUtils.isBlank;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -40,12 +37,8 @@ import java.util.TreeSet;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-import static org.jsoup.internal.StringUtil.isBlank;
-
 public class DocumentsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
-    private final int requestCodePermissionDialog = 0;
-
     private CompositeDisposable disposables;
 
     private MenuItem selectYearMenuItem;
