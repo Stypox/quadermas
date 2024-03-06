@@ -28,7 +28,7 @@ public class SchoolExtractor {
     // See schools/README.md from the repository root for more information. In case reverting to the
     // official APIs is needed, just check the commits that changed this file.
     public static final String schoolsUrl
-            = "https://raw.githubusercontent.com/Stypox/mastercom-workbook/master/schools/schools.json";
+            = "https://raw.githubusercontent.com/Stypox/quadermas/master/schools/schools.json";
 
     static Single<List<SchoolData>> fetchSchools(
             final Extractor.ItemErrorHandler itemErrorHandler) {

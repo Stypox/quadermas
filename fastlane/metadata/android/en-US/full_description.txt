@@ -7,7 +7,6 @@ Features:
 - Topics: view all topics also with a filter for homework
 - Timetable: view the timetable of school days
 - Events: view color coded events
-- Documents: find and download documents
 - Light, dark and black themes are available
 
-NOTICE: The information shown in Quadermas comes from the same APIs of the official websites of schools' electronic workbooks, but Mastercom Workbook is not affiliated with "Mastercom", any school, the Italian government or other government entities.
+NOTICE: The information shown in Quadermas comes from the same APIs of the official websites of schools' electronic workbooks, but Quadermas is not affiliated with "Mastercom", any school, the Italian government or other government entities.

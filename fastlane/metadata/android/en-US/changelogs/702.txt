@@ -1,7 +1,6 @@
 Fixes:
 - Fix loading school list in login screen, and also make it much faster
 - Now the app can be installed on newer Android versions, too
-- Fix downloading documents
 
 Improvements:
 - Update some libraries

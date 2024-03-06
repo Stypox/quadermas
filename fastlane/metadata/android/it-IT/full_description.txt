@@ -7,7 +7,6 @@ Funzionalità:
 - Argomenti: visualizza tutti gli argomenti, anche con un filtro per i compiti
 - Orario: visualizza l'orario dei giorni scolastici
 - Eventi: visualizza i tuoi eventi identificati secondo un codice di colori
-- Documenti: trova e scarica i documenti
 - Sono disponibili i temi chiaro, scuro e nero
 
-NOTA BENE: Le informazioni mostrate in Quadermas vengono dalle stesse APIs dei siti ufficiali dei quaderni elettronici delle scuole, ma Mastercom Workbook non è affiliata con "Mastercom", qualsiasi scuola, il governo italiano o altre entità governative.
+NOTA BENE: Le informazioni mostrate in Quadermas vengono dalle stesse APIs dei siti ufficiali dei quaderni elettronici delle scuole, ma Quadermas non è affiliata con "Mastercom", qualsiasi scuola, il governo italiano o altre entità governative.

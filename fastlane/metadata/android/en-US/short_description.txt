@@ -1,1 +1,1 @@
-View school marks, documents, topics, timetable
+View school marks, topics, timetable

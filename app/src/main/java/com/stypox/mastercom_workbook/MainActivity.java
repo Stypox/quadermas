@@ -68,6 +68,7 @@ public class MainActivity extends ThemedActivity
     private MenuItem topicsMenuItem;
     private MenuItem statisticsMenuItem;
     private MenuItem timetableMenuItem;
+    private MenuItem documentsMenuItem;
 
     private TextView fullNameView;
     private TextView fullAPIUrlView;
@@ -100,6 +101,7 @@ public class MainActivity extends ThemedActivity
         statisticsMenuItem = navigationView.getMenu().findItem(R.id.statisticsAction);
         topicsMenuItem = navigationView.getMenu().findItem(R.id.topicsAction);
         timetableMenuItem = navigationView.getMenu().findItem(R.id.timetableAction);
+        documentsMenuItem = navigationView.getMenu().findItem(R.id.documentsAction);
 
         View headerLayout = navigationView.getHeaderView(0);
         fullNameView = headerLayout.findViewById(R.id.navigationFullName);
@@ -176,6 +178,7 @@ public class MainActivity extends ThemedActivity
 
             topicsMenuItem.setEnabled(true);
             timetableMenuItem.setEnabled(true);
+            documentsMenuItem.setVisible(!Extractor.isFakeAccount());
             fullNameView.setText(AuthenticationExtractor.getFullName());
             fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
 
@@ -200,6 +203,7 @@ public class MainActivity extends ThemedActivity
         topicsMenuItem.setEnabled(false);
         timetableMenuItem.setEnabled(false);
         refreshLayout.setRefreshing(true);
+        documentsMenuItem.setVisible(!Extractor.isFakeAccount());
 
         disposables.clear();
         subjects.clear();
@@ -230,6 +234,7 @@ public class MainActivity extends ThemedActivity
         Extractor.setAPIUrl(LoginData.getAPIUrl(this));
         Extractor.setUser(LoginData.getUser(this));
         Extractor.setPassword(LoginData.getPassword(this));
+        documentsMenuItem.setVisible(!Extractor.isFakeAccount());
 
         fullNameView.setText("");
         fullAPIUrlView.setText(Extractor.getFullAPIUrlToShow());
@@ -261,6 +266,7 @@ public class MainActivity extends ThemedActivity
     private void onAuthenticationCompleted(String fullName, boolean reload) {
         timetableMenuItem.setEnabled(true);
         topicsMenuItem.setEnabled(true);
+        documentsMenuItem.setVisible(!Extractor.isFakeAccount());
         fullNameView.setText(fullName);
 
         if (reload || loadMarksDirectly) {
