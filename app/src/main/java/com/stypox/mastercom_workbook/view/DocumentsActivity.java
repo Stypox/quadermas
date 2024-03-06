@@ -251,6 +251,8 @@ public class DocumentsActivity extends ThemedActivity
                     != PackageManager.PERMISSION_GRANTED) {
             if (lastDownloadDocument != null) {
                 // user just denied permission
+                Toast.makeText(this, R.string.download_missing_permission, Toast.LENGTH_SHORT)
+                        .show();
                 return;
             }
 
@@ -262,7 +264,25 @@ public class DocumentsActivity extends ThemedActivity
 
         } else {
             // on Android 11+
-            DocumentExtractor.downloadDocument(documentData, this);
+            Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT)
+                    .show();
+
+            final DocumentExtractor.OnProgressUpdate onProgUpd = progress -> runOnUiThread(() -> {
+                documentData.setDownloadProgress(progress);
+                final int index = filteredDocuments.indexOf(documentData);
+                if (index >= 0) {
+                    documentsArrayAdapter.notifyItemChanged(index);
+                }
+            });
+            disposables.add(
+                    DocumentExtractor.downloadDocument(documentData, this, onProgUpd)
+                            .doOnError(e -> {
+                                onProgUpd.onProgressUpdate(1.0f); // i.e. no download in progress
+                                runOnUiThread(() -> Toast.makeText(this,
+                                        R.string.download_error, Toast.LENGTH_SHORT));
+                            })
+                            .subscribe()
+            );
         }
     }
 

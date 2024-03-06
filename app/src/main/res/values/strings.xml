@@ -138,6 +138,10 @@
     <string name="event_imminent">Imminent</string>
     <string name="today_is">Today is %s</string>
     <string name="dismiss">Dismiss</string>
+    <string name="download_missing_permission">Permission is needed to download</string>
+    <string name="download_started">Download started</string>
+    <string name="download_error">Download error</string>
+    <string name="share">Share</string>
 
     <string name="two_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s</string>
     <string name="three_strings" translatable="false">%s \u0020\u0020• \u0020\u0020%s \u0020\u0020• \u0020\u0020%s</string>

@@ -102,4 +102,8 @@
     <string name="event_imminent">Imminente</string>
     <string name="today_is">Oggi è il %s</string>
     <string name="dismiss">Nascondi</string>
+    <string name="download_missing_permission">Il permesso è necessario per i download</string>
+    <string name="download_started">Download avviato</string>
+    <string name="download_error">Errore nel download</string>
+    <string name="share">Condividi</string>
 </resources>

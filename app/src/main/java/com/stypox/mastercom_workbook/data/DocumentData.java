@@ -19,6 +19,7 @@ public class DocumentData {
     private final String owner;
     private final Date date;
     private final String subject;
+    private float downloadProgress = 1.0f; // i.e. no download in progress
 
     public DocumentData(JSONObject json) throws JSONException, ParseException {
         name = JsonUtils.getUnescapedString(json, "name");
@@ -57,5 +58,13 @@ public class DocumentData {
 
     public String getSubject() {
         return subject;
+    }
+
+    public float getDownloadProgress() {
+        return downloadProgress;
+    }
+
+    public void setDownloadProgress(final float downloadProgress) {
+        this.downloadProgress = downloadProgress;
     }
 }
