@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -45,6 +47,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 public class DocumentsActivity extends ThemedActivity
         implements Toolbar.OnMenuItemClickListener {
+    private final String TAG = DocumentsActivity.class.getSimpleName();
     private final int requestCodePermissionDialog = 432364;
 
     private CompositeDisposable disposables;
@@ -62,6 +65,8 @@ public class DocumentsActivity extends ThemedActivity
 
     private Integer selectedYear = null;
     private String selectedSubject = null;
+
+    private Toast toast = null;
 
 
     ////////////////////////
@@ -251,8 +256,7 @@ public class DocumentsActivity extends ThemedActivity
                     != PackageManager.PERMISSION_GRANTED) {
             if (lastDownloadDocument != null) {
                 // user just denied permission
-                Toast.makeText(this, R.string.download_missing_permission, Toast.LENGTH_SHORT)
-                        .show();
+                showToast(R.string.download_missing_permission);
                 return;
             }
 
@@ -264,8 +268,7 @@ public class DocumentsActivity extends ThemedActivity
 
         } else {
             // on Android 11+
-            Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT)
-                    .show();
+            showToast(R.string.download_started);
 
             final DocumentExtractor.OnProgressUpdate onProgUpd = progress -> runOnUiThread(() -> {
                 documentData.setDownloadProgress(progress);
@@ -276,14 +279,22 @@ public class DocumentsActivity extends ThemedActivity
             });
             disposables.add(
                     DocumentExtractor.downloadDocument(documentData, this, onProgUpd)
-                            .doOnError(e -> {
+                            .subscribe(() -> {
+                                runOnUiThread(() -> showToast(R.string.download_complete));
+                            }, e -> {
+                                Log.e(TAG, "Download failed", e);
                                 onProgUpd.onProgressUpdate(1.0f); // i.e. no download in progress
-                                runOnUiThread(() -> Toast.makeText(this,
-                                        R.string.download_error, Toast.LENGTH_SHORT));
+                                runOnUiThread(() -> showToast(R.string.download_error));
                             })
-                            .subscribe()
             );
         }
+    }
+
+    void showToast(@StringRes final int res) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, res, Toast.LENGTH_SHORT);
     }
 
 

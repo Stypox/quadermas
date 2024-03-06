@@ -1,5 +1,6 @@
 package com.stypox.mastercom_workbook.extractor;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -171,16 +172,25 @@ public class DocumentExtractor {
 
         final String[] extensions = doc.getName().split("\\.");
         final String extension = extensions[extensions.length - 1];
-        final Intent shareIntent = new ShareCompat.IntentBuilder(context)
-            .setChooserTitle(doc.getName())
-            .setType(MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension))
-            .setStream(uri)
-            .setSubject(doc.getSubject())
-            .setText(doc.getName())
-            .getIntent();
-        shareIntent.setData(uri);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share)));
+        final String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        try {
+            final Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, mimeType);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            final Intent shareIntent = new ShareCompat.IntentBuilder(context)
+                    .setChooserTitle(doc.getName())
+                    .setType(mimeType)
+                    .setStream(uri)
+                    .setSubject(doc.getSubject())
+                    .setText(doc.getName())
+                    .getIntent();
+            shareIntent.setData(uri);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share)));
+        }
     }
 
     // see https://en.wikipedia.org/wiki/JSONP
