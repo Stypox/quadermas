@@ -1,0 +1,7 @@
+Correzioni:
+- La lista di scuole nella pagina di login ora si carica correttamente, ed è anche molto più veloce
+- Ora l'app si installa anche sulle versioni di Android più recenti
+
+Miglioramenti:
+- Aggiornate alcune librerie
+- Incrementato targetSdk da 31 a 34
