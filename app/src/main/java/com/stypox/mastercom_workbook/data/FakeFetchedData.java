@@ -44,21 +44,23 @@ public final class FakeFetchedData {
             }});
             add(new SubjectData(new JSONObject("{\"nome\": \"Italian language\", \"id\": \"00100102\"}")) {{
                 setMarks(new ArrayList<>() {{
-                    add(new MarkData(new JSONObject("{\"valore\": \"9.5\", \"tipo\": \"Scritto\", \"data\": \"Wed, 29 Mar 2021 00:00:00 +0000\", \"note\": \"Vocabulary test about countries\", \"docente\": \"Rachel Jonas\"}")));
-                    add(new MarkData(new JSONObject("{\"valore\": \"8.75\", \"tipo\": \"Orale\", \"data\": \"Mon, 13 Jan 2021 00:00:00 +0000\", \"note\": \"Speaking test\", \"docente\": \"Rachel Jonas\"}")));
+                    add(new MarkData(new JSONObject("{\"valore\": \"8.75\", \"tipo\": \"Scritto\", \"data\": \"Wed, 29 Mar 2021 00:00:00 +0000\", \"note\": \"Vocabulary test about countries\", \"docente\": \"Rachel Jonas\"}")));
+                    add(new MarkData(new JSONObject("{\"valore\": \"9.5\", \"tipo\": \"Orale\", \"data\": \"Mon, 13 Jan 2021 00:00:00 +0000\", \"note\": \"Speaking test\", \"docente\": \"Rachel Jonas\"}")));
                 }});
                 setTopics(new ArrayList<>() {{
-                    add(new TopicData(new JSONObject("{\"data\":\"Mon, 27 Mar 2021 00:00:00 +0000\", \"docente\":\"Rachel Jonas\", \"modulo\":\"Vocabulary\", \"descrizione\":\"andare, passeggiare, camminare\", \"assegnazioni\":\"Study all of the words in table 7.2\"}")));
+                    add(new TopicData(new JSONObject("{\"data\":\"Mon, 27 Mar 2021 00:00:00 +0000\", \"docente\":\"Rachel Jonas\", \"modulo\":\"Vocabulary\", \"descrizione\":\"andare, passeggiare, camminare\", \"assegnazioni\":\"\"}")));
                     add(new TopicData(new JSONObject("{\"data\":\"Tue, 21 Mar 2021 00:00:00 +0000\", \"docente\":\"Rachel Jonas\", \"modulo\":\"Vocabulary\", \"descrizione\":\"tastiera, schermo\", \"assegnazioni\":\"Read poem on page 139\"}")));
                 }});
             }});
             add(new SubjectData(new JSONObject("{\"nome\": \"Arithmetic and geometry\", \"id\": \"00100102\"}")) {{
                 setMarks(new ArrayList<>() {{
-                    add(new MarkData(new JSONObject("{\"valore\": \"5.5\", \"tipo\": \"Orale\", \"data\": \"Sat, 25 Mar 2021 00:00:00 +0000\", \"note\": \"Trigonometric functions: sin, cos, tan\", \"docente\": \"Mario Rossi\"}")));
+                    add(new MarkData(new JSONObject("{\"valore\": \"4.5\", \"tipo\": \"Scritto\", \"data\": \"Sat, 7 Apr 2021 00:00:00 +0000\", \"note\": \"Inverse of trigonometric functions: asin, acos, atan\", \"docente\": \"Mario Rossi\"}")));
+                    add(new MarkData(new JSONObject("{\"valore\": \"6.25\", \"tipo\": \"Orale\", \"data\": \"Sat, 25 Mar 2021 00:00:00 +0000\", \"note\": \"Trigonometric functions: sin, cos, tan\", \"docente\": \"Mario Rossi\"}")));
                 }});
                 setTopics(new ArrayList<>() {{
                     add(new TopicData(new JSONObject("{\"data\":\"Mon, 20 Mar 2021 00:00:00 +0000\", \"docente\":\"Mario Rossi\", \"modulo\":\"Trigonometry\", \"descrizione\":\"Inverse of trigonometric functions: asin, acos, atan\", \"assegnazioni\":\"On page 302 do exercises 16-17-19-24\"}")));
-                    add(new TopicData(new JSONObject("{\"data\":\"Sat, 18 Mar 2021 00:00:00 +0000\", \"docente\":\"Mario Rossi\", \"modulo\":\"Trigonometry\", \"descrizione\":\"sin, cos, tan\", \"assegnazioni\":\"Read and study pages 267-268\"}")));
+                    add(new TopicData(new JSONObject("{\"data\":\"Sat, 18 Mar 2021 00:00:00 +0000\", \"docente\":\"Mario Rossi\", \"modulo\":\"Trigonometry\", \"descrizione\":\"sin, cos, tan\", \"assegnazioni\":\"\"}")));
+                    add(new TopicData(new JSONObject("{\"data\":\"Sat, 15 Mar 2021 00:00:00 +0000\", \"docente\":\"Mario Rossi\", \"modulo\":\"Trigonometry\", \"descrizione\":\"\", \"assegnazioni\":\"Read and study pages 267-268\"}")));
                 }});
             }});
         } catch (Exception e) {
