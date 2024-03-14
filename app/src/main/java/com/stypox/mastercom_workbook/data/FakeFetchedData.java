@@ -4,9 +4,14 @@ import com.stypox.mastercom_workbook.util.DateUtils;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public final class FakeFetchedData {
@@ -81,14 +86,26 @@ public final class FakeFetchedData {
         }
     }};
 
+    private static String monthNow(int plusDays) {
+        final Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, plusDays);
+        return new SimpleDateFormat("MMM", Locale.ITALY).format(c.getTime());
+    }
+
+    private static String dayNow(int plusDays) {
+        final Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, plusDays);
+        return c.get(Calendar.DAY_OF_MONTH) + "";
+    }
+
     public static final List<EventData> EVENTS = new ArrayList<>() {{
         try {
-            add(new EventData(EventData.Type.annotation, "Latin test 4", "Translation from the emperor Julius Caesar", "John Smith", "23", "apr", "07:45 08:30"));
-            add(new EventData(EventData.Type.annotation, "Math test", "Inverse of trigonometric functions: asin, acos, atan", "Mario Rossi", "15", "apr", "11:40 12:25"));
-            add(new EventData(EventData.Type.annotation, "Small math review", "Trigonometry", "Mario Rossi", "3", "apr", "07:00 07:45"));
-            add(new EventData(EventData.Type.event, "International Olympiad in Informatics", "In Singapore", "Steven Halim", "3", "apr", "x 1 apr 06:15 y 7 apr 20:45"));
-            add(new EventData(EventData.Type.annotation, "Italian vocabulary test", "Countries", "Rachel Jonas", "29", "mar", "09:30 10:15"));
-            add(new EventData(EventData.Type.annotation, "Latin test 3", "Translation", "John Smith", "28", "mar", "07:45 08:30"));
+            add(new EventData(EventData.Type.annotation, "Latin test 4", "Translation from the emperor Julius Caesar", "John Smith", dayNow(10), monthNow(10), "07:45 08:30"));
+            add(new EventData(EventData.Type.annotation, "Math test", "Inverse of trigonometric functions: asin, acos, atan", "Mario Rossi", dayNow(3), monthNow(3), "11:40 12:25"));
+            add(new EventData(EventData.Type.annotation, "Small math review", "Trigonometry", "Mario Rossi", dayNow(1), monthNow(1), "07:00 07:45"));
+            add(new EventData(EventData.Type.event, "International Olympiad in Informatics", "In Singapore", "Steven Halim", dayNow(0), monthNow(0), "x " + dayNow(-2) + " " + monthNow(-2) + " 06:15 y " + dayNow(3) + " " + monthNow(3) + " 20:45"));
+            add(new EventData(EventData.Type.annotation, "Italian vocabulary test", "Countries", "Rachel Jonas", dayNow(-2), monthNow(-2), "09:30 10:15"));
+            add(new EventData(EventData.Type.annotation, "Latin test 3", "Translation", "John Smith", dayNow(-10), monthNow(-10), "07:45 08:30"));
         } catch (Exception e) {
             e.printStackTrace();
         }
