@@ -39,13 +39,13 @@
     <string name="settings_about">About</string>
     <string name="settings_source_code">View source code</string>
     <string name="settings_source_code_summary">This app is free and open source!</string>
-    <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/mastercom-workbook</string>
+    <string name="settings_source_code_url" translatable="false">https://github.com/Stypox/quadermas</string>
     <string name="settings_report_bug">Report bug or request feature</string>
     <string name="settings_report_bug_summary">Have you found something to improve?</string>
-    <string name="settings_report_bug_url" translatable="false">https://github.com/Stypox/mastercom-workbook/issues</string>
+    <string name="settings_report_bug_url" translatable="false">https://github.com/Stypox/quadermas/issues</string>
     <string name="settings_changelog">Version %1$s (%2$d)</string>
     <string name="settings_changelog_summary">Read the changelog and check for updates</string>
-    <string name="settings_changelog_url" translatable="false">https://github.com/Stypox/mastercom-workbook/releases</string>
+    <string name="settings_changelog_url" translatable="false">https://github.com/Stypox/quadermas/releases</string>
 
     <string name="activity_title_statistics">Mark statistics</string>
     <string name="activity_title_marks">Mark details</string>

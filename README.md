@@ -3,13 +3,13 @@
 
 *Note: only the student's credentials will work, the parents' ones won't*
 
-<sub>Mastercom Workbook is not affiliated with "Mastercom", any school, the Italian government or other government entities.</sub>
+<sub>The information shown in Quadermas comes from the same APIs of the official websites of schools' electronic workbooks, but Quadermas is not affiliated with "Mastercom", any school, the Italian government or other government entities.</sub>
 
 <p align="center">
     <a href="https://f-droid.org/packages/com.stypox.mastercom_workbook/">
         <img height="80" alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png">
     </a>
-    <a href="https://github.com/Stypox/mastercom-workbook/releases">
+    <a href="https://github.com/Stypox/quadermas/releases">
         <img height="80" alt="Get it on GitHub" src="./meta/get-it-on-github.png">
     </a>
     <a href="https://play.google.com/store/apps/details?id=com.stypox.mastercom_workbook">
