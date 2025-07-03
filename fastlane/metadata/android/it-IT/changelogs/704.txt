@@ -1,0 +1,2 @@
+Miglioramenti:
+- Incrementato targetSdk da 34 a 36
