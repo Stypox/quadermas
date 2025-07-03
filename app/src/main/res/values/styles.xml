@@ -4,6 +4,7 @@
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
@@ -41,6 +42,7 @@
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="actionBarStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
@@ -74,7 +76,7 @@
     </style>
 
     <style name="BlackAppTheme" parent="DarkAppTheme">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="android:colorBackground">@color/black</item>
         <item name="colorBackgroundFloating">#ff212121</item> <!-- material_grey_900 -->
     </style>

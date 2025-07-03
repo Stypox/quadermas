@@ -34,17 +34,18 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1' // can't update, requires minSdk 21
+    //implementation 'androidx.core:core:1.17.0-beta01' // can't use, requires minSdk 21, copy pasted files instead
+    implementation 'com.google.android.material:material:1.11.0' // can't update, requires minSdk 19
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // can't update, requires minSdk 21
     implementation 'com.android.support:multidex:2.0.1'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.12.13' // support Android 4.0.1+ (API 14)
-    implementation 'org.jsoup:jsoup:1.16.2'
+    implementation 'org.jsoup:jsoup:1.19.1'
     implementation 'org.unbescape:unbescape:1.1.6.RELEASE'
 }

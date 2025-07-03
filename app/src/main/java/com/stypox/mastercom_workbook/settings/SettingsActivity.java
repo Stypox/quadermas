@@ -25,6 +25,7 @@ public class SettingsActivity extends ThemedActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        fixInsets();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -48,6 +48,7 @@ public class EventsActivity extends ThemedActivity {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        fixInsets();
         setSupportActionBar(findViewById(R.id.toolbar));
 
         final ActionBar actionBar = getSupportActionBar();

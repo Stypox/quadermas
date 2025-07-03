@@ -50,6 +50,7 @@ public class LoginActivity extends ThemedActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        fixInsets();
 
         APIUrlEdit = findViewById(R.id.APIUrlEdit);
         APIUrlLoading = findViewById(R.id.APIUrlLoadingIndicator);

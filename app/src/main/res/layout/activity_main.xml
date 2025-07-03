@@ -80,6 +80,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"
-        tools:visibility="gone" />
+        tools:visibility="gone"
+        android:background="?android:attr/colorBackground" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
