@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 36
     defaultConfig {
         applicationId "com.stypox.mastercom_workbook"
         minSdkVersion 14
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 703
         versionName "7.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
