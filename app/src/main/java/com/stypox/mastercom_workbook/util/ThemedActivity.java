@@ -136,10 +136,10 @@ abstract public class ThemedActivity extends AppCompatActivity {
     public void fixInsets() {
         View v = findViewById(android.R.id.content);
         TypedValue typedValue = new TypedValue();
-        try(TypedArray a = v.getContext().obtainStyledAttributes(typedValue.data,
-                new int[]{android.R.attr.colorBackground})) {
-            v.setBackgroundColor(a.getColor(0, 0));
-        }
+        TypedArray a = v.getContext().obtainStyledAttributes(typedValue.data,
+                new int[]{android.R.attr.colorBackground});
+        v.setBackgroundColor(a.getColor(0, 0));
+        a.recycle();
 
 
         if (Build.VERSION.SDK_INT < 21 || this instanceof MainActivity) {
